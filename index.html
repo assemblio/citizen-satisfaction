@@ -1,25 +1,252 @@
 <html>
-  <head>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <script>
-      $(function() {
-        $.getJSON( "http://csis.appdec.com/api/report/general", function( data ) {
-          $.each( data, function( key, val ) {
-            console.log(val);
-          });
-        });
-      });
-    </script>
-  </head>
-  <body>
-    <h1>Hello</h1>
-  </body>
+        <script>
+            $(function() {
+                $.getJSON( "http://csis.appdec.com/api/report/general", function( data ) {
+                    $.each( data, function( key, val ) {
+                        console.log(val);
+                    });
+                });
+            });
+        </script>
+        <style>
+            .illustration-container{
+                padding: 0px;
+                width: 130px;
+            }
+
+            .viz-container{
+                background-color: #F3F2F0;
+            }
+
+            .label-indicator, .vote-count-label{
+                color: #AAAAA9;
+                font-size: 13px;
+            }
+
+            .label-indicator{
+                text-align: center;
+            }
+
+            .vote-count-container{
+                margin-top: 18px;
+                min-width: 130px;
+                max-width: 130px;
+                padding-left: 10px;
+                padding-top: 10px;
+            }
+
+            .vote-count, .percentage-count{
+                font-size: 30px;
+                font-weight: bolder;
+            }
+
+            .percentage-count{
+                margin-bottom: 0px;
+            }
+
+            .row-meh .vote-count, .row-unhappy .vote-count{
+                text-align: center;
+            }
+
+            .row-meh, .row-unhappy{
+                padding-top: 50px;
+            }
+
+            .row-happy .vote-count, .row-happy .percentage-count{
+                color: #30C67B;
+            }
+
+            .row-meh .vote-count, .row-meh .percentage-count{
+                color: #D2B028;
+            }
+
+            .row-unhappy .vote-count, .row-unhappy .percentage-count{
+                color: #C6371D;
+            }
+        </style>
+
+        <style>
+            #percentage-bar-container {
+                margin-top: 35px;
+                width: 100%;
+                height: 67px;
+                background-color: #D9D5CC;
+                padding: 2px;
+                /*border: 1px #000 double;*/
+                clear: both;
+            }
+
+            #percentage-bar {
+                background: #30C67B; /*-- Color of the bar --*/
+                height: 63px;
+                width: 0%;
+                max-width: 50%;
+                float: left;
+                -webkit-animation: percentage-bar 2s 1 forwards;
+                -moz-animation: percentage-bar 2s 1 forwards;
+                -ms-animation: percentage-bar 2s 1 forwards;
+                animation: percentage-bar 2s 1 forwards;
+            }
+
+            #percentage-container #percentage-value{
+                font-weight: bolder;
+                font-size: 30px;
+                color: #30C67B;
+            }
+
+            #percentage-value{
+                display: table-cell;
+                height: 70px;
+                font-weight: bolder;
+                font-size: 30px;
+                color: white;
+                padding-left: 10px;
+                vertical-align: middle;
+            }
+
+            @-webkit-keyframes percentage-bar {
+                from { }
+                to { width: 100% }
+            }
+
+            @-moz-keyframes percentage-bar {
+                from { }
+                to { width: 100% }
+            }
+
+            @-ms-keyframes percentage-bar {
+                from { }
+                to { width: 100% }
+            }
+
+            @keyframes percentage-bar {
+                from { }
+                to { width: 100% }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="container-fluid viz-container">
+                <!-- First Row - Happy -->
+                <div class="row row-happy">
+                    <div class="col-xs-2 vote-count-container">
+                        <!--div id="percentage-bar-container">
+                            <div id="percentage-bar" >
+                                <div id="percentage-value">100%</div>
+                            </div>
+                        </div-->
+                        <div>
+                            <p class="percentage-count">80%</p>
+                            <p class="vote-count-label"><span class="vote-count">14</span> përgjigje</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/happy/s1_m1.gif"/>
+                        <p class="label-indicator">cil&euml;sin&euml; e<br>sh&euml;rbimit</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/happy/s1_m2.gif"/>
+                        <p class="label-indicator">kualitetin e<br>sh&euml;rbimit</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/happy/s1_m3.gif"/>
+                        <p class="label-indicator">koh&euml;zgjatjen e<br>sh&euml;rbimit</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/happy/s1_m4.gif"/>
+                        <p class="label-indicator">pages&euml;n e<br>sh&euml;rbimit</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/happy/s1_m5.gif"/>
+                        <p class="label-indicator">meq&euml; sh&euml;rbimi nuk<br>&euml;sht&euml; online</p>
+                    </div>
+                </div>
+                <!-- End First Row - Happy -->
+
+                <!-- Second Row - Meh -->
+                <div class="row row-meh">
+                    <div class="col-xs-2 vote-count-container">
+                        <div>
+                            <p class="percentage-count">14%</p>
+                            <p class="vote-count-label"><span class="vote-count">5</span> përgjigje</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/meh/s2_m1.gif"/>
+                        <p class="label-indicator">cil&euml;sin&euml; e<br>sh&euml;rbimit</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/meh/s2_m2.gif"/>
+                        <p class="label-indicator">kualitetin e<br>sh&euml;rbimit</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/meh/s2_m3.gif"/>
+                        <p class="label-indicator">koh&euml;zgjatjen e<br>sh&euml;rbimit</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/meh/s2_m4.gif"/>
+                        <p class="label-indicator">pages&euml;n e<br>sh&euml;rbimit</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/meh/s2_m5.gif"/>
+                        <p class="label-indicator">meq&euml; sh&euml;rbimi nuk<br>&euml;sht&euml; online</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                </div>
+                <!-- End Second Row - Meh -->
+
+
+                <!-- Third Row - Unhappy -->
+                <div class="row row-unhappy">
+                    <div class="col-xs-2 vote-count-container">
+                        <div>
+                            <p class="percentage-count">14%</p>
+                            <p class="vote-count-label"><span class="vote-count">5</span> përgjigje</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/unhappy/s3_m1.gif"/>
+                        <p class="label-indicator">cil&euml;sin&euml; e<br>sh&euml;rbimit</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/unhappy/s3_m2.gif"/>
+                        <p class="label-indicator">kualitetin e<br>sh&euml;rbimit</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/unhappy/s3_m3.gif"/>
+                        <p class="label-indicator">koh&euml;zgjatjen e<br>sh&euml;rbimit</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/unhappy/s3_m4.gif"/>
+                        <p class="label-indicator">pages&euml;n e<br>sh&euml;rbimit</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                    <div class="col-xs-2 illustration-container">
+                        <img src="img/unhappy/s3_m5.gif"/>
+                        <p class="label-indicator">meq&euml; sh&euml;rbimi nuk<br>&euml;sht&euml; online</p>
+                        <p class="vote-count">5</p>
+                    </div>
+                </div>
+                <!-- End Third Row - Unhappy -->
+            </div>
+        </div>
+    </body>
 </html>
