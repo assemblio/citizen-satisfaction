@@ -1,0 +1,75 @@
+.container-ranking{
+    background-color: #F3F2F0;
+}
+.row-ranking{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.progress-bar {
+    /*margin-left: 100px;*/
+    width: 100%;
+    height: 44px;
+}
+
+.progress-bar div {
+    height: 100%;
+    color: #fff;
+    text-align: right;
+    font-size: 30px;
+    line-height: 44px;
+    width: 0;
+    font-weight: bolder;
+}
+
+.progress-bar-skin  {
+    background: #e4e4e4;
+    /*border: 1px solid #111;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 5px #333;*/
+}
+
+.progress-bar-skin div {
+    background-color: #F3F2F0;
+}
+
+.row-happy .progress-bar-skin div {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#30C67B), to(#30C67B));
+    background: -webkit-linear-gradient(top, #30C67B, #30C67B);
+    background: -moz-linear-gradient(top, #30C67B, #30C67B);
+    background: -ms-linear-gradient(top, #30C67B, #30C67B);
+    background: -o-linear-gradient(top, #30C67B, #30C67B);
+}
+
+.row-meh .progress-bar-skin div {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#D2B028), to(#D2B028));
+    background: -webkit-linear-gradient(top, #D2B028, #D2B028);
+    background: -moz-linear-gradient(top, #D2B028, #D2B028);
+    background: -ms-linear-gradient(top, #D2B028, #D2B028);
+    background: -o-linear-gradient(top, #D2B028, #D2B028);
+}
+
+.row-unhappy .progress-bar-skin div {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C6371D), to(#C6371D));
+    background: -webkit-linear-gradient(top, #C6371D, #C6371D);
+    background: -moz-linear-gradient(top, #C6371D, #C6371D);
+    background: -ms-linear-gradient(top, #C6371D, #C6371D);
+    background: -o-linear-gradient(top, #C6371D, #C6371D);
+}
+
+.row-happy .institution-name{
+    color: #6D6E6E;
+}
+
+.row-meh .institution-name{
+    color: #6D6E6E;
+}
+
+.row-unhappy .institution-name{
+    color: #6D6E6E;
+}
+
+.institution-name{
+    font-size: 22px;
+    font-weight: bolder;
+}

@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <!-- Bootstrap. Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- Bootstrap overwrites -->
+        <link rel="stylesheet" href="../css/boostrap-overwites.css">
+
+        <!-- Application styling -->
+        <link rel="stylesheet" href="../css/style.css">
+
+        <link rel="stylesheet" href="../css/ranking-style.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="../js/ranking-scripts.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <div id="container-ministry-selection">
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">Të kënaqur</a>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:displayHappyRanking()">Të kënaqur</a></li>
+                                    <li><a href="javascript:displayMehRanking()">Të pakënaqur</a></li>
+                                    <li><a href="javascript:displayUnhappyRanking()">Mesatarisht të kënaqur</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="container-fluid container-ranking">
+        </div>
+    </body>
+</html>
