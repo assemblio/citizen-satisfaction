@@ -47,7 +47,7 @@ function setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex){
 
     // Payment vote counts
     $('.row-meh .illustration-payment .vote-count').html(serviceJson['Answers'][1]['result_Middle']);
-    $('.row-unhappy .illustration-payment.vote-count').html(serviceJson['Answers'][1]['result_Bad']);
+    $('.row-unhappy .illustration-payment .vote-count').html(serviceJson['Answers'][1]['result_Bad']);
 
     // Behaviour of official vote counts
     $('.row-meh .illustration-kindliness .vote-count').html(serviceJson['Answers'][2]['result_Middle']);
