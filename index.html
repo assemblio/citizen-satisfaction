@@ -13,68 +13,7 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-        <style>
-            #percentage-bar-container {
-                margin-top: 35px;
-                width: 100%;
-                height: 67px;
-                background-color: #D9D5CC;
-                padding: 2px;
-                /*border: 1px #000 double;*/
-                clear: both;
-            }
-
-            #percentage-bar {
-                background: #30C67B; /*-- Color of the bar --*/
-                height: 63px;
-                width: 0%;
-                max-width: 50%;
-                float: left;
-                -webkit-animation: percentage-bar 2s 1 forwards;
-                -moz-animation: percentage-bar 2s 1 forwards;
-                -ms-animation: percentage-bar 2s 1 forwards;
-                animation: percentage-bar 2s 1 forwards;
-            }
-
-            #percentage-container #percentage-value{
-                font-weight: bolder;
-                font-size: 30px;
-                color: #30C67B;
-            }
-
-            #percentage-value{
-                display: table-cell;
-                height: 70px;
-                font-weight: bolder;
-                font-size: 30px;
-                color: white;
-                padding-left: 10px;
-                vertical-align: middle;
-            }
-
-            @-webkit-keyframes percentage-bar {
-                from { }
-                to { width: 100% }
-            }
-
-            @-moz-keyframes percentage-bar {
-                from { }
-                to { width: 100% }
-            }
-
-            @-ms-keyframes percentage-bar {
-                from { }
-                to { width: 100% }
-            }
-
-            @keyframes percentage-bar {
-                from { }
-                to { width: 100% }
-            }
-        </style>
-
+        
         <script>
             var lang = 'AL';
             var satisfactionJson = null;
@@ -213,11 +152,6 @@
                 <!-- First Row - Happy -->
                 <div class="row row-happy">
                     <div class="col-xs-2 vote-count-container">
-                        <!--div id="percentage-bar-container">
-                            <div id="percentage-bar" >
-                                <div id="percentage-value">100%</div>
-                            </div>
-                        </div-->
                         <div>
                             <p class="percentage-count"></p>
                             <p class="vote-count-label"><span class="vote-count"></span> p&euml;rgjigje</p>
