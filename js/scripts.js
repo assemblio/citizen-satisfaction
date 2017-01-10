@@ -1,31 +1,31 @@
 var lang = 'AL';
 var satisfactionJson = null;
 
-function onMinistrySelection(index, ministryName){
-    $('#container-ministry-selection .navbar-brand').html(ministryName);
+function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
 
-    // When selecting a ministry, we want to update the list of service to those
-    // specific to that ministry.
+    // Set the service name display
+    var serviceName = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang];
+    $('#container-service-selection .navbar-brand').html(serviceName);
 
-    // First, let's select a default service.
-    var defaultServiceName = satisfactionJson[index]['ServiceGroups'][0]['Services'][0]['ServiceName_' + lang];
-    $('#container-service-selection .navbar-brand').html(defaultServiceName);
-
-    // Don't forget to set the default service's satisfaction stats:
-    setSatisfactionStats(index, 0, 0);
+    // Set the default service's satisfaction stats:
+    setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex);
 
     // Now, let's clear previously created list of services.
     $('#container-service-selection .dropdown-menu').html('');
 
     // Finally, let's build the new list of services for the selected ministry.
     // Get each Service from each Service Group.
-    $(satisfactionJson[index]['ServiceGroups']).each(function(serviceGroupIndex) {
+    $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
         $(this['Services']).each(function(serviceIndex) {
             var serviceName = this['ServiceName_' + lang];
-
-            $('#container-service-selection .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + serviceGroupIndex + ', ' + serviceIndex + ', \'' + serviceName + '\')">' + serviceName + '</a></li>');
+            $('#container-service-selection .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceGroupIndex + ', ' + serviceIndex + ')">' + serviceName + '</a></li>');
         });
     });
+}
+
+function onMinistrySelection(ministryIndex, ministryName){
+    $('#container-ministry-selection .navbar-brand').html(ministryName);
+    onServiceSelection(ministryIndex, 0, 0);
 }
 
 function setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex){
@@ -42,26 +42,53 @@ function setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex){
     $('.row-unhappy .vote-count-label .vote-count').html(serviceJson['result_Bad']);
 
     // Timeliness vote counts
-    $('.row-meh .illustration-timeliness .vote-count').html(serviceJson['Answers'][0]['result_Middle']);
-    $('.row-unhappy .illustration-timeliness .vote-count').html(serviceJson['Answers'][0]['result_Bad']);
+    setVoteCounts(serviceJson, 0, '.illustration-timeliness', '.img-timeliness');
 
     // Payment vote counts
-    $('.row-meh .illustration-payment .vote-count').html(serviceJson['Answers'][1]['result_Middle']);
-    $('.row-unhappy .illustration-payment .vote-count').html(serviceJson['Answers'][1]['result_Bad']);
+    setVoteCounts(serviceJson, 1, '.illustration-payment', '.img-payment');
 
     // Behaviour of official vote counts
-    $('.row-meh .illustration-kindliness .vote-count').html(serviceJson['Answers'][2]['result_Middle']);
-    $('.row-unhappy .illustration-kindliness .vote-count').html(serviceJson['Answers'][2]['result_Bad']);
+    setVoteCounts(serviceJson, 2, '.illustration-kindliness', '.img-kindliness');
 
     // Online service vote count
-    $('.row-meh .illustration-online .vote-count').html(serviceJson['Answers'][3]['result_Middle']);
-    $('.row-unhappy .illustration-online .vote-count').html(serviceJson['Answers'][3]['result_Bad']);
+    setVoteCounts(serviceJson, 3, '.illustration-online', '.img-online');
 
     // Quality of service vote count
-    $('.row-meh .illustration-quality .vote-count').html(serviceJson['Answers'][4]['result_Middle']);
-    $('.row-unhappy .illustration-quality .vote-count').html(serviceJson['Answers'][4]['result_Bad']);
+    setVoteCounts(serviceJson, 3, '.illustration-quality', '.img-quality');
 }
 
+function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSelector){
+
+    // MEH ANSWER
+    // If the count is 0 then grey out the illustration in question.
+    if(serviceJson['Answers'][answerIndex]['result_Middle'] == 0 && $('.row-meh ' + imageSelector).attr('src').indexOf('/inactive/') < 0 ){
+        var mehImgUrl = $('.row-meh ' + imageSelector).attr('src').replace('/meh/', '/meh/inactive/');
+        $('.row-meh ' + imageSelector).attr('src', mehImgUrl);
+
+    }
+    // else if the count is greater than 0, enable the illustration in question
+    else if(serviceJson['Answers'][answerIndex]['result_Middle'] > 0 && $('.row-meh ' + imageSelector).attr('src').indexOf('/inactive/') > 0 ){
+        var mehImgUrl = $('.row-meh ' + imageSelector).attr('src').replace('/meh/inactive/', '/meh/');
+        $('.row-meh ' + imageSelector).attr('src', mehImgUrl);
+    }
+
+    // UNHAPPY ANSWER
+    // If the count is 0 then grey out the illustration in question.
+    if(serviceJson['Answers'][answerIndex]['result_Bad'] == 0 && $('.row-unhappy ' + imageSelector).attr('src').indexOf('/inactive/') < 0 ){
+        var unhappyImgUrl = $('.row-unhappy ' + imageSelector).attr('src').replace('/unhappy/', '/unhappy/inactive/');
+        $('.row-unhappy ' + imageSelector).attr('src', unhappyImgUrl);
+
+    }
+
+    // else if the count is greater than 0, enable the illustration in question
+    else if(serviceJson['Answers'][answerIndex]['result_Bad'] > 0 && $('.row-unhappy ' + imageSelector).attr('src').indexOf('/inactive/') > 0 ){
+        var unhappyImgUrl = $('.row-unhappy ' + imageSelector).attr('src').replace('/unhappy/inactive/', '/unhappy/');
+        $('.row-unhappy ' + imageSelector).attr('src', unhappyImgUrl);
+    }
+
+    $('.row-meh ' + illustrationSelector + ' .vote-count').html(serviceJson['Answers'][answerIndex]['result_Middle']);
+    $('.row-unhappy ' + illustrationSelector + ' .vote-count').html(serviceJson['Answers'][answerIndex]['result_Bad']);
+}
 
 
 $(function() {
@@ -83,9 +110,7 @@ $(function() {
         onMinistrySelection(0, data[0]['InstitutionName_' + lang]);
 
         $.each( data, function( key, val ) {
-            // Build the Ministry selection select box
-            //console.log(val);
-
+            // Build the Ministry selection widget
             var institutionName = val['InstitutionName_' + lang];
             $('#container-ministry-selection .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + key + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');
         });
