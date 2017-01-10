@@ -1,3 +1,7 @@
+hr{
+    margin-top: 5px;
+}
+
 .container-ranking{
     background-color: #F3F2F0;
 }
@@ -69,7 +73,7 @@
     color: #6D6E6E;
 }
 
-.institution-name{
+.institution-name, .vote-count{
     font-size: 22px;
     font-weight: bolder;
 }

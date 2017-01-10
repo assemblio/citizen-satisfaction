@@ -39,15 +39,21 @@ function resetRanking(rowType){
     $('.container-ranking').empty();
 
     $.each( institutions, function( key, val ) {
+
+        var institutionName = val["name_" + lang];
+        var answerCount = val[rowType + "Count"];
+
         $('.container-ranking').append(
             '<div class="row row-ranking row-' + rowType + '">' +
                 '<div class="col-md-6 institution-name">' +
-                    (key + 1) + '. ' + val["name_AL"] +
+                    (key + 1) + '. ' + institutionName +
+                    '<br>' +
+                    '<span class="vote-count">' + answerCount + '</span> <span class="vote-count-label">përgjigje</span>' +
                 '</div>' +
                 '<div class="col-md-6">' +
                     '<div id="progress-bar-' + key + '" class="progress-bar progress-bar-skin"><div></div></div>' +
                 '</div>' +
-            '</div>');
+            '</div><hr>');
 
         progressBar(val[rowType], $('#progress-bar-' + key));
     });
@@ -74,7 +80,10 @@ $(function() {
                 name_SR: val['InstitutionName_SR'],
                 happy: parseFloat(val['result_Good_Percentage'].replace('%', '')),
                 meh: parseFloat(val['result_Middle_Percentage'].replace('%', '')),
-                unhappy: parseFloat(val['result_Bad_Percentage'].replace('%', ''))
+                unhappy: parseFloat(val['result_Bad_Percentage'].replace('%', '')),
+                happyCount: val['result_Good'],
+                mehCount: val['result_Middle'],
+                unhappyCount: val['result_Bad']
             });
         });
 
