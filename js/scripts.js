@@ -92,13 +92,11 @@ function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSele
 
 
 $(function() {
-    /**
     $.getJSON( "http://csis.appdec.com/api/report/general", function( data ) {
         $.each( data, function( key, val ) {
             console.log(val);
         });
     });
-    **/
 
     /** get the citizen satisfaction result json **/
     $.getJSON( "../results.json", function( data ) {
