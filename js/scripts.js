@@ -13,6 +13,9 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
     // Now, let's clear previously created list of services.
     $('#container-service-selection .dropdown-menu').html('');
 
+    // Shake illustrations with highest counts
+    shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex);
+
     // Finally, let's build the new list of services for the selected ministry.
     // Get each Service from each Service Group.
     $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
@@ -54,7 +57,72 @@ function setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex){
     setVoteCounts(serviceJson, 3, '.illustration-online', '.img-online');
 
     // Quality of service vote count
-    setVoteCounts(serviceJson, 3, '.illustration-quality', '.img-quality');
+    setVoteCounts(serviceJson, 4, '.illustration-quality', '.img-quality');
+}
+
+function shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex){
+    $('.img-illustration ').removeClass('shake-chunk shake-constant');
+
+    var serviceJson = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex];
+
+    // Get all the mehs
+    var mehs = [{
+        indicator: 'timeliness',
+        count: serviceJson['Answers'][0]['result_Middle']
+    },{
+        indicator: 'payment',
+        count: serviceJson['Answers'][1]['result_Middle']
+    },{
+        indicator: 'kindliness',
+        count: serviceJson['Answers'][2]['result_Middle']
+    },{
+        indicator: 'online',
+        count: serviceJson['Answers'][3]['result_Middle']
+    },{
+        indicator: 'quality',
+        count: serviceJson['Answers'][4]['result_Middle']
+    }];
+
+    // Get all the unhappies
+    var unhappies = [{
+        indicator: 'timeliness',
+        count: serviceJson['Answers'][0]['result_Bad']
+    },{
+        indicator: 'payment',
+        count: serviceJson['Answers'][1]['result_Bad']
+    },{
+        indicator: 'kindliness',
+        count: serviceJson['Answers'][2]['result_Bad']
+    },{
+        indicator: 'online',
+        count: serviceJson['Answers'][3]['result_Bad']
+    },{
+        indicator: 'quality',
+        count: serviceJson['Answers'][4]['result_Bad']
+    }];
+
+    // Figure out which meh is the worst and shake it for emphasis.
+    mehs.sort(function(a, b){
+        return b.count - a.count;
+    });
+
+    // Only shake if there is only one greatest value.
+    // Don't shake if there are equal greatest values (i.e. tied first place).
+    if(mehs[0].count > mehs[1].count){
+        $('.row-meh .img-' + mehs[0].indicator).addClass('shake-chunk shake-constant shake-constant--hover');
+    }
+
+    // Figure out which unhappy is the worst and shake it for emphasis.
+    unhappies.sort(function(a, b){
+        return b.count - a.count;
+    });
+
+    // Only shake if there is only one greatest value.
+    // Don't shake if there are equal greatest values (i.e. tied first place).
+    if(unhappies[0].count > unhappies[1].count){
+        $('.row-unhappy .img-' + unhappies[0].indicator).addClass('shake-chunk shake-constant shake-constant--hover');
+    }
+
 }
 
 function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSelector){
