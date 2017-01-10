@@ -1,3 +1,6 @@
+var API_REQUEST_URL_GENERAL_RESULT = '../results.json';
+// 'http://csis.appdec.com/api/report/general'
+
 var lang = 'AL';
 var satisfactionJson = null;
 
@@ -5,13 +8,13 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
 
     // Set the service name display
     var serviceName = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang];
-    $('#container-service-selection .navbar-brand').html(serviceName);
+    $('#container-second-selection .navbar-brand').html(serviceName);
 
     // Set the default service's satisfaction stats:
     setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex);
 
     // Now, let's clear previously created list of services.
-    $('#container-service-selection .dropdown-menu').html('');
+    $('#container-second-selection .dropdown-menu').html('');
 
     // Shake illustrations with highest counts
     shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex);
@@ -21,13 +24,13 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
     $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
         $(this['Services']).each(function(serviceIndex) {
             var serviceName = this['ServiceName_' + lang];
-            $('#container-service-selection .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceGroupIndex + ', ' + serviceIndex + ')">' + serviceName + '</a></li>');
+            $('#container-second-selection .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceGroupIndex + ', ' + serviceIndex + ')">' + serviceName + '</a></li>');
         });
     });
 }
 
 function onMinistrySelection(ministryIndex, ministryName){
-    $('#container-ministry-selection .navbar-brand').html(ministryName);
+    $('#container-first-selection .navbar-brand').html(ministryName);
     onServiceSelection(ministryIndex, 0, 0);
 }
 
@@ -160,14 +163,8 @@ function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSele
 
 
 $(function() {
-    $.getJSON( "http://csis.appdec.com/api/report/general", function( data ) {
-        $.each( data, function( key, val ) {
-            console.log(val);
-        });
-    });
-
     /** get the citizen satisfaction result json **/
-    $.getJSON( "../results.json", function( data ) {
+    $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {
 
         // Store result in a global variable for future use.
         satisfactionJson = data;
@@ -178,7 +175,7 @@ $(function() {
         $.each( data, function( key, val ) {
             // Build the Ministry selection widget
             var institutionName = val['InstitutionName_' + lang];
-            $('#container-ministry-selection .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + key + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');
+            $('#container-first-selection .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + key + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');
         });
     });
 });

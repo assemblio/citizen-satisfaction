@@ -1,6 +1,12 @@
+var API_REQUEST_URL_GENERAL_RESULT = '../results.json';
+// 'http://csis.appdec.com/api/report/general'
+
 var lang = 'AL';
 var satisfactionJson = null;
 var institutions = [];
+var services = [];
+
+var currentRankingList = null;
 
 function sortByHappy(a, b){
     return b.happy - a.happy;
@@ -19,26 +25,41 @@ function progressBar(percent, $element) {
     $element.find('div').animate({ width: progressBarWidth }, 3000).html(percent + "%&nbsp;");
 }
 
+function displayInstitutionRanking(){
+    $('#container-first-selection .navbar-brand').html('Institucione');
+    currentRankingList = institutions;
+    displayHappyRanking();
+}
+
+function displayServiceRanking(){
+    $('#container-first-selection .navbar-brand').html('Shërbime');
+    currentRankingList = services;
+    displayHappyRanking();
+}
+
 function displayHappyRanking(){
-    institutions.sort(sortByHappy);
-    resetRanking('happy');
+    $('#container-second-selection .navbar-brand').html('Të kënaqur');
+    currentRankingList.sort(sortByHappy);
+    resetRanking('happy', currentRankingList);
 }
 
 function displayMehRanking(){
-    institutions.sort(sortByMeh);
-    resetRanking('meh');
+    $('#container-second-selection .navbar-brand').html('Të pakënaqur');
+    currentRankingList.sort(sortByMeh);
+    resetRanking('meh', currentRankingList);
 }
 
 function displayUnhappyRanking(){
-    institutions.sort(sortByUnhappy);
-    resetRanking('unhappy');
+    currentRankingList.sort(sortByUnhappy);
+    $('#container-second-selection .navbar-brand').html('Mesatarisht të kënaqur');
+    resetRanking('unhappy', currentRankingList);
 }
 
-function resetRanking(rowType){
+function resetRanking(rowType, currentRankingList){
     // Clear ranking
     $('.container-ranking').empty();
 
-    $.each( institutions, function( key, val ) {
+    $.each(currentRankingList, function( key, val ) {
 
         var institutionName = val["name_" + lang];
         var answerCount = val[rowType + "Count"];
@@ -60,20 +81,14 @@ function resetRanking(rowType){
 }
 
 $(function() {
-    /**
-    $.getJSON( "http://csis.appdec.com/api/report/general", function( data ) {
-        $.each( data, function( key, val ) {
-            console.log(val);
-        });
-    });**/
 
     /** get the citizen satisfaction result json **/
-    $.getJSON( "../results.json", function( data ) {
+    $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {
 
         // Store result in a global variable for future use.
         satisfactionJson = data;
 
-        $.each( data, function( key, val ) {
+        $.each( data, function(key, val) {
             institutions.push({
                 name_AL: val['InstitutionName_AL'],
                 name_EN: val['InstitutionName_EN'],
@@ -87,8 +102,26 @@ $(function() {
             });
         });
 
-        displayHappyRanking();
+        // By default, display institution ranking
+        displayInstitutionRanking();
 
-        // TODO: similar thing with services...
+        // Do similar thing with services...
+        $.each( data, function( ministryIndex) {
+            $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function() {
+                $(this['Services']).each(function(key, val) {
+                    services.push({
+                        name_AL: val['ServiceName_AL'],
+                        name_EN: val['ServiceName_EN'],
+                        name_SR: val['ServiceName_SR'],
+                        happy: parseFloat(val['result_Good_Percentage'].replace('%', '')),
+                        meh: parseFloat(val['result_Middle_Percentage'].replace('%', '')),
+                        unhappy: parseFloat(val['result_Bad_Percentage'].replace('%', '')),
+                        happyCount: val['result_Good'],
+                        mehCount: val['result_Middle'],
+                        unhappyCount: val['result_Bad']
+                    });
+                });
+            });
+        });
     });
 });
