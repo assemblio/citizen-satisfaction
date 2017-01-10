@@ -88,5 +88,7 @@ $(function() {
         });
 
         displayHappyRanking();
+
+        // TODO: similar thing with services...
     });
 });

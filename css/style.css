@@ -8,6 +8,12 @@
     background-color: #F3F2F0;
 }
 
+.label-satisfaction-level{
+    padding-top: 15px;
+    color: #4A494A;
+    font-weight: bold;
+}
+
 .label-indicator, .vote-count-label{
     color: #AAAAA9;
     font-size: 13px;
@@ -39,7 +45,9 @@
 }
 
 .row-meh, .row-unhappy{
-    padding-top: 50px;
+    /*
+    padding-top: 10px;
+    */
 }
 
 .row-happy .vote-count, .row-happy .percentage-count{
