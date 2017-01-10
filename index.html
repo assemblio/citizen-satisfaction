@@ -1,79 +1,19 @@
 <html>
     <head>
-        <!-- Latest compiled and minified CSS -->
+        <!-- Bootstrap. Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- Bootstrap overwrites -->
+        <link rel="stylesheet" href="css/boostrap-overwites.css">
+
+        <link rel="stylesheet" href="css/style.css">
 
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
-        <script>
-            $(function() {
-                $.getJSON( "http://csis.appdec.com/api/report/general", function( data ) {
-                    $.each( data, function( key, val ) {
-                        console.log(val);
-                    });
-                });
-            });
-        </script>
-        <style>
-            .illustration-container{
-                padding: 0px;
-                width: 130px;
-            }
 
-            .viz-container{
-                background-color: #F3F2F0;
-            }
-
-            .label-indicator, .vote-count-label{
-                color: #AAAAA9;
-                font-size: 13px;
-            }
-
-            .label-indicator{
-                text-align: center;
-            }
-
-            .vote-count-container{
-                margin-top: 18px;
-                min-width: 130px;
-                max-width: 130px;
-                padding-left: 10px;
-                padding-top: 10px;
-            }
-
-            .vote-count, .percentage-count{
-                font-size: 30px;
-                font-weight: bolder;
-            }
-
-            .percentage-count{
-                margin-bottom: 0px;
-            }
-
-            .row-meh .vote-count, .row-unhappy .vote-count{
-                text-align: center;
-            }
-
-            .row-meh, .row-unhappy{
-                padding-top: 50px;
-            }
-
-            .row-happy .vote-count, .row-happy .percentage-count{
-                color: #30C67B;
-            }
-
-            .row-meh .vote-count, .row-meh .percentage-count{
-                color: #D2B028;
-            }
-
-            .row-unhappy .vote-count, .row-unhappy .percentage-count{
-                color: #C6371D;
-            }
-        </style>
 
         <style>
             #percentage-bar-container {
@@ -134,10 +74,142 @@
                 to { width: 100% }
             }
         </style>
+
+        <script>
+            var lang = 'AL';
+            var satisfactionJson = null;
+
+            function onMinistrySelection(index, ministryName){
+                $('#container-ministry-selection .navbar-brand').html(ministryName);
+
+                // When selecting a ministry, we want to update the list of service to those
+                // specific to that ministry.
+
+                // First, let's select a default service.
+                var defaultServiceName = satisfactionJson[index]['ServiceGroups'][0]['Services'][0]['ServiceName_' + lang];
+                $('#container-service-selection .navbar-brand').html(defaultServiceName);
+
+                // Don't forget to set the default service's satisfaction stats:
+                setSatisfactionStats(index, 0, 0);
+
+                // Now, let's clear previously created list of services.
+                $('#container-service-selection .dropdown-menu').html('');
+
+                // Finally, let's build the new list of services for the selected ministry.
+                // Get each Service from each Service Group.
+                $(satisfactionJson[index]['ServiceGroups']).each(function(serviceGroupIndex) {
+                    $(this['Services']).each(function(serviceIndex) {
+                        var serviceName = this['ServiceName_' + lang];
+
+                        $('#container-service-selection .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + serviceGroupIndex + ', ' + serviceIndex + ', \'' + serviceName + '\')">' + serviceName + '</a></li>');
+                    });
+                });
+            }
+
+            function setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex){
+                var serviceJson = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex];
+
+                // Percentages of votes for each level of satisfaction
+                $('.row-happy .percentage-count').html(serviceJson['result_Good_Percentage'].replace('.00%', '%'));
+                $('.row-meh .percentage-count').html(serviceJson['result_Middle_Percentage'].replace('.00%', '%'));
+                $('.row-unhappy .percentage-count').html(serviceJson['result_Bad_Percentage'].replace('.00%', '%'));
+
+                // Total vote counts for each level of satisfaction
+                $('.row-happy .vote-count-label .vote-count').html(serviceJson['result_Good']);
+                $('.row-meh .vote-count-label .vote-count').html(serviceJson['result_Middle']);
+                $('.row-unhappy .vote-count-label .vote-count').html(serviceJson['result_Bad']);
+
+                // Timeliness vote counts
+                $('.row-meh .illustration-timeliness .vote-count').html(serviceJson['Answers'][0]['result_Middle']);
+                $('.row-unhappy .illustration-timeliness .vote-count').html(serviceJson['Answers'][0]['result_Bad']);
+
+                // Payment vote counts
+                $('.row-meh .illustration-payment .vote-count').html(serviceJson['Answers'][1]['result_Middle']);
+                $('.row-unhappy .illustration-payment.vote-count').html(serviceJson['Answers'][1]['result_Bad']);
+
+                // Behaviour of official vote counts
+                $('.row-meh .illustration-kindliness .vote-count').html(serviceJson['Answers'][2]['result_Middle']);
+                $('.row-unhappy .illustration-kindliness .vote-count').html(serviceJson['Answers'][2]['result_Bad']);
+
+                // Online service vote count
+                $('.row-meh .illustration-online .vote-count').html(serviceJson['Answers'][3]['result_Middle']);
+                $('.row-unhappy .illustration-online .vote-count').html(serviceJson['Answers'][3]['result_Bad']);
+
+                // Quality of service vote count
+                $('.row-meh .illustration-quality .vote-count').html(serviceJson['Answers'][4]['result_Middle']);
+                $('.row-unhappy .illustration-quality .vote-count').html(serviceJson['Answers'][4]['result_Bad']);
+            }
+
+
+
+            $(function() {
+                /**
+                $.getJSON( "http://csis.appdec.com/api/report/general", function( data ) {
+                    $.each( data, function( key, val ) {
+                        console.log(val);
+                    });
+                });
+                **/
+
+                /** get the citizen satisfaction result json **/
+                $.getJSON( "results.json", function( data ) {
+
+                    // Store result in a global variable for future use.
+                    satisfactionJson = data;
+
+                    // Init first ministry
+                    onMinistrySelection(0, data[0]['InstitutionName_' + lang]);
+
+                    $.each( data, function( key, val ) {
+                        // Build the Ministry selection select box
+                        //console.log(val);
+
+                        var institutionName = val['InstitutionName_' + lang];
+                        $('#container-ministry-selection .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + key + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');
+                    });
+                });
+            });
+
+
+        </script>
+
     </head>
     <body>
         <div id="app">
-            <div class="container-fluid viz-container">
+            <div id="container-ministry-selection">
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#"></a>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                                <ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div id="container-service-selection">
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#"></a>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                                <ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+
+            <div class="container-fluid container-visualizer">
                 <!-- First Row - Happy -->
                 <div class="row row-happy">
                     <div class="col-xs-2 vote-count-container">
@@ -147,8 +219,8 @@
                             </div>
                         </div-->
                         <div>
-                            <p class="percentage-count">80%</p>
-                            <p class="vote-count-label"><span class="vote-count">14</span> përgjigje</p>
+                            <p class="percentage-count"></p>
+                            <p class="vote-count-label"><span class="vote-count"></span> p&euml;rgjigje</p>
                         </div>
                     </div>
                     <div class="col-xs-2 illustration-container">
@@ -178,34 +250,34 @@
                 <div class="row row-meh">
                     <div class="col-xs-2 vote-count-container">
                         <div>
-                            <p class="percentage-count">14%</p>
-                            <p class="vote-count-label"><span class="vote-count">5</span> përgjigje</p>
+                            <p class="percentage-count"></p>
+                            <p class="vote-count-label"><span class="vote-count"></span> p&euml;rgjigje</p>
                         </div>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-quality">
                         <img src="img/meh/s2_m1.gif"/>
                         <p class="label-indicator">cil&euml;sin&euml; e<br>sh&euml;rbimit</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-kindliness">
                         <img src="img/meh/s2_m2.gif"/>
                         <p class="label-indicator">kualitetin e<br>sh&euml;rbimit</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-timeliness">
                         <img src="img/meh/s2_m3.gif"/>
                         <p class="label-indicator">koh&euml;zgjatjen e<br>sh&euml;rbimit</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-payment">
                         <img src="img/meh/s2_m4.gif"/>
                         <p class="label-indicator">pages&euml;n e<br>sh&euml;rbimit</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-online">
                         <img src="img/meh/s2_m5.gif"/>
                         <p class="label-indicator">meq&euml; sh&euml;rbimi nuk<br>&euml;sht&euml; online</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
                 </div>
                 <!-- End Second Row - Meh -->
@@ -215,34 +287,34 @@
                 <div class="row row-unhappy">
                     <div class="col-xs-2 vote-count-container">
                         <div>
-                            <p class="percentage-count">14%</p>
-                            <p class="vote-count-label"><span class="vote-count">5</span> përgjigje</p>
+                            <p class="percentage-count"></p>
+                            <p class="vote-count-label"><span class="vote-count"></span> p&euml;rgjigje</p>
                         </div>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-quality">
                         <img src="img/unhappy/s3_m1.gif"/>
                         <p class="label-indicator">cil&euml;sin&euml; e<br>sh&euml;rbimit</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-kindliness">
                         <img src="img/unhappy/s3_m2.gif"/>
                         <p class="label-indicator">kualitetin e<br>sh&euml;rbimit</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-timeliness">
                         <img src="img/unhappy/s3_m3.gif"/>
                         <p class="label-indicator">koh&euml;zgjatjen e<br>sh&euml;rbimit</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-payment">
                         <img src="img/unhappy/s3_m4.gif"/>
                         <p class="label-indicator">pages&euml;n e<br>sh&euml;rbimit</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
-                    <div class="col-xs-2 illustration-container">
+                    <div class="col-xs-2 illustration-container illustration-online">
                         <img src="img/unhappy/s3_m5.gif"/>
                         <p class="label-indicator">meq&euml; sh&euml;rbimi nuk<br>&euml;sht&euml; online</p>
-                        <p class="vote-count">5</p>
+                        <p class="vote-count"></p>
                     </div>
                 </div>
                 <!-- End Third Row - Unhappy -->

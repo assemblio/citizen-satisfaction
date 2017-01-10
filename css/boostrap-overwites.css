@@ -1,0 +1,51 @@
+.navbar{
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border-width: 0px;
+}
+
+#container-ministry-selection .navbar-inverse{
+    /**height: 80px;**/
+    background-color: #243E63;
+    color: white;
+}
+
+#container-service-selection .navbar-inverse{
+    /**height: 80px;**/
+    background-color: white;
+    color: #6D6E6E;
+}
+
+#container-ministry-selection .navbar-inverse .navbar-brand {
+    color: white;
+}
+
+#container-service-selection .navbar-inverse .navbar-brand {
+    color: #6D6E6E;
+}
+
+#container-ministry-selection .navbar-inverse .navbar-nav>li>a {
+    color: white;
+}
+
+#container-service-selection .navbar-inverse .navbar-nav>li>a {
+    color: #6D6E6E;
+}
+
+@media (max-width: 767px){
+    #container-ministry-selection .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+        color: white;
+    }
+
+    #container-ministry-selection .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover {
+        color: gray;
+    }
+
+    #container-service-selection .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+        color: #6D6E6E;
+    }
+
+    #container-service-selection .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover {
+        color: gray;
+    }
+}
