@@ -1,7 +1,6 @@
 var API_REQUEST_URL_GENERAL_RESULT = '../results.json';
 // 'http://csis.appdec.com/api/report/general'
 
-var lang = 'AL';
 var satisfactionJson = null;
 
 function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){

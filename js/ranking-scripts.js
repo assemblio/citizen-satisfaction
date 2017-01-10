@@ -1,7 +1,6 @@
 var API_REQUEST_URL_GENERAL_RESULT = '../results.json';
 // 'http://csis.appdec.com/api/report/general'
 
-var lang = 'AL';
 var satisfactionJson = null;
 var institutions = [];
 var services = [];
@@ -26,32 +25,32 @@ function progressBar(percent, $element) {
 }
 
 function displayInstitutionRanking(){
-    $('#container-first-selection .navbar-brand').html('Institucione');
+    $('#container-first-selection .navbar-brand').html(i18n.institutions[lang]);
     currentRankingList = institutions;
     displayHappyRanking();
 }
 
 function displayServiceRanking(){
-    $('#container-first-selection .navbar-brand').html('Shërbime');
+    $('#container-first-selection .navbar-brand').html(i18n.services[lang]);
     currentRankingList = services;
     displayHappyRanking();
 }
 
 function displayHappyRanking(){
-    $('#container-second-selection .navbar-brand').html('Të kënaqur');
+    $('#container-second-selection .navbar-brand').html(i18n.satisfied[lang]);
     currentRankingList.sort(sortByHappy);
     resetRanking('happy', currentRankingList);
 }
 
 function displayMehRanking(){
-    $('#container-second-selection .navbar-brand').html('Të pakënaqur');
+    $('#container-second-selection .navbar-brand').html(i18n.moderatelySatisfied[lang]);
     currentRankingList.sort(sortByMeh);
     resetRanking('meh', currentRankingList);
 }
 
 function displayUnhappyRanking(){
     currentRankingList.sort(sortByUnhappy);
-    $('#container-second-selection .navbar-brand').html('Mesatarisht të kënaqur');
+    $('#container-second-selection .navbar-brand').html(i18n.dissatisfied[lang]);
     resetRanking('unhappy', currentRankingList);
 }
 
@@ -69,7 +68,7 @@ function resetRanking(rowType, currentRankingList){
                 '<div class="col-md-6 institution-name">' +
                     (key + 1) + '. ' + institutionName +
                     '<br>' +
-                    '<span class="vote-count">' + answerCount + '</span> <span class="vote-count-label">përgjigje</span>' +
+                    '<span class="vote-count">' + answerCount + '</span> <span class="vote-count-label">' + i18n.answers[lang] + '</span>' +
                 '</div>' +
                 '<div class="col-md-6">' +
                     '<div id="progress-bar-' + key + '" class="progress-bar progress-bar-skin"><div></div></div>' +

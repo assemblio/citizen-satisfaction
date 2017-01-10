@@ -17,7 +17,8 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        <!-- Latest compiled JavaScript -->
+        <!-- App scripts -->
+        <script src="../js/i18n.js"></script>
         <script src="../js/ranking-scripts.js"></script>
     </head>
 
@@ -29,15 +30,18 @@
                 <nav class="navbar navbar-inverse">
                     <div class="container-fluid">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="#">Institucione</a>
+                            <a class="navbar-brand" href="#"><script>document.write(i18n.institutions[lang])</script></a>
                         </div>
                         <ul class="nav navbar-nav">
                             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:displayInstitutionRanking()">Institucione</a></li>
-                                    <li><a href="javascript:displayServiceRanking()">Shërbime</a></li>
+                                    <li><a href="javascript:displayInstitutionRanking()"><script>document.write(i18n.institutions[lang])</script></a></li>
+                                    <li><a href="javascript:displayServiceRanking()"><script>document.write(i18n.services[lang])</script></a></li>
                                 </ul>
                             </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/"><script>document.write(i18n.visualizer[lang])</script></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -48,14 +52,14 @@
                 <nav class="navbar navbar-inverse">
                     <div class="container-fluid">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="#">Të kënaqur</a>
+                            <a class="navbar-brand" href="#"><script>document.write(i18n.satisfied[lang])</script></a>
                         </div>
                         <ul class="nav navbar-nav">
                             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:displayHappyRanking()">Të kënaqur</a></li>
-                                    <li><a href="javascript:displayMehRanking()">Të pakënaqur</a></li>
-                                    <li><a href="javascript:displayUnhappyRanking()">Mesatarisht të kënaqur</a></li>
+                                    <li><a href="javascript:displayHappyRanking()"><script>document.write(i18n.satisfied[lang])</script></a></li>
+                                    <li><a href="javascript:displayMehRanking()"><script>document.write(i18n.moderatelySatisfied[lang])</script></a></li>
+                                    <li><a href="javascript:displayUnhappyRanking()"><script>document.write(i18n.dissatisfied[lang])</script></a></li>
                                 </ul>
                             </li>
                         </ul>
