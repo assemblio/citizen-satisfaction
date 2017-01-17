@@ -6,13 +6,13 @@
 
 #container-first-selection .navbar-inverse{
     /**height: 80px;**/
-    background-color: #243E63;
+    background-color: #3b5a84;
     color: white;
 }
 
 #container-second-selection .navbar-inverse{
     /**height: 80px;**/
-    background-color: white;
+    background-color: #4d6789;
     color: #6D6E6E;
 }
 
@@ -21,7 +21,7 @@
 }
 
 #container-second-selection .navbar-inverse .navbar-brand {
-    color: #6D6E6E;
+    color: white;
 }
 
 #container-first-selection .navbar-inverse .navbar-nav>li>a {
@@ -29,7 +29,7 @@
 }
 
 #container-second-selection .navbar-inverse .navbar-nav>li>a {
-    color: #6D6E6E;
+    color: white;
 }
 
 @media (max-width: 767px){

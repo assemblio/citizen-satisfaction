@@ -3,7 +3,7 @@ hr{
 }
 
 .container-ranking{
-    background-color: #F3F2F0;
+    background-color: #223757;
 }
 .row-ranking{
     padding-top: 10px;
@@ -62,15 +62,15 @@ hr{
 }
 
 .row-happy .institution-name{
-    color: #6D6E6E;
+    color: white;
 }
 
 .row-meh .institution-name{
-    color: #6D6E6E;
+    color: white;
 }
 
 .row-unhappy .institution-name{
-    color: #6D6E6E;
+    color: white;
 }
 
 .institution-name, .vote-count{
