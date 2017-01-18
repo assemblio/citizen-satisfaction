@@ -6,14 +6,16 @@
 
 #container-first-selection .navbar-inverse{
     /**height: 80px;**/
-    background-color: #3b5a84;
+    background-color: #364967;
     color: white;
+    border-bottom: thin solid #5C6B84;
 }
 
 #container-second-selection .navbar-inverse{
     /**height: 80px;**/
-    background-color: #4d6789;
+    background-color: #364967;
     color: #6D6E6E;
+    border-bottom: thin solid #5C6B84;
 }
 
 #container-first-selection .navbar-inverse .navbar-brand {
