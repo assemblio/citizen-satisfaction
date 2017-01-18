@@ -1,4 +1,15 @@
-var lang = 'AL';
+var lang = null;
+
+// Get language we should display in
+var urlLangParam = decodeURIComponent((new RegExp('[?|&]lang=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+
+if(urlLangParam === 'sr'){
+    lang = 'SR';
+}else if(urlLangParam === 'en'){
+    lang = 'EN'
+}else{
+    lang = 'AL';
+}
 
 var i18n = {
     title:{
@@ -74,3 +85,15 @@ var i18n = {
         EN: 'Visualizer'
     }
 };
+
+// Display selected language
+
+$(function() {
+    if(urlLangParam === 'sr'){
+        $('.selected-language').html('Srpski');
+    }else if(urlLangParam === 'en'){
+        $('.selected-language').html('English');
+    }else{
+        $('.selected-language').html('Shqip');
+    }
+});

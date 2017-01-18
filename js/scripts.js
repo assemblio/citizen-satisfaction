@@ -162,7 +162,11 @@ function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSele
 
 
 $(function() {
-    /** get the citizen satisfaction result json **/
+
+    // Set link to visualizer with selected language
+    $('#lnk-ranking').attr('href', '/ranking?lang=' + urlLangParam);
+    
+    // get the citizen satisfaction result json
     $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {
 
         // Store result in a global variable for future use.
