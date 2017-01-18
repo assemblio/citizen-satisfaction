@@ -25,32 +25,32 @@ function progressBar(percent, $element) {
 }
 
 function displayInstitutionRanking(){
-    $('#container-first-selection .navbar-brand').html(i18n.institutions[lang]);
+    $('#dropdown-first .selected-value').html(i18n.institutions[lang]);
     currentRankingList = institutions;
     displayHappyRanking();
 }
 
 function displayServiceRanking(){
-    $('#container-first-selection .navbar-brand').html(i18n.services[lang]);
+    $('#dropdown-first .selected-value').html(i18n.services[lang]);
     currentRankingList = services;
     displayHappyRanking();
 }
 
 function displayHappyRanking(){
-    $('#container-second-selection .navbar-brand').html(i18n.satisfied[lang]);
+    $('#dropdown-second .selected-value').html(i18n.satisfied[lang]);
     currentRankingList.sort(sortByHappy);
     resetRanking('happy', currentRankingList);
 }
 
 function displayMehRanking(){
-    $('#container-second-selection .navbar-brand').html(i18n.moderatelySatisfied[lang]);
+    $('#dropdown-second .selected-value').html(i18n.moderatelySatisfied[lang]);
     currentRankingList.sort(sortByMeh);
     resetRanking('meh', currentRankingList);
 }
 
 function displayUnhappyRanking(){
     currentRankingList.sort(sortByUnhappy);
-    $('#container-second-selection .navbar-brand').html(i18n.dissatisfied[lang]);
+    $('#dropdown-second .selected-value').html(i18n.dissatisfied[lang]);
     resetRanking('unhappy', currentRankingList);
 }
 

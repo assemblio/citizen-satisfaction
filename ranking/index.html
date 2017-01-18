@@ -25,46 +25,66 @@
     <body>
         <div id="app">
 
-            <!-- Navbar to select institution or services -->
-            <div id="container-first-selection">
+            <div id="container-navbar">
                 <nav class="navbar navbar-inverse">
                     <div class="container-fluid">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="#"><script>document.write(i18n.institutions[lang])</script></a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#"><script>document.write(i18n.title[lang])</script></a>
                         </div>
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:displayInstitutionRanking()"><script>document.write(i18n.institutions[lang])</script></a></li>
-                                    <li><a href="javascript:displayServiceRanking()"><script>document.write(i18n.services[lang])</script></a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/"><script>document.write(i18n.visualizer[lang])</script></a></li>
-                        </ul>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="/"><script>document.write(i18n.visualizer[lang])</script></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shqipe <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">English</a></li>
+                                        <li><a href="#">Shqip</a></li>
+                                        <li><a href="#">Srpski</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </nav>
             </div>
 
-            <!-- Navbar to selection satisfaction level -->
-            <div id="container-second-selection">
-                <nav class="navbar navbar-inverse">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="#"><script>document.write(i18n.satisfied[lang])</script></a>
+            <div class="container-fluid container-selection-dropdowns">
+                <div class="row row-dropdown">
+                    <div class="col-xs-12">
+                        <div class="dropdown" id="dropdown-first">
+                            <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdown-menu-first" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="selected-value"><script>document.write(i18n.institutions[lang])</script></span>
+                                &nbsp;<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown-menu-first">
+                                <li><a href="javascript:displayInstitutionRanking()"><script>document.write(i18n.institutions[lang])</script></a></li>
+                                <li><a href="javascript:displayServiceRanking()"><script>document.write(i18n.services[lang])</script></a></li>
+                            </ul>
                         </div>
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:displayHappyRanking()"><script>document.write(i18n.satisfied[lang])</script></a></li>
-                                    <li><a href="javascript:displayMehRanking()"><script>document.write(i18n.moderatelySatisfied[lang])</script></a></li>
-                                    <li><a href="javascript:displayUnhappyRanking()"><script>document.write(i18n.dissatisfied[lang])</script></a></li>
-                                </ul>
-                            </li>
-                        </ul>
                     </div>
-                </nav>
+                </div>
+
+                <div class="row row-dropdown">
+                    <div class="col-xs-12">
+                        <div class="dropdown" id="dropdown-second">
+                            <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdown-menu-second" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="selected-value"><script>document.write(i18n.satisfied[lang])</script></span>
+                                &nbsp;<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown-menu-second">
+                                <li><a href="javascript:displayHappyRanking()"><script>document.write(i18n.satisfied[lang])</script></a></li>
+                                <li><a href="javascript:displayMehRanking()"><script>document.write(i18n.moderatelySatisfied[lang])</script></a></li>
+                                <li><a href="javascript:displayUnhappyRanking()"><script>document.write(i18n.dissatisfied[lang])</script></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

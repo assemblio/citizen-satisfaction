@@ -7,13 +7,13 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
 
     // Set the service name display
     var serviceName = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang];
-    $('#container-second-selection .navbar-brand').html(serviceName);
+    $('#dropdown-second .selected-value').html(serviceName);
 
     // Set the default service's satisfaction stats:
     setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex);
 
     // Now, let's clear previously created list of services.
-    $('#container-second-selection .dropdown-menu').html('');
+    $('#dropdown-second .dropdown-menu').html('');
 
     // Shake illustrations with highest counts
     shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex);
@@ -23,14 +23,14 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
     $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
         $(this['Services']).each(function(serviceIndex) {
             var serviceName = this['ServiceName_' + lang];
-            $('#container-second-selection .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceGroupIndex + ', ' + serviceIndex + ')">' + serviceName + '</a></li>');
+            $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceGroupIndex + ', ' + serviceIndex + ')">' + serviceName + '</a></li>');
         });
     });
 }
 
-function onMinistrySelection(ministryIndex, ministryName){
-    $('#container-first-selection .navbar-brand').html(ministryName);
-    onServiceSelection(ministryIndex, 0, 0);
+function onMinistrySelection(institutionIndex, institutionName){
+    $('#dropdown-first .selected-value').html(institutionName);
+    onServiceSelection(institutionIndex, 0, 0);
 }
 
 function setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex){
@@ -168,13 +168,15 @@ $(function() {
         // Store result in a global variable for future use.
         satisfactionJson = data;
 
-        // Init first ministry
-        onMinistrySelection(0, data[0]['InstitutionName_' + lang]);
+        // Init first institution
+        var firstInstitution = data[0]['InstitutionName_' + lang];
+        onMinistrySelection(0, firstInstitution);
 
         $.each( data, function( key, val ) {
             // Build the Ministry selection widget
             var institutionName = val['InstitutionName_' + lang];
-            $('#container-first-selection .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + key + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');
+            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + key + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');
         });
+
     });
 });

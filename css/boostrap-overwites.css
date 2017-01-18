@@ -3,35 +3,29 @@
     border-radius: 0px;
     border-width: 0px;
 }
-
-#container-first-selection .navbar-inverse{
-    /**height: 80px;**/
-    background-color: #364967;
+#container-navbar .navbar-inverse{
+    background-color: #4A5B76;
     color: white;
     border-bottom: thin solid #5C6B84;
 }
 
-#container-second-selection .navbar-inverse{
-    /**height: 80px;**/
+.container-selection-dropdowns{
     background-color: #364967;
-    color: #6D6E6E;
-    border-bottom: thin solid #5C6B84;
 }
 
-#container-first-selection .navbar-inverse .navbar-brand {
-    color: white;
+.row-dropdown{
+   border-bottom: thin solid #5C6B84;
 }
 
-#container-second-selection .navbar-inverse .navbar-brand {
+.btn-dropdown{
     color: white;
+    background-color: #364967;
+    border-color: #364967;
 }
 
-#container-first-selection .navbar-inverse .navbar-nav>li>a {
-    color: white;
-}
 
-#container-second-selection .navbar-inverse .navbar-nav>li>a {
-    color: white;
+.btn-dropdown.focus, .btn-dropdown:focus, .btn-dropdown:hover {
+    color: #AAAAA9;
 }
 
 @media (max-width: 767px){

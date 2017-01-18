@@ -1,6 +1,11 @@
 var lang = 'AL';
 
 var i18n = {
+    title:{
+        AL: '',
+        SR: '',
+        EN: ''
+    },
     institutions:{
         AL: 'Institucione',
         SR: 'NOT TRANSLATED',
