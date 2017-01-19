@@ -64,6 +64,7 @@ function setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex){
 
 function shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex){
     $('.img-illustration ').removeClass('shake-chunk shake-constant');
+    $('.warn').removeAttr('src');
 
     var serviceJson = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex];
 
@@ -111,7 +112,8 @@ function shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex){
     // Only shake if there is only one greatest value.
     // Don't shake if there are equal greatest values (i.e. tied first place).
     if(mehs[0].count > mehs[1].count){
-        $('.row-meh .img-' + mehs[0].indicator).addClass('shake-chunk shake-constant shake-constant--hover');
+        $('.row-meh .warn-' + mehs[0].indicator).addClass('shake-chunk shake-constant shake-constant--hover');
+        $('.row-meh .warn-' + mehs[0].indicator).attr('src','img/meh/warning.png');
     }
 
     // Figure out which unhappy is the worst and shake it for emphasis.
@@ -122,7 +124,8 @@ function shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex){
     // Only shake if there is only one greatest value.
     // Don't shake if there are equal greatest values (i.e. tied first place).
     if(unhappies[0].count > unhappies[1].count){
-        $('.row-unhappy .img-' + unhappies[0].indicator).addClass('shake-chunk shake-constant shake-constant--hover');
+        $('.row-unhappy .warn-' + unhappies[0].indicator).addClass('shake-chunk shake-constant shake-constant--hover');
+        $('.row-unhappy .warn-' + unhappies[0].indicator).attr('src','img/unhappy/warning.png');
     }
 
 }
@@ -165,7 +168,7 @@ $(function() {
 
     // Set link to visualizer with selected language
     $('#lnk-ranking').attr('href', document.location.pathname + 'ranking?lang=' + urlLangParam);
-    
+
     // get the citizen satisfaction result json
     $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {
 

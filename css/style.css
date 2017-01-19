@@ -42,9 +42,17 @@
     }
 }
 
+.warn{
+  float: right;
+  top: 20px;
+  position: absolute;
+  z-index: 10000;
+  left: 100px;
+}
+
 .selected-value{
-  font-size: 15px;
-  font-family: ReneS;
+    font-size: 15px;
+    font-family: ReneS;
 }
 
 .illustration-container{
