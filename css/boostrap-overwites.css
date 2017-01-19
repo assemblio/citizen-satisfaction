@@ -38,8 +38,14 @@
     color: white;
     background-color: #364967;
     border-color: #364967;
+    width: 100%;
+    text-align: left;
+    white-space: normal;
 }
-
+.dropdown-menu>li>a {
+    word-wrap: break-word;
+    white-space: normal;
+}
 
 .btn-dropdown.focus, .btn-dropdown:focus, .btn-dropdown:hover {
     color: #AAAAA9;
