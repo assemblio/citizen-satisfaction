@@ -1,32 +1,50 @@
+@font-face {
+    font-family: "ReneL";
+    src: url('../fonts/Rene.Bieder_Campton.Black.otf');
+}
+@font-face {
+    font-family: "ReneM";
+    src: url('../fonts/Rene.Bieder_Campton.Bold.otf');
+}
+@font-face {
+    font-family: 'ReneS';
+    src: url('../fonts/Rene.Bieder_Campton.Light.otf');
+}
+
 
 @media only screen and (min-width : 1200px){
-  .rows-container{
-    width: 50%;
-    margin: 0 auto;
-  }
-  .col-xs-2 {
-    width: 16.66666667% !important;
-  }
+    .rows-container{
+        width: 50%;
+        margin: 0 auto;
+    }
+    .col-xs-2 {
+        width: 16.66666667% !important;
+    }
 }
 
 @media only screen and (min-width : 790px){
-  .rows-container{
-    width: 50%;
-    margin: 0 auto;
-    min-width: 780px;
-  }
-  .vote-count-container{
-      min-width: 100px;
-  }
-  .illustration-container{
-      max-width: 130px;
-  }
+    .rows-container{
+        width: 50%;
+        margin: 0 auto;
+        min-width: 780px;
+    }
+    .vote-count-container{
+        min-width: 100px;
+    }
+    .illustration-container{
+        max-width: 130px;
+    }
 }
 
 @media only screen and (max-width : 790px){
-  .vote-count-container{
-      min-width: 130px;
-  }
+    .vote-count-container{
+        min-width: 130px;
+    }
+}
+
+.selected-value{
+  font-size: 15px;
+  font-family: ReneS;
 }
 
 .illustration-container{
@@ -47,6 +65,7 @@
 .label-indicator, .vote-count-label{
     color: #AAAAA9;
     font-size: 12px;
+    font-family: ReneS;
 }
 
 .label-indicator{
@@ -63,6 +82,7 @@
 .vote-count, .percentage-count{
     font-size: 25px;
     font-weight: bolder;
+    font-family: ReneL;
 }
 
 .percentage-count{

@@ -13,7 +13,7 @@ if(urlLangParam === 'sr'){
 
 var i18n = {
     title:{
-        AL: '',
+        AL: 'Kosovo',
         SR: '',
         EN: ''
     },
