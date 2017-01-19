@@ -1,4 +1,4 @@
-var API_REQUEST_URL_GENERAL_RESULT = '../results.json';
+var API_REQUEST_URL_GENERAL_RESULT = document.location.pathname + 'results.json';
 // 'http://csis.appdec.com/api/report/general'
 
 var satisfactionJson = null;
@@ -164,7 +164,7 @@ function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSele
 $(function() {
 
     // Set link to visualizer with selected language
-    $('#lnk-ranking').attr('href', '/ranking?lang=' + urlLangParam);
+    $('#lnk-ranking').attr('href', document.location.pathname + 'ranking?lang=' + urlLangParam);
     
     // get the citizen satisfaction result json
     $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {

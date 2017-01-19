@@ -39,7 +39,12 @@
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a id="lnk-visualizer" href="#"><script>document.write(i18n.visualizer[lang])</script></a></li>
+                                <li>
+                                    <a id="lnk-visualizer" href="#">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                        <script>document.write(i18n.visualizer[lang])</script>
+                                    </a>
+                                </li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="selected-language"></span> <span class="caret"></span></a>
                                     <ul class="dropdown-menu">

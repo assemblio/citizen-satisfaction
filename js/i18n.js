@@ -19,32 +19,32 @@ var i18n = {
     },
     institutions:{
         AL: 'Institucione',
-        SR: 'NOT TRANSLATED',
+        SR: 'Institucija',
         EN: 'Institutions'
     },
     services:{
         AL: 'Sh&euml;rbime',
-        SR: 'NOT TRANSLATED',
+        SR: 'Usluga',
         EN: 'Services'
     },
     answers:{
         AL: 'p&euml;rgjigje',
-        SR: 'NOT TRANSLATED',
+        SR: 'odgovor',
         EN: 'answers'
     },
     satisfied:{
         AL: 'T&euml; k&euml;naqur',
-        SR: 'NOT TRANSLATED',
+        SR: 'Zadovoljan',
         EN: 'Satisfied'
     },
     moderatelySatisfied:{
         AL: 'Mesatarisht t&euml; k&euml;naqur',
-        SR: 'NOT TRANSLATED',
+        SR: 'Umereno zadovoljan',
         EN: 'Moderately Satisfied'
     },
     dissatisfied:{
         AL: 'T&euml; pak&euml;naqur',
-        SR: 'NOT TRANSLATED',
+        SR: 'Nezadovoljan',
         EN: 'Dissatisfied'
     },
     indicators:{
@@ -55,7 +55,7 @@ var i18n = {
         },
         staff:{
             AL: 'kualitetin e<br>sh&euml;rbimit',
-            SR: 'NOT TRANSLATED',
+            SR: 'Ljubaznost funkcionera',
             EN: 'friendliness of<br>the official'
         },
         timeliness:{
@@ -76,12 +76,12 @@ var i18n = {
     },
     ranking:{
         AL: 'Niveli vl&euml;resues',
-        SR: 'NOT TRANSLATED',
+        SR: 'Rang',
         EN: 'Ranking'
     },
     visualizer:{
         AL: 'Vizualizim',
-        SR: 'NOT TRANSLATED',
+        SR: 'Vizualizator',
         EN: 'Visualizer'
     }
 };
