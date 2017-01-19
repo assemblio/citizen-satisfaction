@@ -1,4 +1,4 @@
-var API_REQUEST_URL_GENERAL_RESULT = document.location.pathname + 'results.json';
+var API_REQUEST_URL_GENERAL_RESULT = document.location.pathname.replace('/ranking/', '/') + 'results.json';
 // 'http://csis.appdec.com/api/report/general'
 
 var satisfactionJson = null;
