@@ -76,7 +76,7 @@ var i18n = {
     },
     ranking:{
         AL: 'Niveli vl&euml;resues',
-        SR: 'Rangiranje',
+        SR: 'Rang',
         EN: 'Ranking'
     },
     visualizer:{
