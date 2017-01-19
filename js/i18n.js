@@ -50,28 +50,28 @@ var i18n = {
     indicators:{
         quality:{
             AL: 'cil&euml;sin&euml; e<br>sh&euml;rbimit',
-            SR: 'NOT TRANSLATED',
-            EN: 'quality'
+            SR: 'kvalitet pruzene<br>usluge',
+            EN: 'quality of<br>service rendered'
         },
         staff:{
             AL: 'kualitetin e<br>sh&euml;rbimit',
             SR: 'NOT TRANSLATED',
-            EN: 'friendliness'
+            EN: 'friendliness of<br>the official'
         },
         timeliness:{
             AL: 'koh&euml;zgjatjen e<br>sh&euml;rbimit',
-            SR: 'NOT TRANSLATED',
-            EN: 'timeliness'
+            SR: 'pravovremenost<br>pruzene usluge',
+            EN: 'timeliness of<br>service provided'
         },
         payment:{
             AL: 'pages&euml;n e<br>sh&euml;rbimit',
-            SR: 'NOT TRANSLATED',
-            EN: 'payment'
+            SR: 'isplatni nivo<br>pruzene usluge',
+            EN: 'payment level of<br>the rendered service'
         },
         online:{
             AL: 'meq&euml; sh&euml;rbimi nuk<br>&euml;sht&euml; online',
-            SR: 'NOT TRANSLATED',
-            EN: 'online'
+            SR: 'nema online<br>usluge',
+            EN: 'no online<br>service rendered'
         }
     },
     ranking:{
