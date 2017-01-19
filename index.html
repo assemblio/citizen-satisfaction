@@ -83,124 +83,128 @@
             </div>
 
             <div class="container-fluid container-visualizer">
-                <!-- First Row - Happy -->
-                <div class="row">
-                    <div class="col-xs-12 label-satisfaction-level">
-                        <script>document.write(i18n.satisfied[lang])</script>
-                    </div>
-                </div>
-                <div class="row row-happy">
-                    <div class="col-xs-2 vote-count-container">
-                        <div>
-                            <p class="percentage-count"></p>
-                            <p class="vote-count-label"><span class="vote-count"></span> <script>document.write(i18n.answers[lang])</script></p>
-                        </div>
-                    </div>
-                    <div class="col-xs-2 illustration-container">
-                        <img src="img/happy/s1_m1.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.quality[lang])</script></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container">
-                        <img src="img/happy/s1_m2.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.staff[lang])</script></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container">
-                        <img src="img/happy/s1_m3.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.timeliness[lang])</script></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container">
-                        <img src="img/happy/s1_m4.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.payment[lang])</script></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container">
-                        <img src="img/happy/s1_m5.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.online[lang])</script></p>
-                    </div>
-                </div>
-                <!-- End First Row - Happy -->
+                <div class="rows-container">
 
-                <!-- Second Row - Meh -->
-                <div class="row">
-                    <div class="col-xs-12 label-satisfaction-level">
-                        <script>document.write(i18n.moderatelySatisfied[lang])</script>
-                    </div>
-                </div>
-                <div class="row row-meh">
-                    <div class="col-xs-2 vote-count-container">
-                        <div>
-                            <p class="percentage-count"></p>
-                            <p class="vote-count-label"><span class="vote-count"></span> <script>document.write(i18n.answers[lang])</script></p>
-                        </div>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-quality">
-                        <img class="img-illustration img-quality" src="img/meh/s2_m1.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.quality[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-kindliness">
-                        <img class="img-illustration img-kindliness" src="img/meh/s2_m2.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.staff[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-timeliness">
-                        <img class="img-illustration img-timeliness" src="img/meh/s2_m3.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.timeliness[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-payment">
-                        <img class="img-illustration img-payment" src="img/meh/s2_m4.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.payment[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-online">
-                        <img class="img-illustration img-online" src="img/meh/s2_m5.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.online[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                </div>
-                <!-- End Second Row - Meh -->
+                  <!-- First Row - Happy -->
+                  <div class="row">
+                      <div class="col-xs-12 label-satisfaction-level">
+                          <script>document.write(i18n.satisfied[lang])</script>
+                      </div>
+                  </div>
 
+                  <div class="row row-happy">
+                      <div class="col-xs-2 vote-count-container">
+                          <div>
+                              <p class="percentage-count"></p>
+                              <p class="vote-count-label"><span class="vote-count"></span> <script>document.write(i18n.answers[lang])</script></p>
+                          </div>
+                      </div>
+                      <div class="col-xs-2 illustration-container">
+                          <img src="img/happy/s1_m1.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.quality[lang])</script></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container">
+                          <img src="img/happy/s1_m2.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.staff[lang])</script></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container">
+                          <img src="img/happy/s1_m3.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.timeliness[lang])</script></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container">
+                          <img src="img/happy/s1_m4.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.payment[lang])</script></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container">
+                          <img src="img/happy/s1_m5.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.online[lang])</script></p>
+                      </div>
+                  </div>
+                  <!-- End First Row - Happy -->
 
-                <!-- Third Row - Unhappy -->
-                <div class="row">
-                    <div class="col-xs-12 label-satisfaction-level">
-                        <script>document.write(i18n.dissatisfied[lang])</script>
-                    </div>
+                  <!-- Second Row - Meh -->
+                  <div class="row">
+                      <div class="col-xs-12 label-satisfaction-level">
+                          <script>document.write(i18n.moderatelySatisfied[lang])</script>
+                      </div>
+                  </div>
+                  <div class="row row-meh">
+                      <div class="col-xs-2 vote-count-container">
+                          <div>
+                              <p class="percentage-count"></p>
+                              <p class="vote-count-label"><span class="vote-count"></span> <script>document.write(i18n.answers[lang])</script></p>
+                          </div>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-quality">
+                          <img class="img-illustration img-quality" src="img/meh/s2_m1.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.quality[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-kindliness">
+                          <img class="img-illustration img-kindliness" src="img/meh/s2_m2.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.staff[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-timeliness">
+                          <img class="img-illustration img-timeliness" src="img/meh/s2_m3.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.timeliness[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-payment">
+                          <img class="img-illustration img-payment" src="img/meh/s2_m4.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.payment[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-online">
+                          <img class="img-illustration img-online" src="img/meh/s2_m5.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.online[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                  </div>
+                  <!-- End Second Row - Meh -->
+
+                  <!-- Third Row - Unhappy -->
+                  <div class="row">
+                      <div class="col-xs-12 label-satisfaction-level">
+                          <script>document.write(i18n.dissatisfied[lang])</script>
+                      </div>
+                  </div>
+                  <div class="row row-unhappy">
+                      <div class="col-xs-2 vote-count-container">
+                          <div>
+                              <p class="percentage-count"></p>
+                              <p class="vote-count-label"><span class="vote-count"></span> <script>document.write(i18n.answers[lang])</script></p>
+                          </div>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-quality">
+                          <img class="img-illustration img-quality" src="img/unhappy/s3_m1.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.quality[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-kindliness">
+                          <img class="img-illustration img-kindliness" src="img/unhappy/s3_m2.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.staff[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-timeliness">
+                          <img class="img-illustration img-timeliness" src="img/unhappy/s3_m3.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.timeliness[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-payment">
+                          <img class="img-illustration img-payment" src="img/unhappy/s3_m4.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.payment[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                      <div class="col-xs-2 illustration-container illustration-online">
+                          <img class="img-illustration img-online" src="img/unhappy/s3_m5.gif"/>
+                          <p class="label-indicator"><script>document.write(i18n.indicators.online[lang])</script></p>
+                          <p class="vote-count"></p>
+                      </div>
+                  </div>
+                  <!-- End Third Row - Unhappy -->
+
                 </div>
-                <div class="row row-unhappy">
-                    <div class="col-xs-2 vote-count-container">
-                        <div>
-                            <p class="percentage-count"></p>
-                            <p class="vote-count-label"><span class="vote-count"></span> <script>document.write(i18n.answers[lang])</script></p>
-                        </div>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-quality">
-                        <img class="img-illustration img-quality" src="img/unhappy/s3_m1.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.quality[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-kindliness">
-                        <img class="img-illustration img-kindliness" src="img/unhappy/s3_m2.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.staff[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-timeliness">
-                        <img class="img-illustration img-timeliness" src="img/unhappy/s3_m3.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.timeliness[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-payment">
-                        <img class="img-illustration img-payment" src="img/unhappy/s3_m4.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.payment[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                    <div class="col-xs-2 illustration-container illustration-online">
-                        <img class="img-illustration img-online" src="img/unhappy/s3_m5.gif"/>
-                        <p class="label-indicator"><script>document.write(i18n.indicators.online[lang])</script></p>
-                        <p class="vote-count"></p>
-                    </div>
-                </div>
-                <!-- End Third Row - Unhappy -->
             </div>
         </div>
     </body>
