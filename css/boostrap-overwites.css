@@ -10,6 +10,17 @@
     font-family: 'ReneS';
     src: url('../fonts/Rene.Bieder_Campton.Light.otf');
 }
+
+@media (max-width:420px) {
+    .dropdown-menu{
+      width: 100%;
+    }
+}
+@media only screen and (max-width : 790px){
+    .dropdown-menu{
+      width: 100%;
+    }
+}
 .navbar{
     margin-bottom: 0px;
     border-radius: 0px;
@@ -59,4 +70,3 @@
 .navbar-inverse .navbar-nav>li>a:hover {
     color: gray;
 }
-
