@@ -1,4 +1,4 @@
-var API_REQUEST_URL_GENERAL_RESULT = '../results.json';
+var API_REQUEST_URL_GENERAL_RESULT = document.location.pathname + 'results.json';
 // 'http://csis.appdec.com/api/report/general'
 
 var satisfactionJson = null;
@@ -81,7 +81,7 @@ function resetRanking(rowType, currentRankingList){
 
 $(function() {
     // Set link to visualizer with selected language
-    $('#lnk-visualizer').attr('href', '/?lang=' + urlLangParam);
+    $('#lnk-visualizer').attr('href', document.location.pathname + '?lang=' + urlLangParam);
 
     // get the citizen satisfaction result json
     $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {
