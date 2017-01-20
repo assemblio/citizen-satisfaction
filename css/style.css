@@ -10,7 +10,10 @@
     font-family: 'ReneS';
     src: url('../fonts/Rene.Bieder_Campton.Light.otf');
 }
-
+@font-face {
+    font-family: 'ReneT';
+    src: url('../fonts/Rene.Bieder_Campton.SemiBold.otf');
+}
 
 @media only screen and (min-width : 1200px){
     .rows-container{
@@ -40,14 +43,32 @@
     .vote-count-container{
         min-width: 130px;
     }
+    /* centered columns styles */
+    .row-centered {
+        text-align:center;
+    }
+    .col-centered {
+        display:inline-block;
+        float:none;
+        /* reset the text-align */
+        /*text-align:left;*/
+        /* inline-block space fix */
+        margin-right:-4px;
+    }
+    .vote-count-container{
+        width: 100%;
+    }
+}
+
+.percentage{
 }
 
 .warn{
-  float: right;
-  top: 20px;
-  position: absolute;
-  z-index: 10000;
-  left: 100px;
+    float: right;
+    top: 20px;
+    position: absolute;
+    z-index: 10000;
+    left: 100px;
 }
 
 .selected-value{
@@ -67,7 +88,8 @@
 .label-satisfaction-level{
     padding-top: 15px;
     color: white;
-    font-weight: bold;
+    /*font-weight: bold;*/
+    font-family: ReneT;
 }
 
 .label-indicator, .vote-count-label{
