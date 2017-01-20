@@ -68,6 +68,25 @@ function shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex){
 
     var serviceJson = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex];
 
+    // Get all the happies
+    var happies = [{
+        indicator: 'timeliness',
+        count: serviceJson['Answers'][0]['result_Good']
+    },{
+        indicator: 'payment',
+        count: serviceJson['Answers'][1]['result_Good']
+    },{
+        indicator: 'kindliness',
+        count: serviceJson['Answers'][2]['result_Good']
+    },{
+        indicator: 'online',
+        count: serviceJson['Answers'][3]['result_Good']
+    },{
+        indicator: 'quality',
+        count: serviceJson['Answers'][4]['result_Good']
+    }];
+
+
     // Get all the mehs
     var mehs = [{
         indicator: 'timeliness',
@@ -131,6 +150,18 @@ function shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex){
 }
 
 function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSelector){
+    // GOOD ANSWER
+    // If the count is 0 then grey out the illustration in question.
+    if(serviceJson['result_Good'] == 0){
+        var happyImgUrl = $('.row-happy ' + imageSelector).attr('src').replace('/happy/', '/happy/inactive/');
+        $('.row-happy ' + imageSelector).attr('src', happyImgUrl);
+
+    }
+    // else if the count is greater than 0, enable the illustration in question
+    else if(serviceJson['result_Good'] > 0){
+        var happyImgUrl = $('.row-happy ' + imageSelector).attr('src').replace('/happy/inactive/', '/happy/');
+        $('.row-happy ' + imageSelector).attr('src', happyImgUrl);
+    }
 
     // MEH ANSWER
     // If the count is 0 then grey out the illustration in question.
@@ -159,6 +190,7 @@ function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSele
         $('.row-unhappy ' + imageSelector).attr('src', unhappyImgUrl);
     }
 
+    $('.row-happy' + illustrationSelector + '.vote-count').html(serviceJson['Answers'][answerIndex]['result_Good']);
     $('.row-meh ' + illustrationSelector + ' .vote-count').html(serviceJson['Answers'][answerIndex]['result_Middle']);
     $('.row-unhappy ' + illustrationSelector + ' .vote-count').html(serviceJson['Answers'][answerIndex]['result_Bad']);
 }
