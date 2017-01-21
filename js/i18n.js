@@ -13,7 +13,7 @@ if(urlLangParam === 'sr'){
 
 var i18n = {
     title:{
-        AL: 'Kosovo',
+        AL: 'Platforma e OPI-t',
         SR: '',
         EN: ''
     },
