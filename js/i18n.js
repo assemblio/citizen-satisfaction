@@ -17,6 +17,21 @@ var i18n = {
         SR: '',
         EN: ''
     },
+    description:{
+        AL: 'Projekti &euml;sht&euml; bashk&euml;financuar nga Ministria e Administrat&euml;s Publike (MAP) dhe Programi i Kombeve t&euml; Bashkuara p&euml;r Zhvillim (UNDP) n&euml; Kosov&euml;.',
+        SR: 'Projekat je ko-finansiran od strane Ministarstva za javnu upravu (MJU) i Programa za razvoj Ujedinjenin Nacija (UNDP) na Kosovu.',
+        EN: 'The project is co-financed by the Ministry of Public Administration (MPA) and United Nations Development Programme (UNDP) in Kosovo.'
+    },
+    logotext1:{
+        AL: 'Republika e Kosov&euml;s',
+        SR: 'Republika Kosova',
+        EN: 'Republic of Kosovo'
+    },
+    logotext2:{
+        AL: 'Ministria e Administrat&euml;s Publike',
+        SR: 'Ministarstvo Javne Uprave',
+        EN: 'Ministry of Public Administration'
+    },
     institutions:{
         AL: 'Institucione',
         SR: 'Institucija',
