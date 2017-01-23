@@ -10,6 +10,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Application styling -->
         <link rel="stylesheet" href="css/style.css">
+
+        <!-- Footer styling -->
+        <link rel="stylesheet" href="/css/footer.css">
         <!-- csshake -->
         <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
 
@@ -221,52 +224,44 @@
                             <div class="container-footer-div">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="footer-col col-md-4">
-                                            <p class="footer-description">
+                                        <div class="footer-col col-md-4 description-footer footer-description">
                                                 <script>document.write(i18n.description[lang])</script>
-                                            </p>
                                         </div>
-                                        <div class="footer-col col-md-4">
+                                        <div class="footer-col col-md-4 social-icons-footer">
                                             <br>
-
-                                            <h4 class="follow-label">Follow us</h4>
-
                                             <!-- Twitter -->
                                             <a href="https://twitter.com/map_rks" data-toggle="tooltip" title="Twitter" target="_blank" class="share-btn twitter">
-                                                <i class="fa fa-twitter"></i>
+                                                <i class="fa fa-twitter-square"></i>
                                             </a>
 
                                             <!-- Facebook -->
                                             <a href="https://www.facebook.com/map.rks/" data-toggle="tooltip" title="Facebook" target="_blank" class="share-btn facebook">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-
-                                            <!-- Page -->
-                                            <a href="#" data-toggle="tooltip" title="Mystery Shopping" target="_blank" class="share-btn home">
-                                                <i class="fa fa-home"></i>
+                                                <i class="fa fa-facebook-square"></i>
                                             </a>
                                             <br><br>
                                         </div>
                                         <div class="footer-col col-md-4">
-                                            <!-- <h4>UNDP Kosovo</h4> -->
-                                            <div class="row logo-row">
-                                                <div class="col-md-6">
-                                                    <a href="http://map.rks-gov.net/Home.aspx" target="_blank" class="logo-left">
-                                                        <img src="../img/kosovo-coat-of-arms.png" class="footer-img" alt="">
+                                            <div class="row">
+                                                <div id="logo" class="img-responsive">
+                                                    <a href="#">
+                                                        <img src="/img/kosovo-coat-of-arms.png" class="footer-logo img-responsive" alt="" />
+                                                        <div style="font-size:13px;"><script>document.write(i18n.logotext1[lang])</script>
+                                                        </div>
+                                                        <div style="font-size:11px;"><script>document.write(i18n.logotext2[lang])</script>
+                                                        </div>
                                                     </a>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <a href="http://map.rks-gov.net/Home.aspx" target="_blank" class="logo-right">
-                                                        <script>document.write(i18n.logotext1[lang])</script>
-                                                        <br><script>document.write(i18n.logotext2[lang])</script>
-                                                    </a>
-                                                </div>
+
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </footer>
+                    </div>
+                    <div class="row footer-bottom">
+                        <div class="footer-col col-md-12">
+                            <script>document.write(i18n.descriptionbottom[lang])</script>
+                        </div>
                     </div>
                 </div>
         </div>

@@ -18,6 +18,11 @@ var i18n = {
         EN: ''
     },
     description:{
+        AL: 'Platforma e OPI-t sh&euml;rben p&euml;r t&euml; reflektuar rezultatet e grumbulluara nga opinionet e qytetar&euml;ve n&euml; koh&euml; reale dhe n&euml; m&euml;nyr&euml; transparente, si dhe mund&euml;son p&euml;rmir&euml;simin e politikave publike p&euml;r sh&euml;rbimet administrative q&euml; ofrohen nga institucionet e Republik&euml;s s&euml; Kosov&euml;s.',
+        SR: 'not available',
+        EN: 'not available'
+    },
+    descriptionbottom:{
         AL: 'Projekti &euml;sht&euml; bashk&euml;financuar nga Ministria e Administrat&euml;s Publike (MAP) dhe Programi i Kombeve t&euml; Bashkuara p&euml;r Zhvillim (UNDP) n&euml; Kosov&euml;.',
         SR: 'Projekat je ko-finansiran od strane Ministarstva za javnu upravu (MJU) i Programa za razvoj Ujedinjenin Nacija (UNDP) na Kosovu.',
         EN: 'The project is co-financed by the Ministry of Public Administration (MPA) and United Nations Development Programme (UNDP) in Kosovo.'
@@ -28,9 +33,9 @@ var i18n = {
         EN: 'Republic of Kosovo'
     },
     logotext2:{
-        AL: 'Ministria e Administrat&euml;s Publike',
-        SR: 'Ministarstvo Javne Uprave',
-        EN: 'Ministry of Public Administration'
+        AL: 'Ministria&nbsp;e&nbsp;Administrat&euml;s&nbsp;Publike',
+        SR: 'Ministarstvo&nbsp;Javne&nbsp;Uprave',
+        EN: 'Ministry&nbsp;of&nbsp;Public&nbsp;Administration'
     },
     institutions:{
         AL: 'Institucione',
@@ -69,8 +74,8 @@ var i18n = {
             EN: 'quality of<br>service rendered'
         },
         staff:{
-            AL: 'kualitetin e<br>sh&euml;rbimit',
-            SR: 'Ljubaznost funkcionera',
+            AL: 'mir&euml;sjellja e<br>sh&euml;rbimit',
+            SR: 'ljubaznost<br>funkcionera',
             EN: 'friendliness of<br>the official'
         },
         timeliness:{

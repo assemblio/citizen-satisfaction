@@ -21,6 +21,7 @@
       width: 100%;
     }
 }
+
 .navbar{
     margin-bottom: 0px;
     border-radius: 0px;
@@ -28,7 +29,7 @@
 }
 .navbar-brand{
     font-family: ReneM;
-    
+
     color:#ffffff !important
 }
 #container-navbar .navbar-inverse{

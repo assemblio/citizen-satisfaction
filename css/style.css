@@ -59,47 +59,7 @@
         width: 100%;
     }
 }
-@media only screen and (min-width: 992px){
-    .logo-right{
-        float: left;
-        margin-top: 25px;
-    }
 
-    .logo-left{
-        float: right;
-        margin-top: 25px;
-    }
-}
-
-.share-btn{
-    font-size: 25px;
-}
-
-.container-footer{
-    text-align: center;
-    /*margin-top:10px;*/
-    background-color:#363636;
-    color: #FFF;
-}
-.container-footer-div{
-    width: 100%;
-}
-/*.logo-row{
-    display:block;
-    text-align: center;
-}*/
-.footer-img{
-    height: 70px;
-}
-
-
-
-.footer-description{
-    font-family: ReneT;
-    color: #AAAAA9;
-    text-align: center;
-    margin-top: 25px;
-}
 
 .warn{
     float: right;
