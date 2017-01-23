@@ -28,6 +28,11 @@
     max-height:75px;
 }
 
+#logo:hover{
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
 .footer-bottom{
     background-color: #364967;
     color: #fff;
@@ -43,6 +48,13 @@
     font-size: 35px;
 }
 
+.logo-link:hover{
+    text-decoration: none;
+}
+
+.share-btn:hover{
+    text-decoration: none;
+}
 
 .container-footer{
     background-color:#4a5b76;
@@ -64,6 +76,6 @@
     font-family: ReneS;
     font-size: 10px;
     color: #fff;
-    margin-top: 25px;
+    margin-top: 10px;
 }
  /* END OF FOOOTER*/
