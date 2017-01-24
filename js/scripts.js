@@ -19,6 +19,7 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
     shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex);
 
     // Finally, let's build the new list of services for the selected ministry.
+
     // Get each Service from each Service Group.
     $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
         $(this['Services']).each(function(serviceIndex) {

@@ -74,9 +74,9 @@ var i18n = {
             EN: 'quality of<br>service rendered'
         },
         staff:{
-            AL: 'mir&euml;sjellja e<br>sh&euml;rbimit',
-            SR: 'ljubaznost<br>funkcionera',
-            EN: 'friendliness of<br>the official'
+            AL: 'mir&euml;sjelljen e<br>zyrtarit',
+            SR: 'ponasanje<br>sluzbenika',
+            EN: 'behaviour of<br>the official'
         },
         timeliness:{
             AL: 'koh&euml;zgjatjen e<br>sh&euml;rbimit',
