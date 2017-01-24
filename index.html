@@ -2,24 +2,6 @@
     <head>
 
         <title></title>
-        <meta name="description" content="" />
-
-        <!-- Twitter Card data -->
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:site" content="@diamanth">
-        <meta name="twitter:title" content="Page Title">
-        <meta name="twitter:description" content="Page description less than 200 characters">
-        <meta name="twitter:creator" content="@author_handle">
-        <-- Twitter Summary card images must be at least 120x120px -->
-        <meta name="twitter:image" content="https://assemblio.github.io/citizen-satisfaction/img/twitter-share.png">
-
-        <!-- Open Graph data -->
-        <meta property="og:title" content="opendata Here" />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://assemblio.github.io/citizen-satisfaction/" />
-        <meta property="og:image" content="https://assemblio.github.io/citizen-satisfaction/img/facebook-share.png" />
-        <meta property="og:description" content="Description Here" />
-        <meta property="og:site_name" content="Site Name, i.e. Moz" />
 
         <!-- Bootstrap. Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -47,6 +29,43 @@
         <!-- App scripts -->
         <script src="js/i18n.js"></script>
         <script src="js/scripts.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                if(urlLangParam === 'en'){
+                    $('title').html(i18n.title['EN'])
+                    $('meta[name=twitter:card]').attr('content',"UNDP");
+                    $('meta[name=twitter:title]').attr('content',i18n.title['EN']);
+                    $('meta[name=twitter:description]').attr('content',i18n.description['EN']);
+
+                    //fdeleting old facebook tags
+                    $('meta[property=og:title]').attr('content',i18n.title['EN']);
+                    $('meta[property=og:description]').attr('content',i18n.description['EN']);
+                    $('meta[property=og:site_name]').attr('content',"UNDP");
+                }
+                else if( urlLangParam === 'sr'){
+                    $('title').html(i18n.title['SR'])
+                    $('meta[name=twitter:card]').attr('content',"UNDP");
+                    $('meta[name=twitter:title]').attr('content',i18n.title['SR']);
+                    $('meta[name=twitter:description]').attr('content',i18n.description['SR']);
+
+                    //fdeleting old facebook tags
+                    $('meta[property=og:title]').attr('content',i18n.title['SR']);
+                    $('meta[property=og:description]').attr('content',i18n.description['SR']);
+                    $('meta[property=og:site_name]').attr('content',"UNDP");
+                }
+                else {
+                    $('title').html(i18n.title['AL'])
+                    $('meta[name=twitter:card]').attr('content',"UNDP");
+                    $('meta[name=twitter:title]').attr('content',i18n.title['AL']);
+                    $('meta[name=twitter:description]').attr('content',i18n.description['AL']);
+
+                    //fdeleting old facebook tags
+                    $('meta[property=og:title]').attr('content',i18n.title['AL']);
+                    $('meta[property=og:description]').attr('content',i18n.description['AL']);
+                    $('meta[property=og:site_name]').attr('content',"UNDP");
+                }
+            });
+        </script>
     </head>
 
     <body>
@@ -236,54 +255,54 @@
 
                 </div>
             </div>
+            <!-- Footer -->
+            <div class="container-fluid">
+                <div class="row">
+                    <footer class="container-footer">
+                        <div class="container-footer-div">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="footer-col col-md-4 description-footer footer-description">
+                                        <script>document.write(i18n.description[lang])</script>
+                                    </div>
+                                    <div class="footer-col col-md-4 social-icons-footer">
+                                        <br>
+                                        <!-- Twitter -->
+                                        <a href="https://twitter.com/map_rks" data-toggle="tooltip" title="Twitter" target="_blank" class="share-btn twitter">
+                                            <i class="fa fa-twitter-square"></i>
+                                        </a>
 
-                <!-- Footer -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <footer class="container-footer">
-                            <div class="container-footer-div">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="footer-col col-md-4 description-footer footer-description">
-                                                <script>document.write(i18n.description[lang])</script>
-                                        </div>
-                                        <div class="footer-col col-md-4 social-icons-footer">
-                                            <br>
-                                            <!-- Twitter -->
-                                            <a href="https://twitter.com/map_rks" data-toggle="tooltip" title="Twitter" target="_blank" class="share-btn twitter">
-                                                <i class="fa fa-twitter-square"></i>
-                                            </a>
-
-                                            <!-- Facebook -->
-                                            <a href="https://www.facebook.com/map.rks/" data-toggle="tooltip" title="Facebook" target="_blank" class="share-btn facebook">
-                                                <i class="fa fa-facebook-square"></i>
-                                            </a>
-                                            <br><br>
-                                        </div>
-                                        <div class="footer-col col-md-4">
-                                            <div class="row">
-                                                <div id="logo" class="img-responsive">
-                                                    <a href="#" class="logo-link">
-                                                        <img src="img/kosovo-coat-of-arms.png" class="footer-logo img-responsive" alt="" />
-                                                        <div style="font-size:13px;"><script>document.write(i18n.logotext1[lang])</script>
-                                                        </div>
-                                                        <div style="font-size:11px;"><script>document.write(i18n.logotext2[lang])</script>
-                                                        </div>
-                                                    </a>
-                                                </div>
-
+                                        <!-- Facebook -->
+                                        <a href="https://www.facebook.com/map.rks/" data-toggle="tooltip" title="Facebook" target="_blank" class="share-btn facebook">
+                                            <i class="fa fa-facebook-square"></i>
+                                        </a>
+                                        <br><br>
+                                    </div>
+                                    <div class="footer-col col-md-4">
+                                        <div class="row">
+                                            <div id="logo" class="img-responsive">
+                                                <a href="#" class="logo-link">
+                                                    <img src="img/kosovo-coat-of-arms.png" class="footer-logo img-responsive" alt="" />
+                                                    <div style="font-size:13px;"><script>document.write(i18n.logotext1[lang])</script>
+                                                    </div>
+                                                    <div style="font-size:11px;"><script>document.write(i18n.logotext2[lang])</script>
+                                                    </div>
+                                                </a>
                                             </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </footer>
-                    </div>
+                        </div>
+                    </footer>
                     <div class="row footer-bottom">
                         <div class="footer-col col-md-12">
                             <script>document.write(i18n.descriptionbottom[lang])</script>
                         </div>
                     </div>
-                </div>
+            </div>
+
         </div>
     </body>
 </html>
