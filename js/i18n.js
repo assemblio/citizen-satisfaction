@@ -14,8 +14,8 @@ if(urlLangParam === 'sr'){
 var i18n = {
     title:{
         AL: 'Platforma e OPI-t',
-        SR: '',
-        EN: ''
+        SR: 'Platforma e OPI-t english',
+        EN: 'Platforma e OPI-t serbian'
     },
     description:{
         AL: 'Platforma e OPI-t sh&euml;rben p&euml;r t&euml; reflektuar rezultatet e grumbulluara nga opinionet e qytetar&euml;ve n&euml; koh&euml; reale dhe n&euml; m&euml;nyr&euml; transparente, si dhe mund&euml;son p&euml;rmir&euml;simin e politikave publike p&euml;r sh&euml;rbimet administrative q&euml; ofrohen nga institucionet e Republik&euml;s s&euml; Kosov&euml;s.',
@@ -26,6 +26,16 @@ var i18n = {
         AL: 'Projekti &euml;sht&euml; bashk&euml;financuar nga Ministria e Administrat&euml;s Publike (MAP) dhe Programi i Kombeve t&euml; Bashkuara p&euml;r Zhvillim (UNDP) n&euml; Kosov&euml;.',
         SR: 'Projekat je ko-finansiran od strane Ministarstva za javnu upravu (MJU) i Programa za razvoj Ujedinjenin Nacija (UNDP) na Kosovu.',
         EN: 'The project is co-financed by the Ministry of Public Administration (MPA) and United Nations Development Programme (UNDP) in Kosovo.'
+    },
+    institutionLabel:{
+        AL: "Institucioni",
+        SR: "not available",
+        EN: "not available"
+    },
+    serviceLabel:{
+        AL: "Sh&euml;rbimi",
+        SR: "not available",
+        EN: "not available"
     },
     logotext1:{
         AL: 'Republika e Kosov&euml;s',

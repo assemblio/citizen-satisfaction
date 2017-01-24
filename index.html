@@ -47,37 +47,46 @@
         <script type="text/javascript">
             $(document).ready(function(){
                 if(urlLangParam === 'en'){
+                    // linking to gov administration page when logo clicked
+                    $('.logo-link').attr('href', "http://map.rks-gov.net/Home.aspx?lang=en-US");
+
                     $('title').html(i18n.title['EN'])
                     $('meta[name="twitter:card"]').attr('content',"UNDP");
                     $('meta[name="twitter:title"]').attr('content',i18n.title['EN']);
                     $('meta[name="twitter:description"]').attr('content',i18n.description['EN']);
 
                     //fdeleting old facebook tags
-                    $('meta[property=og:title]').attr('content',i18n.title['EN']);
-                    $('meta[property=og:description]').attr('content',i18n.description['EN']);
-                    $('meta[property=og:site_name]').attr('content',"UNDP");
+                    $('meta[property="og:title"]').attr('content',i18n.title['EN']);
+                    $('meta[property="og:description"]').attr('content',i18n.description['EN']);
+                    $('meta[property="og:site_name"]').attr('content',"UNDP");
                 }
                 else if( urlLangParam === 'sr'){
+                    // linking to gov administration page when logo clicked
+                    $('.logo-link').attr('href', "http://map.rks-gov.net/Home.aspx?lang=sr-Latn-CS");
+
                     $('title').html(i18n.title['SR'])
                     $('meta[name="twitter:card"]').attr('content',"UNDP");
                     $('meta[name="twitter:title"]').attr('content',i18n.title['SR']);
                     $('meta[name="twitter:description"]').attr('content',i18n.description['SR']);
 
                     //fdeleting old facebook tags
-                    $('meta[property=og:title]').attr('content',i18n.title['SR']);
-                    $('meta[property=og:description]').attr('content',i18n.description['SR']);
-                    $('meta[property=og:site_name]').attr('content',"UNDP");
+                    $('meta[property="og:title"]').attr('content',i18n.title['SR']);
+                    $('meta[property="og:description"]').attr('content',i18n.description['SR']);
+                    $('meta[property="og:site_name"]').attr('content',"UNDP");
                 }
                 else {
+                    // linking to gov administration page when logo clicked
+                    $('.logo-link').attr('href', "http://map.rks-gov.net/Home.aspx?lang=sq-AL");
+
                     $('title').html(i18n.title['AL'])
                     $('meta[name="twitter:card"]').attr('content',"UNDP");
                     $('meta[name="twitter:title"]').attr('content',i18n.title['AL']);
                     $('meta[name="twitter:description"]').attr('content',i18n.description['AL']);
 
                     //fdeleting old facebook tags
-                    $('meta[property=og:title]').attr('content',i18n.title['AL']);
-                    $('meta[property=og:description]').attr('content',i18n.description['AL']);
-                    $('meta[property=og:site_name]').attr('content',"UNDP");
+                    $('meta[property="og:title"]').attr('content',i18n.title['AL']);
+                    $('meta[property="og:description"]').attr('content',i18n.description['AL']);
+                    $('meta[property="og:site_name"]').attr('content',"UNDP");
                 }
             });
         </script>
@@ -122,6 +131,9 @@
                 <div class="row row-dropdown">
                     <div class="col-xs-12">
                         <div class="dropdown" id="dropdown-first">
+                            <div class="span-institucion">
+                                <span><script>document.write(i18n.institutionLabel[lang])</script>:</span>
+                            </div>
                             <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdown-menu-first" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <span class="selected-value"></span>
                                 &nbsp;<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
@@ -135,6 +147,9 @@
                 <div class="row row-dropdown">
                     <div class="col-xs-12">
                         <div class="dropdown" id="dropdown-second">
+                            <div class="span-service">
+                                <span><script>document.write(i18n.serviceLabel[lang])</script>:</span>
+                            </div>
                             <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdown-menu-second" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <span class="selected-value"></span>
                                 &nbsp;<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
@@ -296,12 +311,14 @@
                                     <div class="footer-col col-md-4">
                                         <div class="row">
                                             <div id="logo" class="img-responsive">
-                                                <a href="#" class="logo-link">
+                                                <a href="http://map.rks-gov.net/Home.aspx?lang=sq-AL" class="logo-link">
                                                     <img src="img/kosovo-coat-of-arms.png" class="footer-logo img-responsive" alt="" />
-                                                    <div style="font-size:13px;"><script>document.write(i18n.logotext1[lang])</script>
-                                                    </div>
-                                                    <div style="font-size:11px;"><script>document.write(i18n.logotext2[lang])</script>
-                                                    </div>
+                                                        <span style="font-size:13px;">
+                                                            <script>document.write(i18n.logotext1[lang])</script>
+                                                        </span>
+                                                        <span style="font-size:11px;">
+                                                            <script>document.write(i18n.logotext2[lang])</script>
+                                                        </span>
                                                 </a>
                                             </div>
 
