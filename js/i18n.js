@@ -14,8 +14,8 @@ if(urlLangParam === 'sr'){
 var i18n = {
     title:{
         AL: 'Platforma e OPI-t',
-        SR: 'Platforma e OPI-t english',
-        EN: 'Platforma e OPI-t serbian'
+        SR: 'Platforma e OPI-t serbian',
+        EN: 'Platforma e OPI-t english'
     },
     description:{
         AL: 'Platforma e OPI-t sh&euml;rben p&euml;r t&euml; reflektuar rezultatet e grumbulluara nga opinionet e qytetar&euml;ve n&euml; koh&euml; reale dhe n&euml; m&euml;nyr&euml; transparente, si dhe mund&euml;son p&euml;rmir&euml;simin e politikave publike p&euml;r sh&euml;rbimet administrative q&euml; ofrohen nga institucionet e Republik&euml;s s&euml; Kosov&euml;s.',

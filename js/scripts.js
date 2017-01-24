@@ -21,16 +21,27 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
     // Finally, let's build the new list of services for the selected ministry.
 
     // Get each Service from each Service Group.
+    var servicesSorted = [];
     $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
         $(this['Services']).each(function(serviceIndex) {
             var serviceName = this['ServiceName_' + lang];
-            $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceGroupIndex + ', ' + serviceIndex + ')">' + serviceName + '</a></li>');
+            servicesSorted.push(serviceName);
         });
+    });
+    servicesSorted.sort();
+
+    $(servicesSorted).each(function(serviceIndex){
+        var serviceName = servicesSorted[serviceIndex];
+        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceIndex + ')">' + serviceName + '</a></li>');
     });
 }
 
 function onMinistrySelection(institutionIndex, institutionName){
+
+
+
     $('#dropdown-first .selected-value').html(institutionName);
+
     onServiceSelection(institutionIndex, 0, 0);
 }
 
@@ -210,13 +221,24 @@ $(function() {
 
         // Init first institution
         var firstInstitution = data[0]['InstitutionName_' + lang];
+
         onMinistrySelection(0, firstInstitution);
+        var sortedInstitutions=[];
 
         $.each( data, function( key, val ) {
-            // Build the Ministry selection widget
-            var institutionName = val['InstitutionName_' + lang];
-            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + key + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');
+
+            sortedInstitutions.push(val['InstitutionName_' + lang]);
+
         });
+
+        sortedInstitutions.sort();
+
+        $.each(sortedInstitutions,function(i,val){
+            var institutionName = val;
+            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + i + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');
+
+        });
+
 
     });
 });

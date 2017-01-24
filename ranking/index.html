@@ -29,6 +29,22 @@
         <!-- App scripts -->
         <script src="../js/i18n.js"></script>
         <script src="../js/ranking-scripts.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                if(urlLangParam === 'en'){
+                    // linking to gov administration page when logo clicked
+                    $('.logo-link').attr('href', "http://map.rks-gov.net/Home.aspx?lang=en-US");
+                }
+                else if( urlLangParam === 'sr'){
+                    // linking to gov administration page when logo clicked
+                    $('.logo-link').attr('href', "http://map.rks-gov.net/Home.aspx?lang=sr-Latn-CS");
+                }
+                else {
+                    // linking to gov administration page when logo clicked
+                    $('.logo-link').attr('href', "http://map.rks-gov.net/Home.aspx?lang=sq-AL");
+                }
+            });
+        </script>
     </head>
 
     <body>
