@@ -118,14 +118,5 @@ $(function() {
 
     }else{
         $('.selected-language').html('Shqip');
-        //
-        // $('meta[name=twitter:card]').attr('content',"UNDP");
-        // $('meta[name=twitter:title]').attr('content',i18n.title[AL]);
-        // $('meta[name=twitter:description]').attr('content',i18n.description[AL]);
-        //
-        // //fdeleting old facebook tags
-        // $('meta[property=og:title]').attr('content',i18n.title[AL]);
-        // $('meta[property=og:description]').attr('content',i18n.description[AL]);
-        // $('meta[property=og:site_name]').attr('content',"UNDP");
     }
 });
