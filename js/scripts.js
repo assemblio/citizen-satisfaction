@@ -7,7 +7,6 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
 
     // Set the service name display
     var serviceName = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang];
-    $('#dropdown-second .selected-value').html(serviceName);
 
     // Set the default service's satisfaction stats:
     setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex);
@@ -29,7 +28,7 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
         });
     });
     servicesSorted.sort();
-
+    $('#dropdown-second .selected-value').html(servicesSorted[0]);
     $(servicesSorted).each(function(serviceIndex){
         var serviceName = servicesSorted[serviceIndex];
         $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceIndex + ')">' + serviceName + '</a></li>');
@@ -222,7 +221,6 @@ $(function() {
         // Init first institution
         var firstInstitution = data[0]['InstitutionName_' + lang];
 
-        onMinistrySelection(0, firstInstitution);
         var sortedInstitutions=[];
 
         $.each( data, function( key, val ) {
@@ -232,7 +230,7 @@ $(function() {
         });
 
         sortedInstitutions.sort();
-
+        onMinistrySelection(0, sortedInstitutions[0]);
         $.each(sortedInstitutions,function(i,val){
             var institutionName = val;
             $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + i + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');

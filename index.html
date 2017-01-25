@@ -3,16 +3,16 @@
         <!-- title problem with js -->
         <title></title>
 
-        <meta name="twitter:card" content="">
-        <meta name="twitter:site" content="@opendatakosovo">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@map_rks">
         <meta name="twitter:title" content="">
         <meta name="twitter:description" content="">
-        <meta name="twitter:creator" content="">
+        <meta name="twitter:creator" content="@OpenDataKosovo">
         <meta name="twitter:image" content="img/twitter-share.png">
 
         <!-- Open Graph data -->
         <meta property="og:title" content="" />
-        <meta property="og:type" content="" />
+        <meta property="og:type" content="website" />
         <meta property="og:url" content="https://assemblio.github.io/citizen-satisfaction/" />
         <meta property="og:image" content="img/facebook-share.png" />
         <meta property="og:description" content="" />
@@ -46,47 +46,45 @@
         <script src="js/scripts.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
+                var title = i18n.title[lang];
                 if(urlLangParam === 'en'){
                     // linking to gov administration page when logo clicked
                     $('.logo-link').attr('href', "http://map.rks-gov.net/Home.aspx?lang=en-US");
 
-                    $('title').html(i18n.title['EN'])
-                    $('meta[name="twitter:card"]').attr('content',"UNDP");
+                    $('title').html(i18n.title['EN']);
                     $('meta[name="twitter:title"]').attr('content',i18n.title['EN']);
                     $('meta[name="twitter:description"]').attr('content',i18n.description['EN']);
 
                     //fdeleting old facebook tags
                     $('meta[property="og:title"]').attr('content',i18n.title['EN']);
                     $('meta[property="og:description"]').attr('content',i18n.description['EN']);
-                    $('meta[property="og:site_name"]').attr('content',"UNDP");
+                    $('meta[property="og:site_name"]').attr('content',title);
                 }
                 else if( urlLangParam === 'sr'){
                     // linking to gov administration page when logo clicked
                     $('.logo-link').attr('href', "http://map.rks-gov.net/Home.aspx?lang=sr-Latn-CS");
 
-                    $('title').html(i18n.title['SR'])
-                    $('meta[name="twitter:card"]').attr('content',"UNDP");
+                    $('title').html(i18n.title['SR']);
                     $('meta[name="twitter:title"]').attr('content',i18n.title['SR']);
                     $('meta[name="twitter:description"]').attr('content',i18n.description['SR']);
 
                     //fdeleting old facebook tags
                     $('meta[property="og:title"]').attr('content',i18n.title['SR']);
                     $('meta[property="og:description"]').attr('content',i18n.description['SR']);
-                    $('meta[property="og:site_name"]').attr('content',"UNDP");
+                    $('meta[property="og:site_name"]').attr('content',title);
                 }
                 else {
                     // linking to gov administration page when logo clicked
                     $('.logo-link').attr('href', "http://map.rks-gov.net/Home.aspx?lang=sq-AL");
 
-                    $('title').html(i18n.title['AL'])
-                    $('meta[name="twitter:card"]').attr('content',"UNDP");
+                    $('title').html(i18n.title['AL']);
                     $('meta[name="twitter:title"]').attr('content',i18n.title['AL']);
                     $('meta[name="twitter:description"]').attr('content',i18n.description['AL']);
 
                     //fdeleting old facebook tags
                     $('meta[property="og:title"]').attr('content',i18n.title['AL']);
                     $('meta[property="og:description"]').attr('content',i18n.description['AL']);
-                    $('meta[property="og:site_name"]').attr('content',"UNDP");
+                    $('meta[property="og:site_name"]').attr('content',title);
                 }
             });
         </script>
