@@ -10,7 +10,42 @@ var currentRankingList = null;
 function sortByHappy(a, b){
     if(a.happy == b.happy){
         if (a.happyCount == b.happyCount) {
-            return b.name_AL - a.name_AL;
+            var A;
+            var B;
+            if (lang == 'AL') {
+                 A = a.name_AL.toUpperCase();
+                 B = b.name_AL.toUpperCase();
+                 if (A < B) {
+                     return -1;
+                 }
+                 if (A > B) {
+                     return 1;
+                 }
+                 return 0;
+            }else if(lang == 'EN') {
+                A = a.name_EN.toUpperCase();
+                B = b.name_EN.toUpperCase();
+
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
+            }
+            else {
+                A = a.name_SR.toUpperCase();
+                B = b.name_SR.toUpperCase();
+
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
+            }
         }
         return b.happyCount - a.happyCount;
     }
@@ -20,7 +55,42 @@ function sortByHappy(a, b){
 function sortByMeh(a, b){
     if(a.meh == b.meh){
         if (a.mehCount == b.mehCount) {
-            return b.name_AL - a.name_AL;
+            var A;
+            var B;
+            if (lang == 'AL') {
+                 A = a.name_AL.toUpperCase();
+                 B = b.name_AL.toUpperCase();
+                 if (A < B) {
+                     return -1;
+                 }
+                 if (A > B) {
+                     return 1;
+                 }
+                 return 0;
+            }else if(lang == 'EN') {
+                A = a.name_EN.toUpperCase();
+                B = b.name_EN.toUpperCase();
+
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
+            }
+            else {
+                A = a.name_SR.toUpperCase();
+                B = b.name_SR.toUpperCase();
+
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
+            }
         }
         return b.mehCount - a.mehCount;
     }
@@ -30,7 +100,42 @@ function sortByMeh(a, b){
 function sortByUnhappy(a, b){
     if (a.unhappy == b.unhappy) {
         if (a.unhappyCount == b.unhappyCount) {
-            return b.name_AL - a.name_AL;
+            var A;
+            var B;
+            if (lang == 'AL') {
+                 A = a.name_AL.toUpperCase();
+                 B = b.name_AL.toUpperCase();
+                 if (A < B) {
+                     return -1;
+                 }
+                 if (A > B) {
+                     return 1;
+                 }
+                 return 0;
+            }else if(lang == 'EN') {
+                A = a.name_EN.toUpperCase();
+                B = b.name_EN.toUpperCase();
+
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
+            }
+            else {
+                A = a.name_SR.toUpperCase();
+                B = b.name_SR.toUpperCase();
+
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
+            }
         }
         return b.unhappyCount - a.unhappyCount;
     }
