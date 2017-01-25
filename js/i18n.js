@@ -30,12 +30,12 @@ var i18n = {
     institutionLabel:{
         AL: "Institucioni",
         SR: "not available",
-        EN: "not available"
+        EN: "Institution"
     },
     serviceLabel:{
         AL: "Sh&euml;rbimi",
         SR: "not available",
-        EN: "not available"
+        EN: "Service"
     },
     logotext1:{
         AL: 'Republika e Kosov&euml;s',
@@ -58,9 +58,9 @@ var i18n = {
         EN: 'Services'
     },
     answers:{
-        AL: 'p&euml;rgjigje',
-        SR: 'odgovor',
-        EN: 'answers'
+        AL: 'qytetar&euml;',
+        SR: 'građana',
+        EN: 'citizens'
     },
     satisfied:{
         AL: 'T&euml; k&euml;naqur',

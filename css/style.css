@@ -14,7 +14,10 @@
     font-family: 'ReneT';
     src: url('../fonts/Rene.Bieder_Campton.SemiBold.otf');
 }
-
+@font-face {
+    font-family: 'ReneMed';
+    src: url('../fonts/Rene.Bieder_Campton.Medium.otf');
+}
 
 
 
@@ -72,14 +75,14 @@
 }
 
 .span-institucion{
-    color: #fff;
+    color: #AAAAA9;
     font-family: ReneS;
     font-size: 15px;
     margin-top: 8px;
 }
 
 .span-service{
-    color: #fff;
+    color: #AAAAA9;
     font-family: ReneS;
     font-size: 15px;
     margin-top: 8px;
@@ -95,7 +98,11 @@
 
 .selected-value{
     font-size: 15px;
-    font-family: ReneS;
+    font-family: ReneMed;
+}
+
+.selected-language{
+    font-family: ReneMed;
 }
 
 .illustration-container{
