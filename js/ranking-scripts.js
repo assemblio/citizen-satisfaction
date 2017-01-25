@@ -8,14 +8,32 @@ var services = [];
 var currentRankingList = null;
 
 function sortByHappy(a, b){
+    if(a.happy == b.happy){
+        if (a.happyCount == b.happyCount) {
+            return b.name_AL - a.name_AL;
+        }
+        return b.happyCount - a.happyCount;
+    }
     return b.happy - a.happy;
 }
 
 function sortByMeh(a, b){
+    if(a.meh == b.meh){
+        if (a.mehCount == b.mehCount) {
+            return b.name_AL - a.name_AL;
+        }
+        return b.mehCount - a.mehCount;
+    }
     return b.meh - a.meh;
 }
 
 function sortByUnhappy(a, b){
+    if (a.unhappy == b.unhappy) {
+        if (a.unhappyCount == b.unhappyCount) {
+            return b.name_AL - a.name_AL;
+        }
+        return b.unhappyCount - a.unhappyCount;
+    }
     return b.unhappy - a.unhappy;
 }
 

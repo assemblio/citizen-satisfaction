@@ -7,6 +7,7 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
 
     // Set the service name display
     var serviceName = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang];
+    $('#dropdown-second .selected-value').html(serviceName);
 
     // Set the default service's satisfaction stats:
     setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex);
@@ -16,28 +17,31 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
 
     // Shake illustrations with highest counts
     shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex);
+    console.log(ministryIndex,serviceGroupIndex,serviceIndex);
 
+    var a = [];
     // Finally, let's build the new list of services for the selected ministry.
-
     // Get each Service from each Service Group.
-    var servicesSorted = [];
     $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
         $(this['Services']).each(function(serviceIndex) {
             var serviceName = this['ServiceName_' + lang];
-            servicesSorted.push(serviceName);
+            console.log(ministryIndex,serviceGroupIndex,serviceIndex);
+            a.push(satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]);
+
         });
     });
-    servicesSorted.sort();
-    $('#dropdown-second .selected-value').html(servicesSorted[0]);
-    $(servicesSorted).each(function(serviceIndex){
-        var serviceName = servicesSorted[serviceIndex];
-        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceIndex + ')">' + serviceName + '</a></li>');
+    a.sort();
+    $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
+        $(this['Services']).each(function(serviceIndex) {
+                var sn = a[serviceIndex];
+                $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceGroupIndex + ', ' + serviceIndex + ')">' + sn + '</a></li>');
+        });
     });
+    console.log(a);
+
 }
 
 function onMinistrySelection(institutionIndex, institutionName){
-
-
 
     $('#dropdown-first .selected-value').html(institutionName);
 

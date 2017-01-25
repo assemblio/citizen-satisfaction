@@ -14,13 +14,13 @@ if(urlLangParam === 'sr'){
 var i18n = {
     title:{
         AL: 'Platforma e OPI-t',
-        SR: 'Platforma e OPI-t serbian',
-        EN: 'Platforma e OPI-t english'
+        SR: 'Platforma OPI',
+        EN: 'OPI Platform'
     },
     description:{
         AL: 'Platforma e OPI-t sh&euml;rben p&euml;r t&euml; reflektuar rezultatet e grumbulluara nga opinionet e qytetar&euml;ve n&euml; koh&euml; reale dhe n&euml; m&euml;nyr&euml; transparente, si dhe mund&euml;son p&euml;rmir&euml;simin e politikave publike p&euml;r sh&euml;rbimet administrative q&euml; ofrohen nga institucionet e Republik&euml;s s&euml; Kosov&euml;s.',
-        SR: 'not available',
-        EN: 'not available'
+        SR: 'Platforma OPI služi za odražavanje rezultata prikupljenih od mišljenja građana u realno vreme i na transparentan način, i omogućava poboljšanje javnih politika za administrativne usluga koje se pružaju od strane institucija Republike Kosova.',
+        EN: 'OPI platform serves to reflect the results collected from the opinions of citizens in a timely and transparent manner, and enables the improvement of public policies for administrative services provided by the institutions of the Republic of Kosovo.'
     },
     descriptionbottom:{
         AL: 'Projekti &euml;sht&euml; bashk&euml;financuar nga Ministria e Administrat&euml;s Publike (MAP) dhe Programi i Kombeve t&euml; Bashkuara p&euml;r Zhvillim (UNDP) n&euml; Kosov&euml;.',
@@ -29,12 +29,12 @@ var i18n = {
     },
     institutionLabel:{
         AL: "Institucioni",
-        SR: "not available",
+        SR: "Institucije",
         EN: "Institution"
     },
     serviceLabel:{
         AL: "Sh&euml;rbimi",
-        SR: "not available",
+        SR: "Usluge",
         EN: "Service"
     },
     logotext1:{
