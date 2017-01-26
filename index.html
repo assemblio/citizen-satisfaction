@@ -33,6 +33,7 @@
         <!-- csshake -->
         <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
 
+        <link rel="stylesheet" href="css/waitMe.css">
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -88,9 +89,34 @@
                 }
             });
         </script>
+        <script src="js/waitMe.js"></script>
+
+        <script>
+        $(function(){
+            run_waitMe_body('img');
+            function run_waitMe_body(effect){
+                $('body').addClass('waitMe_body');
+                var img = 'background:url(\'img/img.svg\')';
+                var elem = $('<div class="waitMe_container ' + effect + '"><div style="' + img + '"></div></div>');
+                $('body').prepend(elem);
+
+                setTimeout(function(){
+                    $('body.waitMe_body').addClass('hideMe');
+                    setTimeout(function(){
+                        $('body.waitMe_body').find('.waitMe_container:not([data-waitme_id])').remove();
+                        $('body.waitMe_body').removeClass('waitMe_body hideMe');
+                    },200);
+                },4000);
+            }
+
+        });
+        </script>
     </head>
 
-    <body>
+    <body class="waitMe_body">
+        <div class="waitMe_container img" style="background:#fff">
+            <div style="background:url('img/img.svg')"></div>
+        </div>
         <div id="app">
             <div id="container-navbar">
                 <nav class="navbar navbar-inverse">
