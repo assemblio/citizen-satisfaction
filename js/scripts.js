@@ -17,27 +17,34 @@ function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
 
     // Shake illustrations with highest counts
     shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex);
-    console.log(ministryIndex,serviceGroupIndex,serviceIndex);
+    // console.log(ministryIndex,serviceGroupIndex,serviceIndex);
 
-    var a = [];
+    var sortedServices = [];
     // Finally, let's build the new list of services for the selected ministry.
     // Get each Service from each Service Group.
     $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
         $(this['Services']).each(function(serviceIndex) {
             var serviceName = this['ServiceName_' + lang];
-            console.log(ministryIndex,serviceGroupIndex,serviceIndex);
-            a.push(satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]);
+            sortedServices.push({grIndex:serviceGroupIndex,srIndex:serviceIndex,service:serviceName});
+        });
+    });
 
-        });
+    sortedServices.sort(function(a,b){
+        A = a.service.toUpperCase();
+        B = b.service.toUpperCase();
+        if (A < B) {
+            return -1;
+        }
+        if (A > B) {
+            return 1;
+        }
+        return 0;
+
     });
-    a.sort();
-    $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
-        $(this['Services']).each(function(serviceIndex) {
-                var sn = a[serviceIndex];
-                $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + serviceGroupIndex + ', ' + serviceIndex + ')">' + sn + '</a></li>');
-        });
+    $(sortedServices).each(function(i){
+        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + sortedServices[i].grIndex + ', ' + sortedServices[i].srIndex + ')">' + sortedServices[i].service + '</a></li>');
     });
-    console.log(a);
+    // console.log(a);
 
 }
 
@@ -226,18 +233,29 @@ $(function() {
         var firstInstitution = data[0]['InstitutionName_' + lang];
 
         var sortedInstitutions=[];
-
         $.each( data, function( key, val ) {
-
-            sortedInstitutions.push(val['InstitutionName_' + lang]);
-
+            sortedInstitutions.push({id:key,instit:data[key]['InstitutionName_' + lang]});
         });
+        sortedInstitutions.sort(function(a, b){
+            A = a.instit.toUpperCase();
+            B = b.instit.toUpperCase();
+            if (A < B) {
+                return -1;
+            }
+            if (A > B) {
+                return 1;
+            }
+            return 0;
+        });
+        // console.log(sortedInstitutions[0].id,sortedInstitutions[0].instit);
 
-        sortedInstitutions.sort();
-        onMinistrySelection(0, sortedInstitutions[0]);
+        onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
+
         $.each(sortedInstitutions,function(i,val){
             var institutionName = val;
-            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + i + ', \'' + institutionName + '\')">' + institutionName + '</a></li>');
+            // console.log(institutionName.id,institutionName.instit);
+            // var id = institutionName.id + 1;
+            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + institutionName.id + ', \'' + institutionName.instit + '\')">' + institutionName.instit + '</a></li>');
 
         });
 
