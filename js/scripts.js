@@ -174,13 +174,13 @@ function shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex){
 function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSelector){
     // GOOD ANSWER
     // If the count is 0 then grey out the illustration in question.
-    if(serviceJson['result_Good'] == 0){
+    if(serviceJson['result_Good'] == 0 && $('.row-happy ' + imageSelector).attr('src').indexOf('/inactive/') < 0){
         var happyImgUrl = $('.row-happy ' + imageSelector).attr('src').replace('/happy/', '/happy/inactive/');
         $('.row-happy ' + imageSelector).attr('src', happyImgUrl);
 
     }
     // else if the count is greater than 0, enable the illustration in question
-    else if(serviceJson['result_Good'] > 0){
+    else if(serviceJson['result_Good'] > 0 && $('.row-happy ' + imageSelector).attr('src').indexOf('/inactive/') > 0){
         var happyImgUrl = $('.row-happy ' + imageSelector).attr('src').replace('/happy/inactive/', '/happy/');
         $('.row-happy ' + imageSelector).attr('src', happyImgUrl);
     }
