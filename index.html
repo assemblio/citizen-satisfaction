@@ -90,41 +90,14 @@
             });
         </script>
         <script src="js/waitMe.js"></script>
-        <script>
-        function getAndDisplayTruckRouteData(){
-          toggleSpinner(true);
-
-          $.get( "https://opi.rks-gov.net/api/report/general", function( points ) {
-              console.log(points);
-          }).done(function() {
-              // Build the route layer.
-
-              toggleSpinner(false);
-          });
-        }
-        function toggleSpinner(display){
-          if(display == true){
-            $('body').waitMe({
-              //none, rotateplane, stretch, orbit, roundBounce, win8,
-              //win8_linear, ios, facebook, rotation, timer, pulse,
-              //progressBar, bouncePulse or img
-              effect: 'stretch',
-              text: '', //place text under the effect (string).
-              bg: 'rgba(255,255,255,0.7)', //background for container (string).
-              color: '#000', //color for background animation and text (string).
-              sizeW: '', //change width for elem animation (string).
-              sizeH: '', //change height for elem animation (string).
-              // url to image
-              source: 'http://4206e9.medialib.glogster.com/media/0de16589e28c077f3ed220e39400774bac8f7465c318d7fe4cc8e9ce8756e1af/animated-gifs-eagles-6.gif'
-            });
-          }else{
-            $('body').waitMe('hide');
-          }
-        }
-        </script>
     </head>
 
-    <body class="waitMe_body">
+    <body>
+        <div class="overllay">
+            <div class="loader">
+                <img src="img/img.svg" alt="">
+            </div>
+        </div>
         <div id="app">
             <div id="container-navbar">
                 <nav class="navbar navbar-inverse">
