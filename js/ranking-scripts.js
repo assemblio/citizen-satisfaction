@@ -247,5 +247,7 @@ $(function() {
                 });
             });
         });
+    }).done(function() {
+        $('.overllay').hide();
     });
 });
