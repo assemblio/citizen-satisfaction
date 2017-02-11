@@ -83,6 +83,7 @@ hr{
 }
 
 .row-sub-service-list .service-sublist-label{
+    padding-left: 40px;
     color: #FFFFFF;
     font-size: 15px;
     font-family: ReneS;

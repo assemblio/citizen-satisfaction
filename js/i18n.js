@@ -114,13 +114,13 @@ var i18n = {
         SR: 'Vizualizator',
         EN: 'Visualizer'
     },
-    serviceList: {
+    serviceList:{
         show: {
             AL: 'trego sh&euml;rbimet',
             SR: 'poka&#382;i usluge',
             EN: 'show services'
         },
-        hide: {
+        hide:{
             AL: 'fsheh sh&euml;rbimet',
             SR: 'sakrij usluge',
             EN: 'hide services'

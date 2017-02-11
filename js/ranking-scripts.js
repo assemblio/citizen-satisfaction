@@ -191,13 +191,13 @@ function resetRanking(rowType, currentRankingList){
 
         var rowHtmlString =
             '<div class="row row-ranking row-' + rowType + '">' +
-                '<div class="col-md-6 institution-name">' +
+                '<div class="col-md-5 institution-name">' +
                     (key + 1) + '. ' + name +
                     '<br>' +
                     '<span class="vote-count">' + answerCount + '</span>&nbsp;' +
                     '<span class="vote-count-label">' + i18n.answers[lang] + '</span>TOKEN_SERVICE_DISPLAY_LINK' +
                 '</div>' +
-                '<div class="col-md-6">' +
+                '<div class="col-md-7">' +
                     '<div id="progress-bar-' + key + '" class="progress-bar progress-bar-skin"><div></div></div>' +
                 '</div>' +
             '</div>' +
@@ -261,14 +261,19 @@ function displayInstitutionServices(institutionId, rowType){
             var answerCount = val[rowType + "Count"];
 
             var institutionServiceRow =
-                '<div class="row row-sub-service-list row-' + rowType + '">' +
-                    '<div class="col-md-1"></div>' +
+                '<div class="row row-sub-service-list">' +
                     '<div class="col-md-5 service-sublist-label">' +
                             (key + 1) + '. ' + serviceName +
                     '</div>' +
-                    '<div class="col-md-6 percentage-count">' +
-                        val[rowType] + '%' + '&nbsp;<span class="vote-count-label">(' + answerCount + '&nbsp;' + i18n.answers[lang] + ')</span>';
-                    '</div>';
+                    '<div class="col-md-2 percentage-count happy-color">' +
+                        val["happy"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;' + i18n.satisfied[lang] + '</span>' +
+                    '</div>' +
+                    '<div class="col-md-3 percentage-count meh-color">' +
+                        val["meh"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;' + i18n.moderatelySatisfied[lang] + '</span>' +
+                    '</div>' +
+                    '<div class="col-md-2 percentage-count unhappy-color">' +
+                        val["unhappy"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;' + i18n.dissatisfied[lang] + '</span>' +
+                    '</div>' +
                 '</div>';
             $('.institution-' + institutionId + '-services-container').append(institutionServiceRow);
         });
