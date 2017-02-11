@@ -113,7 +113,20 @@ var i18n = {
         AL: 'Vizualizim',
         SR: 'Vizualizator',
         EN: 'Visualizer'
+    },
+    serviceList: {
+        show: {
+            AL: 'trego sh&euml;rbimet"',
+            SR: 'poka&#382;i usluge',
+            EN: 'show services'
+        },
+        hide:{
+            AL: 'fsheh sh&euml;rbimet',
+            SR: 'sakrij usluge',
+            EN: 'hide services'
+        }
     }
+
 };
 
 // Display selected language

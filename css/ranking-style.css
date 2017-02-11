@@ -77,3 +77,18 @@ hr{
     font-size: 22px;
     font-weight: bolder;
 }
+
+.row-institution-services-container{
+    display: none;
+}
+
+.row-sub-service-list .service-sublist-label{
+    color: #FFFFFF;
+    font-size: 15px;
+    font-family: ReneS;
+}
+
+.row-sub-service-list .percentage-count{
+    font-size: 15px;
+    font-family: ReneS;
+}

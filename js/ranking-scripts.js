@@ -1,6 +1,8 @@
 var API_REQUEST_URL_GENERAL_RESULT = 'https://opi.rks-gov.net/api/report/general';
 // 'http://csis.appdec.com/api/report/general'
 
+var EXPECTED_NUMBER_OF_INSTITUTIONS = 28;
+
 var satisfactionJson = null;
 var institutions = [];
 var services = [];
@@ -183,23 +185,108 @@ function resetRanking(rowType, currentRankingList){
 
     $.each(currentRankingList, function( key, val ) {
 
-        var institutionName = val["name_" + lang];
+        var institutionId = val['id'];
+        var name = val["name_" + lang];
         var answerCount = val[rowType + "Count"];
 
-        $('.container-ranking').append(
+        var rowHtmlString =
             '<div class="row row-ranking row-' + rowType + '">' +
                 '<div class="col-md-6 institution-name">' +
-                    (key + 1) + '. ' + institutionName +
+                    (key + 1) + '. ' + name +
                     '<br>' +
-                    '<span class="vote-count">' + answerCount + '</span> <span class="vote-count-label">' + i18n.answers[lang] + '</span>' +
+                    '<span class="vote-count">' + answerCount + '</span>&nbsp;' +
+                    '<span class="vote-count-label">' + i18n.answers[lang] + '</span>TOKEN_SERVICE_DISPLAY_LINK' +
                 '</div>' +
                 '<div class="col-md-6">' +
                     '<div id="progress-bar-' + key + '" class="progress-bar progress-bar-skin"><div></div></div>' +
                 '</div>' +
-            '</div><hr>');
+            '</div>' +
+            'TOKEN_SERVICE_SUBLIST_CONTAINER' +
+            '<hr>';
+
+        if(currentRankingList.length <= EXPECTED_NUMBER_OF_INSTITUTIONS){
+
+            var serviceSublistDisplayLinkHtml = '&nbsp;<span class="vote-count-label show-details-institution-' + institutionId + '">' +
+                '<a href="javascript:displayInstitutionServices(' + institutionId + ', \'' + rowType + '\')" id="lnk-details-services">(' + i18n.serviceList.show[lang] + ')</a>' +
+            '</span>';
+
+            // We are listing institutions, add html content for sublisting services
+            var serviceSublistHtmlString =
+                '<div class="row row-' + rowType + ' row-institution-services">' +
+                    '<div class="col-md-12 row-institution-services-container institution-'+ institutionId + '-services-container"></div>' +
+                '</div>';
+
+            rowHtmlString = rowHtmlString.replace('TOKEN_SERVICE_DISPLAY_LINK', serviceSublistDisplayLinkHtml);
+            rowHtmlString = rowHtmlString.replace('TOKEN_SERVICE_SUBLIST_CONTAINER', serviceSublistHtmlString);
+        }else{
+            // We are listing services, don't and any sublisting html content.
+            rowHtmlString = rowHtmlString.replace('TOKEN_SERVICE_DISPLAY_LINK', '');
+            rowHtmlString = rowHtmlString.replace('TOKEN_SERVICE_SUBLIST_CONTAINER', '');
+        }
+
+        $('.container-ranking').append(rowHtmlString);
 
         progressBar(val[rowType], $('#progress-bar-' + key));
     });
+}
+
+function displayInstitutionServices(institutionId, rowType){
+
+    if($('.institution-' + institutionId + '-services-container').html() === ''){
+
+        var institutionServices = [];
+
+        $.each(services, function(key, val) {
+            if(val['institution_id'] == institutionId){
+                // only include services that have at least one vote:
+
+                if(val[rowType + "Count"] > 0){
+                    institutionServices.push(val);
+                }
+            }
+        });
+
+        if(rowType === 'happy'){
+            institutionServices.sort(sortByHappy);
+
+        }else if (rowType === 'meh'){
+            institutionServices.sort(sortByMeh);
+
+        }else if (rowType === 'unhappy'){
+            institutionServices.sort(sortByUnhappy);
+        }
+
+        $.each(institutionServices, function(key, val) {
+            var serviceName = val["name_" + lang];
+            var answerCount = val[rowType + "Count"];
+
+            var institutionServiceRow =
+                '<div class="row row-sub-service-list row-' + rowType + '">' +
+                    '<div class="col-md-1"></div>' +
+                    '<div class="col-md-5 service-sublist-label">' +
+                            (key + 1) + '. ' + serviceName +
+                    '</div>' +
+                    '<div class="col-md-6 percentage-count">' +
+                        val[rowType] + '%' + '&nbsp;<span class="vote-count-label">(' + answerCount + '&nbsp;' + i18n.answers[lang] + ')</span>';
+                    '</div>';
+                '</div>';
+            $('.institution-' + institutionId + '-services-container').append(institutionServiceRow);
+        });
+    }
+
+    // when clicking on show details, show all the services for the current institutions.
+    // If details are already shown, then the link become "hide details" link and clicking on on hides all the services.
+    $('.institution-' + institutionId + '-services-container').slideToggle('slow', function() {
+
+        // Animation complete
+        if($('.institution-' + institutionId + '-services-container').css('display') === 'block'){
+            $('.show-details-institution-' + institutionId + ' #lnk-details-services').html('(' + i18n.serviceList.hide[lang] + ')');
+
+        }else{
+            $('.show-details-institution-' + institutionId + ' #lnk-details-services').html('(' + i18n.serviceList.show[lang] + ')');
+        }
+    });
+
 }
 
 $(function() {
@@ -212,8 +299,9 @@ $(function() {
         // Store result in a global variable for future use.
         satisfactionJson = data;
 
-        $.each( data, function(key, val) {
+        $.each(data, function(key, val) {
             institutions.push({
+                id: val['ID'],
                 name_AL: val['InstitutionName_AL'],
                 name_EN: val['InstitutionName_EN'],
                 name_SR: val['InstitutionName_SR'],
@@ -230,10 +318,11 @@ $(function() {
         displayInstitutionRanking();
 
         // Do similar thing with services...
-        $.each( data, function( ministryIndex) {
+        $.each(data, function(ministryIndex) {
             $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function() {
                 $(this['Services']).each(function(key, val) {
                     services.push({
+                        institution_id: satisfactionJson[ministryIndex]['ID'],
                         name_AL: val['ServiceName_AL'],
                         name_EN: val['ServiceName_EN'],
                         name_SR: val['ServiceName_SR'],
