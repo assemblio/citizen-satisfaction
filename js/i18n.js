@@ -116,7 +116,7 @@ var i18n = {
     },
     serviceList: {
         show: {
-            AL: 'trego sh&euml;rbimet"',
+            AL: 'trego sh&euml;rbimet',
             SR: 'poka&#382;i usluge',
             EN: 'show services'
         },
