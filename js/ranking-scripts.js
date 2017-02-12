@@ -317,6 +317,9 @@ function displayInstitutionServices(institutionId, rowType){
 
 $(function() {
     // Set link to visualizer with selected language
+    if(urlLangParam == null){
+        urlLangParam = 'sq';
+    }
     $('#lnk-visualizer').attr('href', document.location.pathname.replace('/ranking/', '/') + '?lang=' + urlLangParam);
 
     if(satisfactionJson == null) {

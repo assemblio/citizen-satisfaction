@@ -224,6 +224,9 @@ function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSele
 $(function() {
 
     // Set link to visualizer with selected language
+    if(urlLangParam == null){
+        urlLangParam = 'sq';
+    }
     $('#lnk-ranking').attr('href', document.location.pathname + 'ranking?lang=' + urlLangParam);
 
     if(satisfactionJson == null){
