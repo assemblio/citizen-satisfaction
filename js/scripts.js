@@ -2,6 +2,9 @@ var API_REQUEST_URL_GENERAL_RESULT = 'https://opi.rks-gov.net/api/report/general
 // 'http://csis.appdec.com/api/report/general'
 
 var satisfactionJson = null;
+if(sessionStorage.getItem('satisfactionJson') != null){
+    satisfactionJson = JSON.parse(sessionStorage.getItem('satisfactionJson'));
+}
 
 function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
 
@@ -223,18 +226,27 @@ $(function() {
     // Set link to visualizer with selected language
     $('#lnk-ranking').attr('href', document.location.pathname + 'ranking?lang=' + urlLangParam);
 
-    // get the citizen satisfaction result json
-    $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {
+    if(satisfactionJson == null){
+        // get the citizen satisfaction result json
+        $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {
+            sessionStorage.setItem('satisfactionJson', JSON.stringify(data));
+            satisfactionJson = data;
+            processApiResponse(data)
 
-        // Store result in a global variable for future use.
-        satisfactionJson = data;
+        }).done(function() {
+            $('.overllay').hide();
+        });
+    }else{
+        processApiResponse(satisfactionJson);
+        $('.overllay').hide();
+    }
 
-        // Init first institution
-        var firstInstitution = data[0]['InstitutionName_' + lang];
+    function processApiResponse(data){
 
-        var sortedInstitutions=[];
+        var sortedInstitutions = [];
+
         $.each( data, function( key, val ) {
-            sortedInstitutions.push({id:key,instit:data[key]['InstitutionName_' + lang]});
+            sortedInstitutions.push({id:key, instit:data[key]['InstitutionName_' + lang]});
         });
         sortedInstitutions.sort(function(a, b){
             A = a.instit.toUpperCase();
@@ -247,7 +259,6 @@ $(function() {
             }
             return 0;
         });
-        // console.log(sortedInstitutions[0].id,sortedInstitutions[0].instit);
 
         onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
 
@@ -256,11 +267,8 @@ $(function() {
             // console.log(institutionName.id,institutionName.instit);
             // var id = institutionName.id + 1;
             $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + institutionName.id + ', \'' + institutionName.instit + '\')">' + institutionName.instit + '</a></li>');
-
         });
+    }
 
 
-    }).done(function() {
-        $('.overllay').hide();
-    });
 });
