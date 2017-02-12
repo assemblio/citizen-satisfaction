@@ -214,7 +214,7 @@ function resetRanking(rowType, currentRankingList){
 
             // We are listing institutions, add html content for sublisting services
             var serviceSublistHtmlString =
-                '<div class="row row-' + rowType + ' row-institution-services">' +
+                '<div class="row row-institution-services">' +
                     '<div class="col-md-12 row-institution-services-container institution-'+ institutionId + '-services-container"></div>' +
                 '</div>';
 
