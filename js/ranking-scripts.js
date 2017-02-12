@@ -4,6 +4,10 @@ var API_REQUEST_URL_GENERAL_RESULT = 'https://opi.rks-gov.net/api/report/general
 var EXPECTED_NUMBER_OF_INSTITUTIONS = 28;
 
 var satisfactionJson = null;
+if(sessionStorage.getItem('satisfactionJson') != null){
+    satisfactionJson = JSON.parse(sessionStorage.getItem('satisfactionJson'));
+}
+
 var institutions = [];
 var services = [];
 
@@ -315,13 +319,24 @@ $(function() {
     // Set link to visualizer with selected language
     $('#lnk-visualizer').attr('href', document.location.pathname.replace('/ranking/', '/') + '?lang=' + urlLangParam);
 
-    // get the citizen satisfaction result json
-    $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {
+    if(satisfactionJson == null) {
+        // get the citizen satisfaction result json
+        $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function (data) {
+            sessionStorage.setItem('satisfactionJson', JSON.stringify(data));
+            satisfactionJson = data;
+            processApiResponse(data);
 
-        // Store result in a global variable for future use.
-        satisfactionJson = data;
+        }).done(function () {
+            $('.overllay').hide();
+        });
+    }else{
+        processApiResponse(satisfactionJson);
+        $('.overllay').hide();
+    }
 
-        $.each(data, function(key, val) {
+    function processApiResponse(data){
+        
+        $.each(data, function (key, val) {
             institutions.push({
                 id: val['ID'],
                 name_AL: val['InstitutionName_AL'],
@@ -341,9 +356,9 @@ $(function() {
         displayInstitutionRanking();
 
         // Do similar thing with services...
-        $.each(data, function(ministryIndex) {
-            $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function() {
-                $(this['Services']).each(function(key, val) {
+        $.each(data, function (ministryIndex) {
+            $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function () {
+                $(this['Services']).each(function (key, val) {
                     services.push({
                         institution_id: satisfactionJson[ministryIndex]['ID'],
                         name_AL: val['ServiceName_AL'],
@@ -360,7 +375,5 @@ $(function() {
                 });
             });
         });
-    }).done(function() {
-        $('.overllay').hide();
-    });
+    }
 });
