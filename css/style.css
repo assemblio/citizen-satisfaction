@@ -183,14 +183,14 @@
     */
 }
 
-.row-happy .vote-count, .happy-color{
+.row-happy .vote-count, .row-happy .percentage-count, .happy-color{
     color: #30C67B;
 }
 
-.row-meh .vote-count, .meh-color{
+.row-meh .vote-count, .row-meh .percentage-count, .meh-color{
     color: #D2B028;
 }
 
-.row-unhappy .vote-count, .unhappy-color{
+.row-unhappy .vote-count, .row-unhappy .percentage-count, .unhappy-color{
     color: #C6371D;
 }
