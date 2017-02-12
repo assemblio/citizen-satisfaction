@@ -146,7 +146,7 @@
     font-family: ReneT;
 }
 
-.label-indicator, .vote-count-label{
+.label-indicator, .vote-count-label, .vote-count-total{
     color: #AAAAA9;
     font-size: 12px;
     font-family: ReneS;

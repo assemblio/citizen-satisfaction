@@ -188,13 +188,15 @@ function resetRanking(rowType, currentRankingList){
         var institutionId = val['id'];
         var name = val["name_" + lang];
         var answerCount = val[rowType + "Count"];
+        var totalCount = val['totalCount'];
 
         var rowHtmlString =
             '<div class="row row-ranking row-' + rowType + '">' +
                 '<div class="col-md-6 institution-name">' +
                     (key + 1) + '. ' + name +
                     '<br>' +
-                    '<span class="vote-count">' + answerCount + '</span>&nbsp;' +
+                    '<span class="vote-count">' + answerCount + '</span>' +
+                    '<span class="vote-count-total">/' + totalCount + '</span>&nbsp;' +
                     '<span class="vote-count-label">' + i18n.answers[lang] + '</span>TOKEN_SERVICE_DISPLAY_LINK' +
                 '</div>' +
                 '<div class="col-md-6">' +
@@ -238,9 +240,8 @@ function displayInstitutionServices(institutionId, rowType){
 
         $.each(services, function(key, val) {
             if(val['institution_id'] == institutionId){
-                // only include services that have at least one vote:
-
-                if(val[rowType + "Count"] > 0){
+                // only include services that have at least one vote for each satisfaction level:
+                if(val["happyCount"] > 0 || val["mehCount"] > 0  || val["unhappyCount"] > 0 ){
                     institutionServices.push(val);
                 }
             }
@@ -331,7 +332,8 @@ $(function() {
                 unhappy: parseFloat(val['result_Bad_Percentage'].replace('%', '')),
                 happyCount: val['result_Good'],
                 mehCount: val['result_Middle'],
-                unhappyCount: val['result_Bad']
+                unhappyCount: val['result_Bad'],
+                totalCount: val['result_Total']
             });
         });
 
@@ -352,7 +354,8 @@ $(function() {
                         unhappy: parseFloat(val['result_Bad_Percentage'].replace('%', '')),
                         happyCount: val['result_Good'],
                         mehCount: val['result_Middle'],
-                        unhappyCount: val['result_Bad']
+                        unhappyCount: val['result_Bad'],
+                        totalCount: val['result_Total']
                     });
                 });
             });
