@@ -1,3 +1,5 @@
+#!/bin/bash
+
 current_branch=$(git branch | grep \* | tr -d ' *')
 
 git pull
