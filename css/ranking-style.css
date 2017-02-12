@@ -79,11 +79,13 @@ hr{
 }
 
 .row-institution-services-container{
+    padding-left: 40px;
+    padding-right: 32px;
     display: none;
 }
 
 .row-sub-service-list .service-sublist-label{
-    padding-left: 40px;
+    padding-left: 0px;
     color: #FFFFFF;
     font-size: 15px;
     font-family: ReneS;
@@ -92,4 +94,12 @@ hr{
 .row-sub-service-list .percentage-count{
     font-size: 15px;
     font-family: ReneS;
+}
+
+.row-sub-service-list.row-even{
+    background-color: #364967;
+}
+
+.row-sub-service-list.row-odd{
+    background-color: #223757;
 }

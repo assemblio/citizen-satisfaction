@@ -281,8 +281,13 @@ function displayInstitutionServices(institutionId, rowType){
             var serviceName = val["name_" + lang];
             var answerCount = val[rowType + "Count"];
 
+            var evenOrOddRow = 'row-even';
+            if(key % 2 != 0){
+                evenOrOddRow = 'row-odd';
+            }
+
             var institutionServiceRow =
-                '<div class="row row-sub-service-list">' +
+                '<div class="row row-sub-service-list ' + evenOrOddRow + '">' +
                     '<div class="col-md-6 service-sublist-label">' +
                             (key + 1) + '. ' + serviceName +
                     '</div>' +
