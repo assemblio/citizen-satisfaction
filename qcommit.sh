@@ -1,11 +1,11 @@
 #!/bin/bash
 
 current_branch=$(git branch | grep \* | tr -d ' *')
-BranchMaster="master"
-if [$current_branch != $BranchMaster]
-    then
-        echo 'You are not in master'
-fi
+# BranchMaster=master
+# if [$current_branch == $BranchMaster]
+#     then
+#         echo 'You are not in master'
+# fi
 
 git pull
 git add .
