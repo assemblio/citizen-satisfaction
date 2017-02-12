@@ -191,13 +191,13 @@ function resetRanking(rowType, currentRankingList){
 
         var rowHtmlString =
             '<div class="row row-ranking row-' + rowType + '">' +
-                '<div class="col-md-5 institution-name">' +
+                '<div class="col-md-6 institution-name">' +
                     (key + 1) + '. ' + name +
                     '<br>' +
                     '<span class="vote-count">' + answerCount + '</span>&nbsp;' +
                     '<span class="vote-count-label">' + i18n.answers[lang] + '</span>TOKEN_SERVICE_DISPLAY_LINK' +
                 '</div>' +
-                '<div class="col-md-7">' +
+                '<div class="col-md-6">' +
                     '<div id="progress-bar-' + key + '" class="progress-bar progress-bar-skin"><div></div></div>' +
                 '</div>' +
             '</div>' +
@@ -256,23 +256,39 @@ function displayInstitutionServices(institutionId, rowType){
             institutionServices.sort(sortByUnhappy);
         }
 
+        // Header row labelling column of service values.
+        var institutionServiceRowHeader =
+                '<div class="row row-sub-service-list" style="padding-bottom:10px;">' +
+                    '<div class="col-md-6"></div>' +
+                    '<div class="col-md-2 percentage-count happy-color">' +
+                        i18n.satisfied[lang] +
+                    '</div>' +
+                    '<div class="col-md-2 percentage-count meh-color">' +
+                        i18n.moderatelySatisfied[lang] +
+                    '</div>' +
+                    '<div class="col-md-2 percentage-count unhappy-color">' +
+                        i18n.dissatisfied[lang] +
+                    '</div>' +
+                '</div>';
+        $('.institution-' + institutionId + '-services-container').append(institutionServiceRowHeader);
+
         $.each(institutionServices, function(key, val) {
             var serviceName = val["name_" + lang];
             var answerCount = val[rowType + "Count"];
 
             var institutionServiceRow =
                 '<div class="row row-sub-service-list">' +
-                    '<div class="col-md-5 service-sublist-label">' +
+                    '<div class="col-md-6 service-sublist-label">' +
                             (key + 1) + '. ' + serviceName +
                     '</div>' +
                     '<div class="col-md-2 percentage-count happy-color">' +
-                        val["happy"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;' + i18n.satisfied[lang] + '</span>' +
+                        val["happy"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;(' + val['happyCount'] + '&nbsp;' + i18n.answers[lang] + ')</span>' +
                     '</div>' +
-                    '<div class="col-md-3 percentage-count meh-color">' +
-                        val["meh"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;' + i18n.moderatelySatisfied[lang] + '</span>' +
+                    '<div class="col-md-2 percentage-count meh-color">' +
+                        val["meh"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;(' + val['mehCount'] + '&nbsp;' + i18n.answers[lang] + ')</span>' +
                     '</div>' +
                     '<div class="col-md-2 percentage-count unhappy-color">' +
-                        val["unhappy"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;' + i18n.dissatisfied[lang] + '</span>' +
+                        val["unhappy"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;(' + val['unhappyCount'] + '&nbsp;' + i18n.answers[lang] + ')</span>' +
                     '</div>' +
                 '</div>';
             $('.institution-' + institutionId + '-services-container').append(institutionServiceRow);
