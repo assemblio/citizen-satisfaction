@@ -391,14 +391,13 @@ $(function() {
     // Init keyup listener for search field
     $('.form-control-search').keyup(function() {
         $.each($('.institution-or-service-name'), function(key, value){
-            var regexMatchRule = '\.*' + $('.form-control-search').val() + '\.*';
+            var regexMatchRule = '\.*' + $('.form-control-search').val().toLowerCase() + '\.*';
 
             // If institution or service name in current div doesn't match search, hide it.
             if($(value).html().slugify().match(regexMatchRule) == null){
 
                 // Hide the row:
                 $(value).parent().parent().parent().css('display', 'none');
-
 
 
             }else{
