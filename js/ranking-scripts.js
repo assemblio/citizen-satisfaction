@@ -398,8 +398,7 @@ $(function() {
 
                 // Hide the row:
                 $(value).parent().parent().parent().css('display', 'none');
-
-
+                
             }else{
                 // Else, display it.
                 $(value).parent().parent().parent().css('display', 'block');
