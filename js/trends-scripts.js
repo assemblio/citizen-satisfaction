@@ -118,8 +118,6 @@ $(function() {
 
         // Hide gif loader animation.
         $('.overllay').hide();
-
-        console.log(institutions);
     });
 
     function renderChart(data){
