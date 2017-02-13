@@ -1,6 +1,7 @@
 var API_REQUEST_URL_GENERAL_RESULT = 'https://opi.rks-gov.net/api/report/general';
 // 'http://csis.appdec.com/api/report/general'
 
+// TODO: Fix this jank approach to detecting whether we are listing institutions or not
 var EXPECTED_NUMBER_OF_INSTITUTIONS = 28;
 
 var satisfactionJson = null;
