@@ -61,19 +61,19 @@ hr{
     background: -o-linear-gradient(top, #C6371D, #C6371D);
 }
 
-.row-happy .institution-name{
+.row-happy .institution-or-service-name-container{
     color: white;
 }
 
-.row-meh .institution-name{
+.row-meh .institution-or-service-name-container{
     color: white;
 }
 
-.row-unhappy .institution-name{
+.row-unhappy .institution-or-service-name-container{
     color: white;
 }
 
-.institution-name, .vote-count{
+.institution-or-service-name-container, .vote-count{
     font-size: 22px;
     font-weight: bolder;
 }
@@ -103,3 +103,19 @@ hr{
 .row-sub-service-list.row-odd{
     background-color: #223757;
 }
+
+.col-ranking-type-dropdown-container{
+    padding-top: 5px;
+    padding-right: 0px;
+}
+
+.input-group.input-group-search{
+    width: 350px;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+/**
+.col-search-container{
+    padding-left: 0px;
+}**/

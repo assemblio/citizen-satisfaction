@@ -125,6 +125,11 @@ var i18n = {
             SR: 'sakrij usluge',
             EN: 'hide services'
         }
+    },
+    searchFor:{
+        AL: 'Search for...',
+        SR: 'Search for...',
+        EN: 'Search for...'
     }
 
 };

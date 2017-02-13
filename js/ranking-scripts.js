@@ -195,20 +195,22 @@ function resetRanking(rowType, currentRankingList){
         var totalCount = val['totalCount'];
 
         var rowHtmlString =
-            '<div class="row row-ranking row-' + rowType + '">' +
-                '<div class="col-md-6 institution-name">' +
-                    (key + 1) + '. ' + name +
-                    '<br>' +
-                    '<span class="vote-count">' + answerCount + '</span>' +
-                    '<span class="vote-count-total">/' + totalCount + '</span>&nbsp;' +
-                    '<span class="vote-count-label">' + i18n.answers[lang] + '</span>TOKEN_SERVICE_DISPLAY_LINK' +
+            '<div class="row-container">' +
+                '<div class="row row-ranking row-' + rowType + '">' +
+                    '<div class="col-md-6 institution-or-service-name-container">' +
+                        (key + 1) + '. <span class="institution-or-service-name">' + name + '</span>' +
+                        '<br>' +
+                        '<span class="vote-count">' + answerCount + '</span>' +
+                        '<span class="vote-count-total">/' + totalCount + '</span>&nbsp;' +
+                        '<span class="vote-count-label">' + i18n.answers[lang] + '</span>TOKEN_SERVICE_DISPLAY_LINK' +
+                    '</div>' +
+                    '<div class="col-md-6">' +
+                        '<div id="progress-bar-' + key + '" class="progress-bar progress-bar-skin"><div></div></div>' +
+                    '</div>' +
                 '</div>' +
-                '<div class="col-md-6">' +
-                    '<div id="progress-bar-' + key + '" class="progress-bar progress-bar-skin"><div></div></div>' +
-                '</div>' +
-            '</div>' +
-            'TOKEN_SERVICE_SUBLIST_CONTAINER' +
-            '<hr>';
+                'TOKEN_SERVICE_SUBLIST_CONTAINER' +
+                '<hr>' +
+            '</div>';
 
         if(currentRankingList.length <= EXPECTED_NUMBER_OF_INSTITUTIONS){
 
@@ -320,6 +322,7 @@ function displayInstitutionServices(institutionId, rowType){
 
 }
 
+
 $(function() {
     // Set link to visualizer with selected language
     if(urlLangParam == null){
@@ -384,4 +387,24 @@ $(function() {
             });
         });
     }
+
+    // Init keyup listener for search field
+    $('.form-control-search').keyup(function() {
+        $.each($('.institution-or-service-name'), function(key, value){
+            var regexMatchRule = '\.*' + $('.form-control-search').val() + '\.*';
+
+            // If institution or service name in current div doesn't match search, hide it.
+            if($(value).html().slugify().match(regexMatchRule) == null){
+
+                // Hide the row:
+                $(value).parent().parent().parent().css('display', 'none');
+
+
+
+            }else{
+                // Else, display it.
+                $(value).parent().parent().parent().css('display', 'block');
+            }
+        });
+    });
 });
