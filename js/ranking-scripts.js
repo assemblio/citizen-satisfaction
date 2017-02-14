@@ -331,6 +331,9 @@ $(function() {
     }
     $('#lnk-visualizer').attr('href', document.location.pathname.replace('/ranking/', '/') + '?lang=' + urlLangParam);
 
+    $('.navbar-brand').attr('href', document.location.pathname.replace('/ranking/', '/') + '?lang=' + urlLangParam);
+
+
     if(satisfactionJson == null) {
         // get the citizen satisfaction result json
         $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function (data) {
@@ -347,7 +350,7 @@ $(function() {
     }
 
     function processApiResponse(data){
-        
+
         $.each(data, function (key, val) {
             institutions.push({
                 id: val['ID'],
@@ -399,7 +402,7 @@ $(function() {
 
                 // Hide the row:
                 $(value).parent().parent().parent().css('display', 'none');
-                
+
             }else{
                 // Else, display it.
                 $(value).parent().parent().parent().css('display', 'block');

@@ -47,6 +47,12 @@ var institutions = [];
 var services = [];
 
 $(function() {
+    // Set link to trends with selected language
+    if(urlLangParam == null){
+        urlLangParam = 'sq';
+    }
+    $('.navbar-brand').attr('href', document.location.pathname.replace('/trends/', '/') + '?lang=' + urlLangParam);
+
     $.when(
         // Deferred requests
         $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[0], function (rsp) {
