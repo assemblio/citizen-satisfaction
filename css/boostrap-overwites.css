@@ -43,26 +43,43 @@
     color:#ffffff !important
 }
 #container-navbar .navbar-inverse{
-    background-color: #4A5B76;
+    /**background-color: #4A5B76;**/
+    background: #0065AD; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#005795, #0065AD); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#005795, #0065AD); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#005795, #0065AD); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#005795, #0065AD); /* Standard syntax */
     color: white;
-    border-bottom: thin solid #5C6B84;
+    border-bottom: thin solid #1874B5;
 }
 
 .container-selection-dropdowns{
-    background-color: #364967;
+    background: #0065AD; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#005795, #0065AD); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#005795, #0065AD); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#005795, #0065AD); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#005795, #0065AD); /* Standard syntax */
 }
 
 .row-dropdown{
-   border-bottom: thin solid #5C6B84;
+   border-bottom: thin solid #1874B5;
+}
+
+hr{
+    border-color: #1874B5;
 }
 
 .btn-dropdown{
     color: white;
-    background-color: #364967;
-    border-color: #364967;
+    border: 0px;
     width: 100%;
     text-align: left;
     white-space: normal;
+    background: #0065AD; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#005795, #0065AD); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#005795, #0065AD); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#005795, #0065AD); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#005795, #0065AD); /* Standard syntax */
 }
 .dropdown-menu>li>a {
     word-wrap: break-word;

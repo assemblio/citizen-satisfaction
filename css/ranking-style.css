@@ -97,11 +97,11 @@ hr{
 }
 
 .row-sub-service-list.row-even{
-    background-color: #364967;
+    /*background-color: #364967;*/
 }
 
 .row-sub-service-list.row-odd{
-    background-color: #223757;
+    /*background-color: #223757;*/
 }
 
 .col-ranking-type-dropdown-container{

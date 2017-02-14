@@ -34,13 +34,17 @@
 }
 
 .footer-bottom{
-    background-color: #364967;
     color: #fff;
     font-family: ReneS;
     font-size: 10px;
     text-align: center;
     padding-top: 25px;
     padding-bottom: 25px;
+    background: #0065AD; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#005795, #0065AD); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#005795, #0065AD); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#005795, #0065AD); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#005795, #0065AD); /* Standard syntax */
 }
 
 .share-btn{
@@ -57,7 +61,11 @@
 }
 
 .container-footer{
-    background-color:#4a5b76;
+    background: #0065AD; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#005795, #0065AD); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#005795, #0065AD); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#005795, #0065AD); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#005795, #0065AD); /* Standard syntax */
     color: #FFF;
 }
 .description-footer{

@@ -126,14 +126,31 @@ $(function() {
                 text: ''
             },
             xAxis: {
-                categories: ["three weeks ago", "two weeks ago", "one week ago"]
+                categories: ["three weeks ago", "two weeks ago", "one week ago"],
+                labels: {
+                    style: {
+                        color: 'white'
+                    }
+                }
             },
             yAxis: {
                 labels: {
                     format: "{value}%",
+                    style: {
+                        color: 'white'
+                    }
                 },
                 title: {
                     text: ''
+                }
+            },
+            chart:{
+                backgroundColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                    stops: [
+                        [0, 'rgb(82, 178, 213)'],
+                        [1, 'rgb(65, 118, 173)']
+                    ]
                 }
             },
             labels: {
@@ -141,8 +158,8 @@ $(function() {
                     html: i18n.answers[lang] + ":",
                     style: {
                         left: '50px',
-                        top: '-14px',
-                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                        top: '0px',
+                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
                     }
                 }]
             },
@@ -186,7 +203,7 @@ $(function() {
                     y: data.happyCount.reduce(function(a, b) { return a + b; }, 0),
                     color: '#30C67B' // Satisfied color
                 }],
-                center: [100, 40],
+                center: [100, 60],
                 size: 120,
                 showInLegend: false,
                 dataLabels: {

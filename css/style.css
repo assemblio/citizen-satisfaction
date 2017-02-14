@@ -74,6 +74,21 @@
     }
 }
 
+.gradient-background {
+    background: #4176AD; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#52B2D5, #4176AD); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#52B2D5, #4176AD); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#52B2D5, #4176AD); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#52B2D5, #4176AD); /* Standard syntax */
+}
+
+.gradient-background-ranking {
+    background: #4B99C4; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#4B99C4, #4176AD); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#4B99C4, #4176AD); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#4B99C4, #4176AD); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#4B99C4, #4176AD); /* Standard syntax */
+}
 
 .overllay{
     position:fixed;
@@ -100,14 +115,14 @@
 
 
 .span-institucion{
-    color: #AAAAA9;
+    color: #5599C9;
     font-family: ReneS;
     font-size: 15px;
     margin-top: 8px;
 }
 
 .span-service{
-    color: #AAAAA9;
+    color: #5599C9;
     font-family: ReneS;
     font-size: 15px;
     margin-top: 8px;
@@ -147,7 +162,7 @@
 }
 
 .label-indicator, .vote-count-label, .vote-count-total{
-    color: #AAAAA9;
+    color: white;
     font-size: 12px;
     font-family: ReneS;
 }
