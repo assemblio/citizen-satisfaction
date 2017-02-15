@@ -113,21 +113,37 @@
 
             <div class="container-fluid container-selection-dropdowns">
                 <div class="row row-dropdown">
-                    <div class="col-md-12 col-ranking-type-dropdown-container">
+                    <div class="col-xs-12">
                         <div class="dropdown" id="dropdown-first">
+                            <div class="span-institucion">
+                                <span><script>document.write(i18n.institutionLabel[lang])</script>:</span>
+                            </div>
                             <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdown-menu-first" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span class="selected-value"><script>document.write(i18n.institutions[lang])</script></span>
+                                <span class="selected-value"></span>
                                 &nbsp;<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdown-menu-first">
-                                <li><a href="javascript:displayInstitutionRanking()"><script>document.write(i18n.institutions[lang])</script></a></li>
-                                <li><a href="javascript:displayServiceRanking()"><script>document.write(i18n.services[lang])</script></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-dropdown">
+                    <div class="col-xs-12">
+                        <div class="dropdown" id="dropdown-second">
+                            <div class="span-service">
+                                <span><script>document.write(i18n.serviceLabel[lang])</script>:</span>
+                            </div>
+                            <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdown-menu-second" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="selected-value"></span>
+                                &nbsp;<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown-menu-second">
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             <div class="container-fluid container-chart">
                 <div class="row">

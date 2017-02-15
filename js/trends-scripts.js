@@ -45,6 +45,114 @@ var data = {
 
 var institutions = [];
 var services = [];
+var sortedInstitutions = [];
+
+
+function onMinistrySelection(instituIndex,institu) {
+    $('#dropdown-first .selected-value').html(institu);
+    $('#dropdown-second .selected-value').html('All services');
+    // Render the chart.
+    renderChart(institutions[instituIndex]);
+}
+function onServiceSelection(serviceIndex,serviceName){
+    $('#dropdown-first .selected-value').html('All institutions');
+    $('#dropdown-second .selected-value').html(serviceName);
+    renderChart(services[serviceIndex]);
+}
+
+function renderChart(data){
+    Highcharts.chart('container-barchart', {
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: ["three weeks ago", "two weeks ago", "one week ago"],
+            labels: {
+                style: {
+                    color: 'white'
+                }
+            }
+        },
+        yAxis: {
+            labels: {
+                format: "{value}%",
+                style: {
+                    color: 'white'
+                }
+            },
+            title: {
+                text: ''
+            }
+        },
+        chart:{
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                stops: [
+                    [0, 'rgb(82, 178, 213)'],
+                    [1, 'rgb(65, 118, 173)']
+                ]
+            }
+        },
+        labels: {
+            items: [{
+                html: i18n.answers[lang] + ":",
+                style: {
+                    left: '50px',
+                    top: '0px',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
+                }
+            }]
+        },
+        series: [{
+            type: 'column',
+            name: i18n.dissatisfied[lang],
+            data: data.unhappy,
+            color: '#C6371D' // Dissatisfied color
+        }, {
+            type: 'column',
+            name: i18n.moderatelySatisfied[lang],
+            data: data.meh,
+            color: '#D2B028' // Moderately satisfied colors
+        }, {
+            type: 'column',
+            name: i18n.satisfied[lang],
+            data: data.happy,
+            color: '#30C67B' // Satisfied color
+        }/**, {
+            type: 'spline',
+            name: 'Average',
+            data: [3, 2.67, 3],
+            marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                fillColor: 'white'
+            }
+        }**/,{
+            type: 'pie',
+            name: i18n.answers[lang],
+            data: [{
+                name: i18n.dissatisfied[lang],
+                y: data.unhappyCount.reduce(function(a, b) { return a + b; }, 0),
+                color: '#C6371D' // Dissatisfied color
+            }, {
+                name: i18n.moderatelySatisfied[lang],
+                y: data.mehCount.reduce(function(a, b) { return a + b; }, 0),
+                color: '#D2B028' // Moderately satisfied colors
+            }, {
+                name: i18n.satisfied[lang],
+                y: data.happyCount.reduce(function(a, b) { return a + b; }, 0),
+                color: '#30C67B' // Satisfied color
+            }],
+            center: [100, 60],
+            size: 120,
+            showInLegend: false,
+            dataLabels: {
+                enabled: false
+            }
+        }]
+    });
+}
+
 
 $(function() {
     // Set link to trends with selected language
@@ -113,109 +221,78 @@ $(function() {
                     data['second'][idx]['result_Total'],
                     data['third'][idx]['result_Total']
                 ]
-            })
+            });
 
+            $(val['ServiceGroups']).each(function(serviceGroupIndex){
+                $(this['Services']).each(function(serviceIndex,serviceVal) {
+                    var serviceName = this['ServiceName_' + lang];
+                    // services.push({grIndex:serviceGroupIndex,srIndex:serviceIndex,service:serviceName});
+                    services.push({
+                        service_id: serviceVal['ID'],
+                        name_AL: serviceVal['ServiceName_AL'],
+                        name_EN: serviceVal['ServiceName_EN'],
+                        name_SR: serviceVal['ServiceName_SR'],
+                        happy: [
+                            parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                            parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                            parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
+                        ],
+                        meh: [
+                            parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                            parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                            parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
+                        ],
+                        unhappy: [
+                            parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                            parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                            parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
+                        ],
+                        happyCount: [
+                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
+                        ],
+                        mehCount: [
+                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
+                        ],
+                        unhappyCount: [
+                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
+                        ],
+                        totalCount: [
+                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
+                        ]
+                    });
+                });
+            });
         });
 
-        // TODO: Build services list
+        $(services).each(function(i){
+            var servID = services[i].service_id;
+            var serviceN = services[i].name_+lang;
+            $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + servID + ', \'' + serviceN + '\')">' + serviceN + '</a></li>');
+        });
 
-        // Render the chart.
-        renderChart(institutions[13]);
+        $.each( data['first'], function( key, val ) {
+            sortedInstitutions.push({id:key, instit:val['InstitutionName_' + lang]});
+        });
+        // console.log(sortedInstitutions[0]);
+        // console.log(sortedInstitutions[0].instit);
+        // // TODO: Build services list
+
+        onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
+        $.each(institutions, function(i) {
+            var institu = sortedInstitutions[i].instit;
+            var instituIndex = sortedInstitutions[i].id;
+            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + institu + '\')">' + institu + '</a></li>');
+        })
 
         // Hide gif loader animation.
         $('.overllay').hide();
     });
-
-    function renderChart(data){
-        Highcharts.chart('container-barchart', {
-            title: {
-                text: ''
-            },
-            xAxis: {
-                categories: ["three weeks ago", "two weeks ago", "one week ago"],
-                labels: {
-                    style: {
-                        color: 'white'
-                    }
-                }
-            },
-            yAxis: {
-                labels: {
-                    format: "{value}%",
-                    style: {
-                        color: 'white'
-                    }
-                },
-                title: {
-                    text: ''
-                }
-            },
-            chart:{
-                backgroundColor: {
-                    linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-                    stops: [
-                        [0, 'rgb(82, 178, 213)'],
-                        [1, 'rgb(65, 118, 173)']
-                    ]
-                }
-            },
-            labels: {
-                items: [{
-                    html: i18n.answers[lang] + ":",
-                    style: {
-                        left: '50px',
-                        top: '0px',
-                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
-                    }
-                }]
-            },
-            series: [{
-                type: 'column',
-                name: i18n.dissatisfied[lang],
-                data: data.unhappy,
-                color: '#C6371D' // Dissatisfied color
-            }, {
-                type: 'column',
-                name: i18n.moderatelySatisfied[lang],
-                data: data.meh,
-                color: '#D2B028' // Moderately satisfied colors
-            }, {
-                type: 'column',
-                name: i18n.satisfied[lang],
-                data: data.happy,
-                color: '#30C67B' // Satisfied color
-            }/**, {
-                type: 'spline',
-                name: 'Average',
-                data: [3, 2.67, 3],
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[3],
-                    fillColor: 'white'
-                }
-            }**/,{
-                type: 'pie',
-                name: i18n.answers[lang],
-                data: [{
-                    name: i18n.dissatisfied[lang],
-                    y: data.unhappyCount.reduce(function(a, b) { return a + b; }, 0),
-                    color: '#C6371D' // Dissatisfied color
-                }, {
-                    name: i18n.moderatelySatisfied[lang],
-                    y: data.mehCount.reduce(function(a, b) { return a + b; }, 0),
-                    color: '#D2B028' // Moderately satisfied colors
-                }, {
-                    name: i18n.satisfied[lang],
-                    y: data.happyCount.reduce(function(a, b) { return a + b; }, 0),
-                    color: '#30C67B' // Satisfied color
-                }],
-                center: [100, 60],
-                size: 120,
-                showInLegend: false,
-                dataLabels: {
-                    enabled: false
-                }
-            }]
-        });
-    }
 });
