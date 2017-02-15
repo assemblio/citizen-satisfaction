@@ -57,7 +57,7 @@ function onMinistrySelection(instituIndex,institu) {
 function onServiceSelection(serviceIndex,serviceName){
     $('#dropdown-first .selected-value').html('All institutions');
     $('#dropdown-second .selected-value').html(serviceName);
-    renderChart(services[serviceIndex]);
+    // renderChart(services[serviceIndex]);
 }
 
 function renderChart(data){
@@ -225,49 +225,59 @@ $(function() {
 
             $(val['ServiceGroups']).each(function(serviceGroupIndex){
                 $(this['Services']).each(function(serviceIndex,serviceVal) {
-                    var serviceName = this['ServiceName_' + lang];
+
+                    //console.log(serviceGroupIndex + "," + serviceIndex);
+                    if(serviceGroupIndex == 3 && serviceIndex == 1){
+                        //console.log(serviceVal);
+                        //console.log(val);
+                        //console.log(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services']);
+                        //console.log(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services']);
+
+                        console.log(data['first'][idx]);
+                        console.log(data['second'][idx]);
+                    }
                     // services.push({grIndex:serviceGroupIndex,srIndex:serviceIndex,service:serviceName});
-                    services.push({
-                        service_id: serviceVal['ID'],
-                        name_AL: serviceVal['ServiceName_AL'],
-                        name_EN: serviceVal['ServiceName_EN'],
-                        name_SR: serviceVal['ServiceName_SR'],
-                        happy: [
-                            parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                            parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                            parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
-                        ],
-                        meh: [
-                            parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                            parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                            parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
-                        ],
-                        unhappy: [
-                            parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                            parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                            parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
-                        ],
-                        happyCount: [
-                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
-                        ],
-                        mehCount: [
-                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
-                        ],
-                        unhappyCount: [
-                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
-                        ],
-                        totalCount: [
-                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
-                        ]
-                    });
+                    // services.push({
+                    //     service_id: serviceVal['ID'],
+                    //     name_AL: serviceVal['ServiceName_AL'],
+                    //     name_EN: serviceVal['ServiceName_EN'],
+                    //     name_SR: serviceVal['ServiceName_SR'],
+                    //     happy: [
+                    //         parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    //         parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    //         parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
+                    //     ],
+                    //     meh: [
+                    //         parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    //         parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    //         parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
+                    //     ],
+                    //     unhappy: [
+                    //         parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    //         parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    //         parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
+                    //     ],
+                    //     happyCount: [
+                    //         data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    //         data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    //         data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
+                    //     ],
+                    //     mehCount: [
+                    //         data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    //         data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    //         data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
+                    //     ],
+                    //     unhappyCount: [
+                    //         data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    //         data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    //         data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
+                    //     ],
+                    //     totalCount: [
+                    //         data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    //         data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    //         data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
+                    //     ]
+                    // });
                 });
             });
         });
