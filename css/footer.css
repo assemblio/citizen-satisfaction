@@ -1,31 +1,33 @@
 /* FOOOTER */
-@media only screen and (max-width : 990px){
+/*@media only screen and (max-width : 990px){
     #logo {
         width: 50%;
-        margin: 0 auto;
+        margin: auto;
     }
-}
+}*/
 
 #logo {
-    width: 300px;
-    padding: 25px;
+    /*width: 320px;*/
+    padding: 13px 0px;
     position: relative;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
+    margin: auto;
 }
 #logo img {
-    position: absolute;
-    top: 50%;
-    margin-top: -35px;  /* = image height div 2 */
+    margin: auto;
 }
 #logo span {
-    margin-left: 80px;  /* = image width + 8 */
+    margin: auto;
     display: block;
     text-decoration: none;
+    text-align: center;
     color: #fff;
+    white-space: nowrap;
+    font-size: 10px;
 }
 
 .footer-logo{
-    max-height:75px;
+    max-height:55px;
 }
 
 #logo:hover{
