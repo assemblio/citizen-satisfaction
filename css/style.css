@@ -119,6 +119,7 @@
     font-family: ReneS;
     font-size: 15px;
     margin-top: 8px;
+    width: 83px;
 }
 
 .span-service{
@@ -126,8 +127,15 @@
     font-family: ReneS;
     font-size: 15px;
     margin-top: 8px;
+    width: 83px;
 }
-
+#dropdown-menu-first .glyphicon, #dropdown-menu-second .glyphicon{
+    float: right;
+}
+text{
+    color: white !important;
+    fill:white !important;
+}
 .warn{
     float: right;
     top: 20px;
