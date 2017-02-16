@@ -132,13 +132,13 @@
 #dropdown-menu-first .glyphicon, #dropdown-menu-second .glyphicon{
     float: right;
 }
-text{
+.highcharts-legend-item text{
     color: white !important;
     fill:white !important;
 }
-text:hover{
-    color: grey !important;
-    fill:grey !important;
+.highcharts-legend-item text:hover{
+    color: #ddd !important;
+    fill:#ddd !important;
 }
 
 .warn{
