@@ -106,6 +106,11 @@
                                         <script>document.write(i18n.visualizer[lang])</script>
                                     </a>
                                 </li>
+                                <li><a id="lnk-trends" href="#">
+                                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                                        <script>document.write(i18n.trends[lang])</script>
+                                    </a>
+                                </li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="selected-language"></span> <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
@@ -131,6 +136,19 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdown-menu-first">
                                 <li><a href="javascript:displayInstitutionRanking()"><script>document.write(i18n.institutions[lang])</script></a></li>
                                 <li><a href="javascript:displayServiceRanking()"><script>document.write(i18n.services[lang])</script></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="dropdown" id="dropdown-second">
+                            <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdown-menu-second" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="selected-value"><script>document.write(i18n.satisfied[lang])</script></span>
+                                &nbsp;<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown-menu-second">
+                                <li><a href="javascript:displayHappyRanking()"><script>document.write(i18n.satisfied[lang])</script></a></li>
+                                <li><a href="javascript:displayMehRanking()"><script>document.write(i18n.moderatelySatisfied[lang])</script></a></li>
+                                <li><a href="javascript:displayUnhappyRanking()"><script>document.write(i18n.dissatisfied[lang])</script></a></li>
                             </ul>
                         </div>
                     </div>

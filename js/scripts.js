@@ -231,6 +231,7 @@ $(function() {
     // TODO: do the same for page title
     $('#lnk-ranking').attr('href', document.location.pathname + 'ranking?lang=' + urlLangParam);
     $('.navbar-brand').attr('href', document.location.pathname + '?lang=' + urlLangParam);
+    $('#lnk-trends').attr('href', document.location.pathname+'trends?lang=' + urlLangParam);
 
     if(satisfactionJson == null){
         // get the citizen satisfaction result json

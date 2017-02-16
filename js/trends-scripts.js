@@ -107,17 +107,17 @@ function renderChart(data){
             type: 'column',
             name: i18n.dissatisfied[lang],
             data: data.unhappy,
-            color: '#C6371D' // Dissatisfied color
+            color: '#ef4241' // Dissatisfied color
         }, {
             type: 'column',
             name: i18n.moderatelySatisfied[lang],
             data: data.meh,
-            color: '#D2B028' // Moderately satisfied colors
+            color: '#fed53e' // Moderately satisfied colors
         }, {
             type: 'column',
             name: i18n.satisfied[lang],
             data: data.happy,
-            color: '#30C67B' // Satisfied color
+            color: '#87c441' // Satisfied color
         }/**, {
             type: 'spline',
             name: 'Average',
@@ -133,15 +133,15 @@ function renderChart(data){
             data: [{
                 name: i18n.dissatisfied[lang],
                 y: data.unhappyCount.reduce(function(a, b) { return a + b; }, 0),
-                color: '#C6371D' // Dissatisfied color
+                color: '#ef4241' // Dissatisfied color
             }, {
                 name: i18n.moderatelySatisfied[lang],
                 y: data.mehCount.reduce(function(a, b) { return a + b; }, 0),
-                color: '#D2B028' // Moderately satisfied colors
+                color: '#fed53e' // Moderately satisfied colors
             }, {
                 name: i18n.satisfied[lang],
                 y: data.happyCount.reduce(function(a, b) { return a + b; }, 0),
-                color: '#30C67B' // Satisfied color
+                color: '#87c441' // Satisfied color
             }],
             center: [100, 60],
             size: 120,

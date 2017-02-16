@@ -109,6 +109,11 @@ var i18n = {
         SR: 'Rang',
         EN: 'Ranking'
     },
+    trends:{
+        AL:'Trendi',
+        SR:'unknown',
+        EN:'Trends'
+    },
     visualizer:{
         AL: 'Vizualizim',
         SR: 'Vizualizator',

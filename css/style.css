@@ -199,13 +199,13 @@
 }
 
 .row-happy .vote-count, .row-happy .percentage-count, .happy-color{
-    color: #30C67B;
+    color: #87c441;
 }
 
 .row-meh .vote-count, .row-meh .percentage-count, .meh-color{
-    color: #D2B028;
+    color: #fed53e;
 }
 
 .row-unhappy .vote-count, .row-unhappy .percentage-count, .unhappy-color{
-    color: #C6371D;
+    color: #ef4241;
 }

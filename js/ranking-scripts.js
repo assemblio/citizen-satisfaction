@@ -333,6 +333,8 @@ $(function() {
 
     $('.navbar-brand').attr('href', document.location.pathname.replace('/ranking/', '/') + '?lang=' + urlLangParam);
 
+    $('#lnk-trends').attr('href', document.location.pathname.replace('/ranking/', '/trends') + '?lang=' + urlLangParam);
+
 
     if(satisfactionJson == null) {
         // get the citizen satisfaction result json
