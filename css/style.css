@@ -209,3 +209,11 @@
 .row-unhappy .vote-count, .row-unhappy .percentage-count, .unhappy-color{
     color: #ef4241;
 }
+
+.sub-service-list-title{
+    padding: 0px;
+    font-size: 18px;
+    color: white;
+    font-weight: bolder;
+    font-family: sans-serif;;
+}

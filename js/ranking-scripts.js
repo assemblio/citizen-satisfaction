@@ -267,7 +267,7 @@ function displayInstitutionServices(institutionId, rowType){
         // Header row labelling column of service values.
         var institutionServiceRowHeader =
                 '<div class="row row-sub-service-list" style="padding-bottom:10px;">' +
-                    '<div class="col-md-6"></div>' +
+                    '<div class="col-md-6 sub-service-list-title">' + i18n.services[lang] + ':</div>' +
                     '<div class="col-md-2 percentage-count happy-color">' +
                         i18n.satisfied[lang] +
                     '</div>' +
