@@ -136,6 +136,11 @@ text{
     color: white !important;
     fill:white !important;
 }
+text:hover{
+    color: grey !important;
+    fill:grey !important;
+}
+
 .warn{
     float: right;
     top: 20px;
