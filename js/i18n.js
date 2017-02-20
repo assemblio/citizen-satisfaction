@@ -8,9 +8,9 @@ if(urlLangParam === 'sr'){
 }else if(urlLangParam === 'en'){
     lang = 'EN';
 }
-// else if(urlLangParam === 'tr'){
-//     lang = 'TR';
-// }
+else if(urlLangParam === 'tr'){
+    lang = 'TR';
+}
 else{
     lang = 'AL';
 }

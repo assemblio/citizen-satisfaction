@@ -72,7 +72,7 @@ hr{
 .btn-dropdown{
     color: white;
     border: 0px;
-    /*width: 100%;*/
+    min-width: 320px;
     text-align: left;
     white-space: normal;
     background: #0065AD; /* For browsers that do not support gradients */

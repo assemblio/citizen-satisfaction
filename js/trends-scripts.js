@@ -44,19 +44,135 @@ var data = {
 
 
 var institutions = [];
-var services = [];
 var sortedInstitutions = [];
-
+var services = [];
 
 function onMinistrySelection(instituIndex,institu) {
     $('#dropdown-first .selected-value').html(institu);
-    $('#dropdown-second .selected-value').html('All services');
+
     // Render the chart.
     renderChart(institutions[instituIndex]);
+
+    // onServiceSelection(instituIndex,0,0);
+
+    getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
 }
-function onServiceSelection(serviceIndex,serviceName){
-    $('#dropdown-first .selected-value').html('All institutions');
-    $('#dropdown-second .selected-value').html(serviceName);
+function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex, serviceIndex){
+    $('#dropdown-second .selected-value').html('All Services');
+
+    // console.log(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_'+lang]);
+    $('#dropdown-second .dropdown-menu').html('');
+    var services = [];
+
+    $(data['first'][instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
+        $(this['Services']).each(function(serviceIndex,serviceVal) {
+            services.push({
+                service_id: serviceVal['ID'],
+                service_grid: serviceGroupIndex,
+                name_AL: serviceVal['ServiceName_AL'],
+                name_EN: serviceVal['ServiceName_EN'],
+                name_SR: serviceVal['ServiceName_SR'],
+                name_TR: serviceVal['ServiceName_TR'],
+                happy: [
+                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
+                ],
+                meh: [
+                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
+                ],
+                unhappy: [
+                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
+                ],
+                happyCount: [
+                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
+                ],
+                mehCount: [
+                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
+                ],
+                unhappyCount: [
+                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
+                ],
+                totalCount: [
+                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
+                ]
+            });
+        });
+    });
+    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex].InstitutionName_+lang + '\')">All Services</a></li>');
+    $(services).each(function(i){
+        var servID = i;
+        var serviceN = services[i].name_AL;
+        var serviceGrId = services[i].service_grid;
+        // console.log(servID);
+        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection('+ instituIndex + ', ' + serviceGrId + ', ' + servID + ')">' + serviceN + '</a></li>');
+    });
+}
+function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
+    var services = [];
+    $('#dropdown-second .selected-value').html(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_AL']);
+
+    $(data['first'][instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
+        $(this['Services']).each(function(serviceIndex,serviceVal) {
+            services.push({
+                service_id: serviceVal['ID'],
+                service_grid: serviceGroupIndex,
+                name_AL: serviceVal['ServiceName_AL'],
+                name_EN: serviceVal['ServiceName_EN'],
+                name_SR: serviceVal['ServiceName_SR'],
+                name_TR: serviceVal['ServiceName_TR'],
+                happy: [
+                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
+                ],
+                meh: [
+                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
+                ],
+                unhappy: [
+                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
+                ],
+                happyCount: [
+                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
+                ],
+                mehCount: [
+                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
+                ],
+                unhappyCount: [
+                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
+                ],
+                totalCount: [
+                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
+                ]
+            });
+        });
+    });
+    $('#dropdown-second .selected-value').html(services[serviceIndex]['ServiceName_'+lang]);
+
     renderChart(services[serviceIndex]);
 }
 
@@ -188,6 +304,7 @@ $(function() {
                 name_AL: val['InstitutionName_AL'],
                 name_EN: val['InstitutionName_EN'],
                 name_SR: val['InstitutionName_SR'],
+                name_TR: val['InstitutionName_TR'],
                 happy: [
                     parseFloat(data['first'][idx]['result_Good_Percentage'].replace('%', '')),
                     parseFloat(data['second'][idx]['result_Good_Percentage'].replace('%', '')),
@@ -224,72 +341,9 @@ $(function() {
                     data['third'][idx]['result_Total']
                 ]
             });
-
-            $(val['ServiceGroups']).each(function(serviceGroupIndex){
-                $(this['Services']).each(function(serviceIndex,serviceVal) {
-
-                    //console.log(serviceGroupIndex + "," + serviceIndex);
-                    if(serviceGroupIndex == 3 && serviceIndex == 1){
-                        // console.log(serviceVal);
-                        // console.log(val);
-                        // console.log(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services']);
-                        // console.log(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services']);
-                        // console.log(data);
-                        // console.log(data['first'][idx]);
-                        // console.log(data['second'][idx]);
-                    }
-                    // services.push({grIndex:serviceGroupIndex,srIndex:serviceIndex,service:serviceName});
-                    services.push({
-                        service_id: serviceVal['ID'],
-                        name_AL: serviceVal['ServiceName_AL'],
-                        name_EN: serviceVal['ServiceName_EN'],
-                        name_SR: serviceVal['ServiceName_SR'],
-                        happy: [
-                            parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                            parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                            parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
-                        ],
-                        meh: [
-                            parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                            parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                            parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
-                        ],
-                        unhappy: [
-                            parseFloat(data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                            parseFloat(data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                            parseFloat(data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
-                        ],
-                        happyCount: [
-                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
-                        ],
-                        mehCount: [
-                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
-                        ],
-                        unhappyCount: [
-                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
-                        ],
-                        totalCount: [
-                            data['first'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                            data['second'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                            data['third'][idx]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
-                        ]
-                    });
-                });
-            });
         });
 
-        $(services).each(function(i){
-            var servID = services[i].service_id;
-            var serviceN = services[i].name_AL;
-            // console.log(servID);
-            $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + servID + ', \'' + serviceN + '\')">' + serviceN + '</a></li>');
-        });
+
 
         $.each( data['first'], function( key, val ) {
             sortedInstitutions.push({id:key, instit:val['InstitutionName_' + lang]});

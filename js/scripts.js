@@ -255,7 +255,18 @@ $(function() {
         $.each( data, function( key, val ) {
             sortedInstitutions.push({id:key, instit:data[key]['InstitutionName_' + lang]});
         });
+        sortedInstitutions.sort(function(y,x){
+            A = y.instit.toUpperCase();
+            B = x.instit.toUpperCase();
+            if (A < B) {
+                return -1;
+            }
+            if (A > B) {
+                return 1;
+            }
+            return 0;
 
+        });
         onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
 
         $.each(sortedInstitutions,function(i,val){
