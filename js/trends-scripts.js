@@ -115,7 +115,6 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
     $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex]['InstitutionName_'+lang] + '\')">All Services</a></li>');
     $(services).each(function(i){
         var servID = services[i]['id'];
-        console.log(servID);
         var serviceN = services[i]['name_' + lang];
         var serviceGrId = services[i].service_grid;
         // console.log(servID);
@@ -360,7 +359,6 @@ $(function() {
             var instituIndex = sortedInstitutions[i].id;
             $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + institu + '\')">' + institu + '</a></li>');
         })
-
         // Hide gif loader animation.
         $('.overllay').hide();
     });
