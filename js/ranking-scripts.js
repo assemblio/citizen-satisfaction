@@ -40,6 +40,17 @@ function sortByHappy(a, b){
                     return 1;
                 }
                 return 0;
+            }else if(lang == 'TR') {
+                A = a.name_EN.toUpperCase();
+                B = b.name_EN.toUpperCase();
+
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
             }
             else {
                 A = a.name_SR.toUpperCase();
@@ -85,6 +96,17 @@ function sortByMeh(a, b){
                     return 1;
                 }
                 return 0;
+            }else if(lang == 'TR') {
+                A = a.name_EN.toUpperCase();
+                B = b.name_EN.toUpperCase();
+
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
             }
             else {
                 A = a.name_SR.toUpperCase();
@@ -120,6 +142,17 @@ function sortByUnhappy(a, b){
                  }
                  return 0;
             }else if(lang == 'EN') {
+                A = a.name_EN.toUpperCase();
+                B = b.name_EN.toUpperCase();
+
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
+            }else if(lang == 'TR') {
                 A = a.name_EN.toUpperCase();
                 B = b.name_EN.toUpperCase();
 
@@ -359,6 +392,7 @@ $(function() {
                 name_AL: val['InstitutionName_AL'],
                 name_EN: val['InstitutionName_EN'],
                 name_SR: val['InstitutionName_SR'],
+                name_TR: val['InstitutionName_TR'],
                 happy: parseFloat(val['result_Good_Percentage'].replace('%', '')),
                 meh: parseFloat(val['result_Middle_Percentage'].replace('%', '')),
                 unhappy: parseFloat(val['result_Bad_Percentage'].replace('%', '')),
@@ -381,6 +415,7 @@ $(function() {
                         name_AL: val['ServiceName_AL'],
                         name_EN: val['ServiceName_EN'],
                         name_SR: val['ServiceName_SR'],
+                        name_TR: val['ServiceName_TR'],
                         happy: parseFloat(val['result_Good_Percentage'].replace('%', '')),
                         meh: parseFloat(val['result_Middle_Percentage'].replace('%', '')),
                         unhappy: parseFloat(val['result_Bad_Percentage'].replace('%', '')),
