@@ -111,10 +111,10 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
             });
         });
     });
-    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex].InstitutionName_+lang + '\')">All Services</a></li>');
+    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex]['InstitutionName_'+lang] + '\')">All Services</a></li>');
     $(services).each(function(i){
         var servID = i;
-        var serviceN = services[i].name_AL;
+        var serviceN = services[i]['name_' + lang];
         var serviceGrId = services[i].service_grid;
         // console.log(servID);
         $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection('+ instituIndex + ', ' + serviceGrId + ', ' + servID + ')">' + serviceN + '</a></li>');
@@ -122,7 +122,7 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
 }
 function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
     var services = [];
-    $('#dropdown-second .selected-value').html(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_AL']);
+    $('#dropdown-second .selected-value').html(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]);
 
     $(data['first'][instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
         $(this['Services']).each(function(serviceIndex,serviceVal) {
