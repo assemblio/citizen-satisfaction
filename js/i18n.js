@@ -26,7 +26,7 @@ var i18n = {
         AL: 'Platforma e OPI-t sh\xEBrben p\xEBr t\xEB reflektuar rezultatet e grumbulluara nga opinionet e qytetar\xEBve n\xEB koh\xEB reale dhe n\xEB m\xEBnyr\xEB transparente, si dhe mund\xEBson p\xEBrmir\xEBsimin e politikave publike p\xEBr sh\xEBrbimet administrative q\xEB ofrohen nga institucionet e Republik\xEBs s\xEB Kosov\xEBs.',
         SR: 'Platforma OPI slu&zcaron;i za odra&zcaron;avanje rezultata prikupljenih od mi&scaron;ljenja gra&#273;ana u realno vreme i na transparentan na&ccaron;in, i omogu&cacute;ava pobolj&scaron;anje javnih politika za administrativne usluga koje se pru&zcaron;aju od strane institucija Republike Kosova.',
         EN: 'OPI platform serves to reflect the results collected from the opinions of citizens in a timely and transparent manner, and enables the improvement of public policies for administrative services provided by the institutions of the Republic of Kosovo.',
-        TR: 'OPI platformu, vatandaşların görüşleri doğrultusunda toplanan sonuçların zamanında ve şeffaf bir şekilde yansımasını sağlamakta ve Kosova Cumhuriyeti kurumlarının sağladığı idari hizmetler için kamu politikalarının geliştirilmesini sağlamaktadır.'
+        TR: 'OPI platformu, vatanda&#351;lar&#305;n g&#246;r&#252;&#351;leri do&#287;rultusunda toplanan sonu&#231;lar&#305;n zaman&#305;nda ve &#351;effaf bir &#351;ekilde yans&#305;mas&#305;n&#305; sa&#287;lamakta ve Kosova Cumhuriyeti kurumlar&#305;n&#305;n sa&#287;lad&#305;&#287;&#305; idari hizmetler i&#231;in kamu politikalar&#305;n&#305;n geli&#351;tirilmesini sa&#287;lamaktad&#305;r.'
     },
     descriptionbottom:{
         AL: 'Projekti \xEBsht\xEB bashk\xEBfinancuar nga Ministria e Administrat\xEBs Publike (MAP) dhe Programi i Kombeve t\xEB Bashkuara p\xEBr Zhvillim (UNDP) n\xEB Kosov\xEB.',
@@ -56,7 +56,7 @@ var i18n = {
         AL: 'Ministria&nbsp;e&nbsp;Administrat\xEBs&nbsp;Publike',
         SR: 'Ministarstvo&nbsp;Javne&nbsp;Uprave',
         EN: 'Ministry&nbsp;of&nbsp;Public&nbsp;Administration',
-        TR: 'Kamu&nbsp;Yönetimi&nbsp;Bakanlığı'
+        TR: 'Kamu&nbsp;Y&#246;netimi&nbsp;Bakanl&#305;&#287;&#305;'
     },
     institutions:{
         AL: 'Institucione',
@@ -74,7 +74,7 @@ var i18n = {
         AL: 'qytetar\xEB',
         SR: 'gra&#273;ana',
         EN: 'citizens',
-        TR: 'vatandaşlar'
+        TR: 'vatanda&#351;lar'
     },
     satisfied:{
         AL: 'T\xEB k\xEBnaqur',
@@ -86,7 +86,7 @@ var i18n = {
         AL: 'Mesatarisht t\xEB k\xEBnaqur',
         SR: 'Umereno zadovoljan',
         EN: 'Moderately Satisfied',
-        TR: 'Kısmi memnuniyet'
+        TR: 'K&#305;smi memnuniyet'
     },
     dissatisfied:{
         AL: 'T\xEB pak\xEBnaqur',
@@ -105,25 +105,25 @@ var i18n = {
             AL: 'mir\xEBsjelljen e<br>zyrtarit',
             SR: 'ponasanje<br>sluzbenika',
             EN: 'behaviour of<br>the official',
-            TR: 'yetkili davranışı'
+            TR: 'yetkili davran&#305;&#351;&#305;'
         },
         timeliness:{
             AL: 'koh\xEBzgjatjen e<br>sh\xEBrbimit',
             SR: 'pravovremenost<br>pruzene usluge',
             EN: 'timeliness of<br>service provided',
-            TR: 'hizmet süresi'
+            TR: 'hizmet s&#252;resi'
         },
         payment:{
             AL: 'pages\xEBn e<br>sh\xEBrbimit',
             SR: 'isplatni nivo<br>pruzene usluge',
             EN: 'payment level of<br>the rendered service',
-            TR: 'hizmetin ödeme seviyesi'
+            TR: 'hizmetin &#246;deme seviyesi'
         },
         online:{
             AL: 'meq\xEB sh\xEBrbimi nuk<br>\xEBsht\xEB online',
             SR: 'nema online<br>usluge',
             EN: 'no online<br>service rendered',
-            TR: 'çevirim dışı'
+            TR: '&#231;evirim d&#305;&#351;&#305;'
         }
     },
     ranking:{
@@ -136,20 +136,20 @@ var i18n = {
         AL:'Trendet',
         SR:'unknown',
         EN:'Trends',
-        TR: 'Eğilimler'
+        TR: 'E&#287;ilimler'
     },
     visualizer:{
         AL: 'Vizualizim',
         SR: 'Vizualizator',
         EN: 'Visualizer',
-        TR: 'Gösterge'
+        TR: 'G&#246;sterge'
     },
     serviceList:{
         show: {
             AL: 'trego sh\xEBrbimet',
             SR: 'poka&#382;i usluge',
             EN: 'show services',
-            TR: 'hizmetleri göster'
+            TR: 'hizmetleri g&#246;ster'
         },
         hide:{
             AL: 'fsheh sh\xEBrbimet',
@@ -162,7 +162,7 @@ var i18n = {
         AL: 'Search for...',
         SR: 'Search for...',
         EN: 'Search for...',
-        TR: 'Için ara ...'
+        TR: 'I&#231;in ara ...'
     }
 
 };
@@ -176,9 +176,9 @@ $(function() {
     }else if(urlLangParam === 'en'){
         $('.selected-language').html('English');
     }
-    // else if(urlLangParam === 'tr'){
-    //     $('.selected-language').html('T&uuml;rk&ccedil;e');
-    // }
+    else if(urlLangParam === 'tr'){
+        $('.selected-language').html('T&uuml;rk&ccedil;e');
+    }
     else{
         $('.selected-language').html('Shqip');
     }
