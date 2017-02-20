@@ -67,6 +67,7 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
     $(data['first'][instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
         $(this['Services']).each(function(serviceIndex,serviceVal) {
             services.push({
+                id: serviceIndex,
                 service_id: serviceVal['ID'],
                 service_grid: serviceGroupIndex,
                 name_AL: serviceVal['ServiceName_AL'],
@@ -113,7 +114,8 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
     });
     $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex]['InstitutionName_'+lang] + '\')">All Services</a></li>');
     $(services).each(function(i){
-        var servID = i;
+        var servID = services[i]['id'];
+        console.log(servID);
         var serviceN = services[i]['name_' + lang];
         var serviceGrId = services[i].service_grid;
         // console.log(servID);

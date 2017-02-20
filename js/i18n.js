@@ -99,31 +99,31 @@ var i18n = {
             AL: 'cil\xEBsin\xEB e<br>sh\xEBrbimit',
             SR: 'kvalitet pruzene<br>usluge',
             EN: 'quality of<br>service rendered',
-            TR: 'hizmet kalitesi'
+            TR: 'hizmet kalitesi<br></br>'
         },
         staff:{
             AL: 'mir\xEBsjelljen e<br>zyrtarit',
             SR: 'ponasanje<br>sluzbenika',
             EN: 'behaviour of<br>the official',
-            TR: 'yetkili davran\u0131&#351;\u0131'
+            TR: 'yetkili davran\u0131&#351;\u0131<br></br>'
         },
         timeliness:{
             AL: 'koh\xEBzgjatjen e<br>sh\xEBrbimit',
             SR: 'pravovremenost<br>pruzene usluge',
             EN: 'timeliness of<br>service provided',
-            TR: 'hizmet s&#252;resi'
+            TR: 'hizmet s&#252;resi<br></br>'
         },
         payment:{
             AL: 'pages\xEBn e<br>sh\xEBrbimit',
             SR: 'isplatni nivo<br>pruzene usluge',
             EN: 'payment level of<br>the rendered service',
-            TR: 'hizmetin \xf6deme seviyesi'
+            TR: 'hizmetin \xf6deme<br>seviyesi'
         },
         online:{
             AL: 'meq\xEB sh\xEBrbimi nuk<br>\xEBsht\xEB online',
             SR: 'nema online<br>usluge',
             EN: 'no online<br>service rendered',
-            TR: '\xE7evirim d\u0131\u015f\u0131'
+            TR: '\xE7evirim d\u0131\u015f\u0131<br></br>'
         }
     },
     ranking:{
