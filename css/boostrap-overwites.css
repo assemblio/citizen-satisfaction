@@ -72,7 +72,7 @@ hr{
 .btn-dropdown{
     color: white;
     border: 0px;
-    min-width: 320px;
+    min-width: 300px;
     text-align: left;
     white-space: normal;
     background: #0065AD; /* For browsers that do not support gradients */
@@ -81,11 +81,17 @@ hr{
     background: -moz-linear-gradient(#005795, #0065AD); /* For Firefox 3.6 to 15 */
     background: linear-gradient(#005795, #0065AD); /* Standard syntax */
 }
+
+.input-group .form-control{
+    min-width: 300px;
+}
 .dropdown-menu>li>a {
     word-wrap: break-word;
     white-space: normal;
 }
-
+.dropdown-menu{
+    min-width: 300px;
+}
 .btn-dropdown.focus, .btn-dropdown:focus, .btn-dropdown:hover {
     color: #AAAAA9;
 }

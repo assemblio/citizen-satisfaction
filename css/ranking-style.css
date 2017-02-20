@@ -110,7 +110,7 @@ hr{
 }
 
 .input-group.input-group-search{
-    width: 350px;
+    /*width: 350px;*/
     padding-top:5px;
     padding-bottom:5px;
 }
