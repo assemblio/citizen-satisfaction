@@ -173,8 +173,11 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
         });
     });
     $('#dropdown-second .selected-value').html(services[serviceIndex]['ServiceName_'+lang]);
-
-    renderChart(services[serviceIndex]);
+    if (true) {
+        
+    }else {
+        renderChart(services[serviceIndex]);
+    }
 }
 
 function renderChart(data){
