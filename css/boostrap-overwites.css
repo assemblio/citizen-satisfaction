@@ -73,6 +73,7 @@ hr{
     color: white;
     border: 0px;
     min-width: 300px;
+    max-width: 480px;
     text-align: left;
     white-space: normal;
     background: #0065AD; /* For browsers that do not support gradients */

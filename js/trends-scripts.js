@@ -50,11 +50,23 @@ var services = [];
 function onMinistrySelection(instituIndex,institu) {
     $('#dropdown-first .selected-value').html(institu);
 
-    // Render the chart.
-    renderChart(institutions[instituIndex]);
 
+    var dataTime = ['first','second','third'];
+    var RenderChartBool = false;
+    for (var i = 0; i <= 2; i++) {
+        if (data[dataTime[i]][instituIndex]['result_Bad'] == 0 && data[dataTime[i]][instituIndex]['result_Middle'] == 0 && data[dataTime[i]][instituIndex]['result_Good'] == 0) {
+            RenderChartBool = true;
+        }
+    }
+    if(RenderChartBool == false) {
+        console.log("Data rendered!!!!!");
+        // Render the chart.
+        renderChart(institutions[instituIndex]);
+    }
+    if (RenderChartBool == true) {
+        $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
+    }
     // onServiceSelection(instituIndex,0,0);
-
     getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
 }
 function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex, serviceIndex){
@@ -173,10 +185,20 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
         });
     });
     $('#dropdown-second .selected-value').html(services[serviceIndex]['ServiceName_'+lang]);
-    if (true) {
-        
-    }else {
+
+    var dataTime = ['first','second','third'];
+    var RenderChartBool = false;
+    for (var i = 0; i <= 2; i++) {
+        if (data[dataTime[i]][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'] == 0 && data[dataTime[i]][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'] == 0 && data[dataTime[i]][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'] == 0) {
+            RenderChartBool = true;
+        }
+    }
+    if(RenderChartBool == false) {
+        console.log("Data rendered!!!!!");
         renderChart(services[serviceIndex]);
+    }
+    if (RenderChartBool == true) {
+        $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
 }
 
