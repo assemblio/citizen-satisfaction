@@ -32,7 +32,7 @@ var i18n = {
         AL: 'Projekti \xEBsht\xEB bashk\xEBfinancuar nga Ministria e Administrat\xEBs Publike (MAP) dhe Programi i Kombeve t\xEB Bashkuara p\xEBr Zhvillim (UNDP) n\xEB Kosov\xEB.',
         SR: 'Projekat je ko-finansiran od strane Ministarstva za javnu upravu (MJU) i Programa za razvoj Ujedinjenin Nacija (UNDP) na Kosovu.',
         EN: 'The project is co-financed by the Ministry of Public Administration (MPA) and United Nations Development Programme (UNDP) in Kosovo.',
-        TR: ''
+        TR: 'Proje, Kosova Kamu Y\xf6netimi Bakanlı\u011fı ve Birle&#351;mi&#351; Milletler Kalkınma Programı (UNDP) tarafından ortak olarak finanse edilmektedir.'
     },
     institutionLabel:{
         AL: "Institucioni",
@@ -65,10 +65,16 @@ var i18n = {
         TR: 'Kurumlar'
     },
     services:{
-        AL: 'Sh\xEBrbime',
+        AL: 'Sh\xEBrbimet',
         SR: 'Usluga',
         EN: 'Services',
         TR: 'Hizmetler'
+    },
+    allServices:{
+        AL: 'T\xEB gjitha sh\xEBrbimet',
+        SR: 'Sve usluge',
+        EN: 'All services',
+        TR: 'T\xfcm hizmetler'
     },
     answers:{
         AL: 'qytetar\xEB',
@@ -160,11 +166,28 @@ var i18n = {
     },
     searchFor:{
         AL: 'K\xEBrko p\xEBr...',
-        SR: 'Search for...',
+        SR: 'Tragati za...',
         EN: 'Search for...',
         TR: 'I\xe7in ara ...'
+    },
+    weeks1:{
+        AL: 'para nj\xEB jave',
+        SR: 'pre jedne nedelje',
+        EN: 'one week ago',
+        TR: 'bir hafta önce'
+    },
+    weeks2:{
+        AL: 'para dy jav\xEBsh',
+        SR: 'pre dve nedelje',
+        EN: 'two weeks ago',
+        TR: 'iki hafta önce'
+    },
+    weeks3:{
+        AL: 'para tre jav\xEBsh',
+        SR: 'pre tri nedelje',
+        EN: 'three weeks ago',
+        TR: 'üç hafta önce'
     }
-
 };
 
 // Display selected language

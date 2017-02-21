@@ -69,7 +69,7 @@ function onMinistrySelection(instituIndex,institu) {
     getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
 }
 function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex, serviceIndex){
-    $('#dropdown-second .selected-value').html('All Services');
+    $('#dropdown-second .selected-value').html(i18n.allServices[lang]);
 
     // console.log(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_'+lang]);
     $('#dropdown-second .dropdown-menu').html('');
@@ -123,7 +123,7 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
             });
         });
     });
-    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex]['InstitutionName_'+lang] + '\')">All Services</a></li>');
+    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex]['InstitutionName_'+lang] + '\')">document.write(i18n.allServices[lang])</a></li>');
     $(services).each(function(i){
         var servID = services[i]['id'];
         var serviceN = services[i]['name_' + lang];
@@ -203,7 +203,7 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
 
 function renderChart(data){
     var device = (window.screen.width / 2) - (window.screen.width / 22  );
-    
+
     Highcharts.chart('container-barchart2',{
         title: {
             text: ''
@@ -275,7 +275,7 @@ function renderChart(data){
             text: ''
         },
         xAxis: {
-            categories: ["three weeks ago", "two weeks ago", "one week ago"],
+            categories: [i18n.weeks3[lang], i18n.weeks2[lang], i18n.weeks1[lang]],
             labels: {
                 style: {
                     color: 'white'
