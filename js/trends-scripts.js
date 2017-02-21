@@ -36,17 +36,21 @@ var dateRanges = [
 
 // Object containing the requested responses.
 // We are making three requests, so three responses.
-var data = {
-    'first': null,
-    'second': null,
-    'third': null
-};
+// var data = {
+//     'first': null,
+//     'second': null,
+//     'third': null
+// };
 
-// if(sessionStorage.getItem(data[0]) != null && sessionStorage.getItem(data[1]) && sessionStorage.getItem(data[2])){
-//     data['first'] = JSON.parse(sessionStorage.getItem('rsp1'));
-//     data['second'] = JSON.parse(sessionStorage.getItem('rsp2'));
-//     data['third'] = JSON.parse(sessionStorage.getItem('rsp3'));
-// }
+var data1 = null;
+var data2 = null;
+var data3 = null;
+
+if(sessionStorage.getItem('data1') != null && sessionStorage.getItem('data2') != null  && sessionStorage.getItem('data3') != null){
+    data1 = JSON.parse(sessionStorage.getItem('data1'));
+    data2 = JSON.parse(sessionStorage.getItem('data2'));
+    data3 = JSON.parse(sessionStorage.getItem('data3'));
+}
 
 var institutions = [];
 var sortedInstitutions = [];
@@ -56,10 +60,10 @@ function onMinistrySelection(instituIndex,institu) {
     $('#dropdown-first .selected-value').html(institu);
 
 
-    var dataTime = ['first','second','third'];
+    var dataTime = [data1,data2,data3];
     var RenderChartBool = false;
     for (var i = 0; i <= 2; i++) {
-        if (data[dataTime[i]][instituIndex]['result_Bad'] == 0 && data[dataTime[i]][instituIndex]['result_Middle'] == 0 && data[dataTime[i]][instituIndex]['result_Good'] == 0) {
+        if (dataTime[i][instituIndex]['result_Bad'] == 0 && dataTime[i][instituIndex]['result_Middle'] == 0 && dataTime[i][instituIndex]['result_Good'] == 0) {
             RenderChartBool = true;
         }
     }
@@ -71,7 +75,7 @@ function onMinistrySelection(instituIndex,institu) {
     }
     if (RenderChartBool == true) {
         $('#container-barchart2').css('display','none');
-        $('#container-barchart').html('<div style="margin-left: -15px;margin-right: -15px;text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
+        $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
     // onServiceSelection(instituIndex,0,0);
     getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
@@ -79,11 +83,11 @@ function onMinistrySelection(instituIndex,institu) {
 function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex, serviceIndex){
     $('#dropdown-second .selected-value').html(i18n.allServices[lang]);
 
-    // console.log(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_'+lang]);
+    // console.log(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_'+lang]);
     $('#dropdown-second .dropdown-menu').html('');
     var services = [];
 
-    $(data['first'][instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
+    $(data1[instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
         $(this['Services']).each(function(serviceIndex,serviceVal) {
             services.push({
                 id: serviceIndex,
@@ -94,44 +98,44 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
                 name_SR: serviceVal['ServiceName_SR'],
                 name_TR: serviceVal['ServiceName_TR'],
                 happy: [
-                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
+                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
                 ],
                 meh: [
-                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
+                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
                 ],
                 unhappy: [
-                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
+                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
                 ],
                 happyCount: [
-                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
+                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
                 ],
                 mehCount: [
-                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
+                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
                 ],
                 unhappyCount: [
-                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
+                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
                 ],
                 totalCount: [
-                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
+                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
                 ]
             });
         });
     });
-    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex]['InstitutionName_'+lang] + '\')">' + i18n.allServices[lang] + '</script></a></li>');
+    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data1[instituIndex]['InstitutionName_'+lang] + '\')">' + i18n.allServices[lang] + '</script></a></li>');
     $(services).each(function(i){
         var servID = services[i]['id'];
         var serviceN = services[i]['name_' + lang];
@@ -142,9 +146,9 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
 }
 function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
     var services = [];
-    $('#dropdown-second .selected-value').html(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]);
+    $('#dropdown-second .selected-value').html(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]);
 
-    $(data['first'][instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
+    $(data1[instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
         $(this['Services']).each(function(serviceIndex,serviceVal) {
             services.push({
                 service_id: serviceVal['ID'],
@@ -154,49 +158,49 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
                 name_SR: serviceVal['ServiceName_SR'],
                 name_TR: serviceVal['ServiceName_TR'],
                 happy: [
-                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
+                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
                 ],
                 meh: [
-                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
+                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
                 ],
                 unhappy: [
-                    parseFloat(data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
+                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
                 ],
                 happyCount: [
-                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
+                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
+                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
                 ],
                 mehCount: [
-                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
+                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
+                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
                 ],
                 unhappyCount: [
-                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
+                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
+                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
                 ],
                 totalCount: [
-                    data['first'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                    data['second'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                    data['third'][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
+                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
+                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
                 ]
             });
         });
     });
     $('#dropdown-second .selected-value').html(services[serviceIndex]['ServiceName_'+lang]);
 
-    var dataTime = ['first','second','third'];
+    var dataTime = [data1,data2,data3];
     var RenderChartBool = false;
     for (var i = 0; i <= 2; i++) {
-        if (data[dataTime[i]][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'] == 0 && data[dataTime[i]][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'] == 0 && data[dataTime[i]][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'] == 0) {
+        if (dataTime[i][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'] == 0 && dataTime[i][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'] == 0 && dataTime[i][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'] == 0) {
             RenderChartBool = true;
         }
     }
@@ -208,7 +212,7 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
     if (RenderChartBool == true) {
         $('#container-barchart2').css('display','none');
 
-        $('#container-barchart').html('<div style="margin-left: -15px;margin-right: -15px;text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
+        $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
 }
 
@@ -351,104 +355,89 @@ $(function() {
     $('#lnk-visualizer').attr('href', document.location.pathname.replace('/trends/', '/') + '?lang=' + urlLangParam);
     $('#lnk-ranking').attr('href', document.location.pathname.replace('/trends/', '/ranking') + '?lang=' + urlLangParam);
     $('#lnk-trends').attr('href', document.location.pathname+'?lang=' + urlLangParam);
-    // if (true) {
+    if (data1 == null && data2 == null  && data3 == null) {
         $.when(
             // Deferred requests
             $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[0], function (rsp3) {
-                // sessionStorage.setItem(data['third'], JSON.stringify(rsp3));
-                data['third'] = rsp3;
+                sessionStorage.setItem('data3', JSON.stringify(rsp3));
+                data3 = rsp3;
             }),
 
             $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[1], function (rsp2) {
-                // sessionStorage.setItem(data['second'], JSON.stringify(rsp2));
-                data['second'] = rsp2;
+                sessionStorage.setItem('data2', JSON.stringify(rsp2));
+                data2 = rsp2;
             }),
 
             $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[2], function (rsp1) {
-                // sessionStorage.setItem(data['first'], JSON.stringify(rsp1));
-                data['first'] = rsp1;
+                sessionStorage.setItem('data1', JSON.stringify(rsp1));
+                data1 = rsp1;
             })
         ).then(function() {
-
-
-            // processApiResponse(data['first'], data['second'], data['third'])
-
-
-            // Build institutions list
-            $.each(data['first'], function(idx, val){
-                institutions.push({
-                    institution_id: val['ID'],
-                    name_AL: val['InstitutionName_AL'],
-                    name_EN: val['InstitutionName_EN'],
-                    name_SR: val['InstitutionName_SR'],
-                    name_TR: val['InstitutionName_TR'],
-                    happy: [
-                        parseFloat(data['first'][idx]['result_Good_Percentage'].replace('%', '')),
-                        parseFloat(data['second'][idx]['result_Good_Percentage'].replace('%', '')),
-                        parseFloat(data['third'][idx]['result_Good_Percentage'].replace('%', ''))
-                    ],
-                    meh: [
-                        parseFloat(data['first'][idx]['result_Middle_Percentage'].replace('%', '')),
-                        parseFloat(data['second'][idx]['result_Middle_Percentage'].replace('%', '')),
-                        parseFloat(data['third'][idx]['result_Middle_Percentage'].replace('%', ''))
-                    ],
-                    unhappy: [
-                        parseFloat(data['first'][idx]['result_Bad_Percentage'].replace('%', '')),
-                        parseFloat(data['second'][idx]['result_Bad_Percentage'].replace('%', '')),
-                        parseFloat(data['third'][idx]['result_Bad_Percentage'].replace('%', ''))
-                    ],
-                    happyCount: [
-                        data['first'][idx]['result_Good'],
-                        data['second'][idx]['result_Good'],
-                        data['third'][idx]['result_Good']
-                    ],
-                    mehCount: [
-                        data['first'][idx]['result_Middle'],
-                        data['second'][idx]['result_Middle'],
-                        data['third'][idx]['result_Middle']
-                    ],
-                    unhappyCount: [
-                        data['first'][idx]['result_Bad'],
-                        data['second'][idx]['result_Bad'],
-                        data['third'][idx]['result_Bad']
-                    ],
-                    totalCount: [
-                        data['first'][idx]['result_Total'],
-                        data['second'][idx]['result_Total'],
-                        data['third'][idx]['result_Total']
-                    ]
-                });
-            });
-
-
-
-            $.each( data['first'], function( key, val ) {
-                sortedInstitutions.push({id:key, instit:val['InstitutionName_' + lang]});
-            });
-            // console.log(sortedInstitutions[0]);
-            // console.log(sortedInstitutions[0].instit);
-            // // TODO: Build services list
-
-            onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
-            $.each(institutions, function(i) {
-                var institu = sortedInstitutions[i].instit;
-                var instituIndex = sortedInstitutions[i].id;
-                $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + institu + '\')">' + institu + '</a></li>');
-            })
-
-
+            // console.log(data1);
+            processApiResponse(data1, data2, data3)
             // Hide gif loader animation.
             $('.overllay').hide();
         });
-    // }else {
-    //     // processApiResponse();
-    //     $('.overllay').hide();
-    // }
-    //
+    }else {
+        processApiResponse(data1, data2, data3)
+        $('.overllay').hide();
+    }
+
     function processApiResponse(rsp1,rsp2, rsp3) {
-        // TODO: Account for case when at least on of the deferred request fails
 
-        // All requests have been resolved (or rejected),
+        $.each(data1, function(idx, val){
+            institutions.push({
+                institution_id: val['ID'],
+                name_AL: val['InstitutionName_AL'],
+                name_EN: val['InstitutionName_EN'],
+                name_SR: val['InstitutionName_SR'],
+                name_TR: val['InstitutionName_TR'],
+                happy: [
+                    parseFloat(data1[idx]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data2[idx]['result_Good_Percentage'].replace('%', '')),
+                    parseFloat(data3[idx]['result_Good_Percentage'].replace('%', ''))
+                ],
+                meh: [
+                    parseFloat(data1[idx]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data2[idx]['result_Middle_Percentage'].replace('%', '')),
+                    parseFloat(data3[idx]['result_Middle_Percentage'].replace('%', ''))
+                ],
+                unhappy: [
+                    parseFloat(data1[idx]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data2[idx]['result_Bad_Percentage'].replace('%', '')),
+                    parseFloat(data3[idx]['result_Bad_Percentage'].replace('%', ''))
+                ],
+                happyCount: [
+                    data1[idx]['result_Good'],
+                    data2[idx]['result_Good'],
+                    data3[idx]['result_Good']
+                ],
+                mehCount: [
+                    data1[idx]['result_Middle'],
+                    data2[idx]['result_Middle'],
+                    data3[idx]['result_Middle']
+                ],
+                unhappyCount: [
+                    data1[idx]['result_Bad'],
+                    data2[idx]['result_Bad'],
+                    data3[idx]['result_Bad']
+                ],
+                totalCount: [
+                    data1[idx]['result_Total'],
+                    data2[idx]['result_Total'],
+                    data3[idx]['result_Total']
+                ]
+            });
+        });
 
+        $.each( data1, function( key, val ) {
+            sortedInstitutions.push({id:key, instit:val['InstitutionName_' + lang]});
+        });
+        onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
+        $.each(institutions, function(i) {
+            var institu = sortedInstitutions[i].instit;
+            var instituIndex = sortedInstitutions[i].id;
+            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + institu + '\')">' + institu + '</a></li>');
+        });
     }
 });

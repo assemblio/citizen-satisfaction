@@ -277,6 +277,4 @@ $(function() {
             $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + institutionName.id + ', \'' + institutionName.instit + '\')">' + institutionName.instit + '</a></li>');
         });
     }
-
-
 });
