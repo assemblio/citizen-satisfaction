@@ -368,6 +368,8 @@ $(function() {
 
     $('#lnk-trends').attr('href', document.location.pathname.replace('/ranking/', '/trends') + '?lang=' + urlLangParam);
 
+    $('#lnk-ranking').attr('href', document.location.pathname + '?lang=' + urlLangParam);
+
 
     if(satisfactionJson == null) {
         // get the citizen satisfaction result json

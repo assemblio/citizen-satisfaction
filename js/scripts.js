@@ -232,6 +232,7 @@ $(function() {
     $('#lnk-ranking').attr('href', document.location.pathname + 'ranking?lang=' + urlLangParam);
     $('.navbar-brand').attr('href', document.location.pathname + '?lang=' + urlLangParam);
     $('#lnk-trends').attr('href', document.location.pathname+'trends?lang=' + urlLangParam);
+    $('#lnk-visualizer').attr('href', document.location.pathname + '?lang=' + urlLangParam);
 
     if(satisfactionJson == null){
         // get the citizen satisfaction result json

@@ -42,6 +42,11 @@ var data = {
     'third': null
 };
 
+// if(sessionStorage.getItem(data[0]) != null && sessionStorage.getItem(data[1]) && sessionStorage.getItem(data[2])){
+//     data['first'] = JSON.parse(sessionStorage.getItem('rsp1'));
+//     data['second'] = JSON.parse(sessionStorage.getItem('rsp2'));
+//     data['third'] = JSON.parse(sessionStorage.getItem('rsp3'));
+// }
 
 var institutions = [];
 var sortedInstitutions = [];
@@ -60,10 +65,13 @@ function onMinistrySelection(instituIndex,institu) {
     }
     if(RenderChartBool == false) {
         // Render the chart.
+        $('#container-barchart2').css('display','block');
+
         renderChart(institutions[instituIndex]);
     }
     if (RenderChartBool == true) {
-        $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
+        $('#container-barchart2').css('display','none');
+        $('#container-barchart').html('<div style="margin-left: -15px;margin-right: -15px;text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
     // onServiceSelection(instituIndex,0,0);
     getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
@@ -123,7 +131,7 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
             });
         });
     });
-    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex]['InstitutionName_'+lang] + '\')">document.write(i18n.allServices[lang])</a></li>');
+    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data['first'][instituIndex]['InstitutionName_'+lang] + '\')">' + i18n.allServices[lang] + '</script></a></li>');
     $(services).each(function(i){
         var servID = services[i]['id'];
         var serviceN = services[i]['name_' + lang];
@@ -193,11 +201,14 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
         }
     }
     if(RenderChartBool == false) {
-        console.log("Data rendered!!!!!");
+        $('#container-barchart2').css('display','block');
+
         renderChart(services[serviceIndex]);
     }
     if (RenderChartBool == true) {
-        $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
+        $('#container-barchart2').css('display','none');
+
+        $('#container-barchart').html('<div style="margin-left: -15px;margin-right: -15px;text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
 }
 
@@ -339,87 +350,105 @@ $(function() {
     $('.navbar-brand').attr('href', document.location.pathname.replace('/trends/', '/') + '?lang=' + urlLangParam);
     $('#lnk-visualizer').attr('href', document.location.pathname.replace('/trends/', '/') + '?lang=' + urlLangParam);
     $('#lnk-ranking').attr('href', document.location.pathname.replace('/trends/', '/ranking') + '?lang=' + urlLangParam);
+    $('#lnk-trends').attr('href', document.location.pathname+'?lang=' + urlLangParam);
+    // if (true) {
+        $.when(
+            // Deferred requests
+            $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[0], function (rsp3) {
+                // sessionStorage.setItem(data['third'], JSON.stringify(rsp3));
+                data['third'] = rsp3;
+            }),
 
-    $.when(
-        // Deferred requests
-        $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[0], function (rsp) {
-            data['third'] = rsp;
-        }),
+            $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[1], function (rsp2) {
+                // sessionStorage.setItem(data['second'], JSON.stringify(rsp2));
+                data['second'] = rsp2;
+            }),
 
-        $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[1], function (rsp) {
-            data['second'] = rsp;
-        }),
+            $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[2], function (rsp1) {
+                // sessionStorage.setItem(data['first'], JSON.stringify(rsp1));
+                data['first'] = rsp1;
+            })
+        ).then(function() {
 
-        $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[2], function (rsp) {
-            data['first'] = rsp;
-        })
-    ).then(function() {
+
+            // processApiResponse(data['first'], data['second'], data['third'])
+
+
+            // Build institutions list
+            $.each(data['first'], function(idx, val){
+                institutions.push({
+                    institution_id: val['ID'],
+                    name_AL: val['InstitutionName_AL'],
+                    name_EN: val['InstitutionName_EN'],
+                    name_SR: val['InstitutionName_SR'],
+                    name_TR: val['InstitutionName_TR'],
+                    happy: [
+                        parseFloat(data['first'][idx]['result_Good_Percentage'].replace('%', '')),
+                        parseFloat(data['second'][idx]['result_Good_Percentage'].replace('%', '')),
+                        parseFloat(data['third'][idx]['result_Good_Percentage'].replace('%', ''))
+                    ],
+                    meh: [
+                        parseFloat(data['first'][idx]['result_Middle_Percentage'].replace('%', '')),
+                        parseFloat(data['second'][idx]['result_Middle_Percentage'].replace('%', '')),
+                        parseFloat(data['third'][idx]['result_Middle_Percentage'].replace('%', ''))
+                    ],
+                    unhappy: [
+                        parseFloat(data['first'][idx]['result_Bad_Percentage'].replace('%', '')),
+                        parseFloat(data['second'][idx]['result_Bad_Percentage'].replace('%', '')),
+                        parseFloat(data['third'][idx]['result_Bad_Percentage'].replace('%', ''))
+                    ],
+                    happyCount: [
+                        data['first'][idx]['result_Good'],
+                        data['second'][idx]['result_Good'],
+                        data['third'][idx]['result_Good']
+                    ],
+                    mehCount: [
+                        data['first'][idx]['result_Middle'],
+                        data['second'][idx]['result_Middle'],
+                        data['third'][idx]['result_Middle']
+                    ],
+                    unhappyCount: [
+                        data['first'][idx]['result_Bad'],
+                        data['second'][idx]['result_Bad'],
+                        data['third'][idx]['result_Bad']
+                    ],
+                    totalCount: [
+                        data['first'][idx]['result_Total'],
+                        data['second'][idx]['result_Total'],
+                        data['third'][idx]['result_Total']
+                    ]
+                });
+            });
+
+
+
+            $.each( data['first'], function( key, val ) {
+                sortedInstitutions.push({id:key, instit:val['InstitutionName_' + lang]});
+            });
+            // console.log(sortedInstitutions[0]);
+            // console.log(sortedInstitutions[0].instit);
+            // // TODO: Build services list
+
+            onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
+            $.each(institutions, function(i) {
+                var institu = sortedInstitutions[i].instit;
+                var instituIndex = sortedInstitutions[i].id;
+                $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + institu + '\')">' + institu + '</a></li>');
+            })
+
+
+            // Hide gif loader animation.
+            $('.overllay').hide();
+        });
+    // }else {
+    //     // processApiResponse();
+    //     $('.overllay').hide();
+    // }
+    //
+    function processApiResponse(rsp1,rsp2, rsp3) {
         // TODO: Account for case when at least on of the deferred request fails
 
         // All requests have been resolved (or rejected),
 
-        // Build institutions list
-        $.each(data['first'], function(idx, val){
-            institutions.push({
-                institution_id: val['ID'],
-                name_AL: val['InstitutionName_AL'],
-                name_EN: val['InstitutionName_EN'],
-                name_SR: val['InstitutionName_SR'],
-                name_TR: val['InstitutionName_TR'],
-                happy: [
-                    parseFloat(data['first'][idx]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data['second'][idx]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data['third'][idx]['result_Good_Percentage'].replace('%', ''))
-                ],
-                meh: [
-                    parseFloat(data['first'][idx]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data['second'][idx]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data['third'][idx]['result_Middle_Percentage'].replace('%', ''))
-                ],
-                unhappy: [
-                    parseFloat(data['first'][idx]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data['second'][idx]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data['third'][idx]['result_Bad_Percentage'].replace('%', ''))
-                ],
-                happyCount: [
-                    data['first'][idx]['result_Good'],
-                    data['second'][idx]['result_Good'],
-                    data['third'][idx]['result_Good']
-                ],
-                mehCount: [
-                    data['first'][idx]['result_Middle'],
-                    data['second'][idx]['result_Middle'],
-                    data['third'][idx]['result_Middle']
-                ],
-                unhappyCount: [
-                    data['first'][idx]['result_Bad'],
-                    data['second'][idx]['result_Bad'],
-                    data['third'][idx]['result_Bad']
-                ],
-                totalCount: [
-                    data['first'][idx]['result_Total'],
-                    data['second'][idx]['result_Total'],
-                    data['third'][idx]['result_Total']
-                ]
-            });
-        });
-
-
-
-        $.each( data['first'], function( key, val ) {
-            sortedInstitutions.push({id:key, instit:val['InstitutionName_' + lang]});
-        });
-        // console.log(sortedInstitutions[0]);
-        // console.log(sortedInstitutions[0].instit);
-        // // TODO: Build services list
-
-        onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
-        $.each(institutions, function(i) {
-            var institu = sortedInstitutions[i].instit;
-            var instituIndex = sortedInstitutions[i].id;
-            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + institu + '\')">' + institu + '</a></li>');
-        })
-        // Hide gif loader animation.
-        $('.overllay').hide();
-    });
+    }
 });
