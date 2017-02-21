@@ -59,7 +59,6 @@ function onMinistrySelection(instituIndex,institu) {
         }
     }
     if(RenderChartBool == false) {
-        console.log("Data rendered!!!!!");
         // Render the chart.
         renderChart(institutions[instituIndex]);
     }
@@ -203,7 +202,9 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
 }
 
 function renderChart(data){
-    Highcharts.chart('container-barchart', {
+    var device = (window.screen.width / 2) - (window.screen.width / 22  );
+    
+    Highcharts.chart('container-barchart2',{
         title: {
             text: ''
         },
@@ -239,11 +240,67 @@ function renderChart(data){
             items: [{
                 html: i18n.answers[lang] + ":",
                 style: {
-                    left: '50px',
+                    left: device + '50px',
                     top: '0px',
                     color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
                 }
             }]
+        },
+        series:[{
+            type: 'pie',
+            name: i18n.answers[lang],
+            data: [{
+                name: i18n.dissatisfied[lang],
+                y: data.unhappyCount.reduce(function(a, b) { return a + b; }, 0),
+                color: '#ef4241' // Dissatisfied color
+            }, {
+                name: i18n.moderatelySatisfied[lang],
+                y: data.mehCount.reduce(function(a, b) { return a + b; }, 0),
+                color: '#fed53e' // Moderately satisfied colors
+            }, {
+                name: i18n.satisfied[lang],
+                y: data.happyCount.reduce(function(a, b) { return a + b; }, 0),
+                color: '#87c441' // Satisfied color
+            }],
+            size: 140,
+            center: [device, 90],
+            showInLegend: false,
+            dataLabels: {
+                enabled: false
+            }
+        }]
+    });
+    Highcharts.chart('container-barchart', {
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: ["three weeks ago", "two weeks ago", "one week ago"],
+            labels: {
+                style: {
+                    color: 'white'
+                }
+            }
+        },
+        yAxis: {
+            labels: {
+                format: "{value}%",
+                style: {
+                    color: 'white'
+                }
+            },
+            title: {
+                text: ''
+            }
+        },
+        chart:{
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                stops: [
+                    [0, 'rgb(82, 178, 213)'],
+                    [1, 'rgb(65, 118, 173)']
+                ]
+            }
         },
         series: [{
             type: 'column',
@@ -260,7 +317,7 @@ function renderChart(data){
             name: i18n.satisfied[lang],
             data: data.happy,
             color: '#87c441' // Satisfied color
-        }/**, {
+        }]/**, {
             type: 'spline',
             name: 'Average',
             data: [3, 2.67, 3],
@@ -269,29 +326,7 @@ function renderChart(data){
                 lineColor: Highcharts.getOptions().colors[3],
                 fillColor: 'white'
             }
-        }**/,{
-            type: 'pie',
-            name: i18n.answers[lang],
-            data: [{
-                name: i18n.dissatisfied[lang],
-                y: data.unhappyCount.reduce(function(a, b) { return a + b; }, 0),
-                color: '#ef4241' // Dissatisfied color
-            }, {
-                name: i18n.moderatelySatisfied[lang],
-                y: data.mehCount.reduce(function(a, b) { return a + b; }, 0),
-                color: '#fed53e' // Moderately satisfied colors
-            }, {
-                name: i18n.satisfied[lang],
-                y: data.happyCount.reduce(function(a, b) { return a + b; }, 0),
-                color: '#87c441' // Satisfied color
-            }],
-            center: [100, 60],
-            size: 120,
-            showInLegend: false,
-            dataLabels: {
-                enabled: false
-            }
-        }]
+        }**/
     });
 }
 
