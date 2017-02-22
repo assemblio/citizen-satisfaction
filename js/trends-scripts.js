@@ -197,6 +197,10 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
         if (dataTime[i][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'] == 0 && dataTime[i][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'] == 0 && dataTime[i][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'] == 0) {
             RenderChartBool = true;
         }
+        else {
+            RenderChartBool = false;
+            break;
+        }
     }
     if(RenderChartBool == false) {
         $('#dropdown-second .selected-value').html(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]);
