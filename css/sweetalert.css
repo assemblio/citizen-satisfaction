@@ -27,7 +27,8 @@ body.stop-scrolling {
   left: 50%;
   top: 50%;
   margin-left: -256px;
-  margin-top: -200px;
+  margin-top: -220px !important;
+  /*top: 180px;*/
   overflow: hidden;
   display: none;
   z-index: 99999; }
@@ -38,7 +39,12 @@ body.stop-scrolling {
       margin-right: 0;
       left: 15px;
       right: 15px;
-      top: 180px;} }
+      /*top: 180px;*/
+      }
+    .sweet-alert h2 {
+        font-size: 16px !important;
+    }
+  }
   .sweet-alert h2 {
     color: #575757;
     font-size: 30px;

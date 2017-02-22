@@ -15,7 +15,11 @@
     src: url('../fonts/Rene.Bieder_Campton.Medium.otf');
 }
 
-
+@media only screen and (max-width : 790px){
+    .sweet-alert{
+        margin-top: -220px !important;
+    }
+}
 @media (max-width:420px) {
     .dropdown-menu{
       width: 100%;
