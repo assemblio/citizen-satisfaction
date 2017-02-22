@@ -59,20 +59,17 @@ function onMinistrySelection(instituIndex,institu) {
     }
     if(RenderChartBool == false) {
         // Render the chart.
-        // $('#container-barchart2').css('display','block');
         $('#dropdown-first .selected-value').html(institu);
 
         renderChart(institutions[instituIndex]);
         getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
     }
     if (RenderChartBool == true) {
-        // $('#container-barchart2').css('display','none');
         swal({
             title: "We're sorry, but there is no data for "+institu+"!",
             type: "error",
             confirmButtonText: "Back"
         });
-        // $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
     // onServiceSelection(instituIndex,0,0);
 }
@@ -136,13 +133,11 @@ function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex,
         var servID = services[i]['id'];
         var serviceN = services[i]['name_' + lang];
         var serviceGrId = services[i].service_grid;
-        // console.log(servID);
         $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection('+ instituIndex + ', ' + serviceGrId + ', ' + servID + ')">' + serviceN + '</a></li>');
     });
 }
 function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
     var services = [];
-    $('#dropdown-second .selected-value').html(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]);
 
     $(data1[instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
         $(this['Services']).each(function(serviceIndex,serviceVal) {
@@ -191,7 +186,6 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
             });
         });
     });
-    $('#dropdown-second .selected-value').html(services[serviceIndex]['ServiceName_'+lang]);
 
     var dataTime = [data1,data2,data3];
     var RenderChartBool = false;
@@ -201,25 +195,21 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
         }
     }
     if(RenderChartBool == false) {
-        // $('#container-barchart2').css('display','block');
+        $('#dropdown-second .selected-value').html(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]);
+        $('#dropdown-second .selected-value').html(services[serviceIndex]['ServiceName_'+lang]);
         renderChart(services[serviceIndex]);
     }
     if (RenderChartBool == true) {
-        // $('#container-barchart2').css('display','none');
         swal({
-          title: "We're sorry, but there is no data for "+services[serviceIndex]['name_'+lang]+"!",
+          title: "We're sorry, but there is no data for "+data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]+"!",
           type: "error",
           confirmButtonText: "Back"
         });
-
-        // $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
 }
 
 function renderChart(data){
-    var device = (window.screen.width / 2) - (window.screen.width / 22  );
-
-    Highcharts.chart('container-barchart2',{
+    Highcharts.chart('container-barchart', {
         title: {
             text: ''
         },
@@ -255,67 +245,11 @@ function renderChart(data){
             items: [{
                 html: i18n.answers[lang] + ":",
                 style: {
-                    left: device + '50px',
+                    left: '50px',
                     top: '0px',
                     color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
                 }
             }]
-        },
-        series:[{
-            type: 'pie',
-            name: i18n.answers[lang],
-            data: [{
-                name: i18n.dissatisfied[lang],
-                y: data.unhappyCount.reduce(function(a, b) { return a + b; }, 0),
-                color: '#ef4241' // Dissatisfied color
-            }, {
-                name: i18n.moderatelySatisfied[lang],
-                y: data.mehCount.reduce(function(a, b) { return a + b; }, 0),
-                color: '#fed53e' // Moderately satisfied colors
-            }, {
-                name: i18n.satisfied[lang],
-                y: data.happyCount.reduce(function(a, b) { return a + b; }, 0),
-                color: '#87c441' // Satisfied color
-            }],
-            size: 140,
-            center: [device, 90],
-            showInLegend: false,
-            dataLabels: {
-                enabled: false
-            }
-        }]
-    });
-    Highcharts.chart('container-barchart', {
-        title: {
-            text: ''
-        },
-        xAxis: {
-            categories: [i18n.weeks3[lang], i18n.weeks2[lang], i18n.weeks1[lang]],
-            labels: {
-                style: {
-                    color: 'white'
-                }
-            }
-        },
-        yAxis: {
-            labels: {
-                format: "{value}%",
-                style: {
-                    color: 'white'
-                }
-            },
-            title: {
-                text: ''
-            }
-        },
-        chart:{
-            backgroundColor: {
-                linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-                stops: [
-                    [0, 'rgb(82, 178, 213)'],
-                    [1, 'rgb(65, 118, 173)']
-                ]
-            }
         },
         series: [{
             type: 'column',
@@ -332,7 +266,7 @@ function renderChart(data){
             name: i18n.satisfied[lang],
             data: data.happy,
             color: '#87c441' // Satisfied color
-        }]/**, {
+        }/**, {
             type: 'spline',
             name: 'Average',
             data: [3, 2.67, 3],
@@ -341,11 +275,31 @@ function renderChart(data){
                 lineColor: Highcharts.getOptions().colors[3],
                 fillColor: 'white'
             }
-        }**/
+        }**/,{
+            type: 'pie',
+            name: i18n.answers[lang],
+            data: [{
+                name: i18n.dissatisfied[lang],
+                y: data.unhappyCount.reduce(function(a, b) { return a + b; }, 0),
+                color: '#ef4241' // Dissatisfied color
+            }, {
+                name: i18n.moderatelySatisfied[lang],
+                y: data.mehCount.reduce(function(a, b) { return a + b; }, 0),
+                color: '#fed53e' // Moderately satisfied colors
+            }, {
+                name: i18n.satisfied[lang],
+                y: data.happyCount.reduce(function(a, b) { return a + b; }, 0),
+                color: '#87c441' // Satisfied color
+            }],
+            center: [100, 60],
+            size: 120,
+            showInLegend: false,
+            dataLabels: {
+                enabled: false
+            }
+        }]
     });
 }
-
-
 $(function() {
     // Set link to trends with selected language
     if(urlLangParam == null){
