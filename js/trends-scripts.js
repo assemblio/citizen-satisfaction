@@ -274,16 +274,7 @@ function renderChart(data){
             name: i18n.satisfied[lang],
             data: data.happy,
             color: '#87c441' // Satisfied color
-        }/**, {
-            type: 'spline',
-            name: 'Average',
-            data: [3, 2.67, 3],
-            marker: {
-                lineWidth: 2,
-                lineColor: Highcharts.getOptions().colors[3],
-                fillColor: 'white'
-            }
-        }**/,{
+        },{
             type: 'pie',
             name: i18n.answers[lang],
             data: [{
