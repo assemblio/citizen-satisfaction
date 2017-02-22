@@ -33,15 +33,6 @@ var dateRanges = [
     '?date_fromString=' + pastDaysBy3n.toLocaleDateString('fr-FR') + '&date_toString=' + pastDaysBy2nMin1.toLocaleDateString('fr-FR')
 ];
 
-
-// Object containing the requested responses.
-// We are making three requests, so three responses.
-// var data = {
-//     'first': null,
-//     'second': null,
-//     'third': null
-// };
-
 var data1 = null;
 var data2 = null;
 var data3 = null;
@@ -69,13 +60,19 @@ function onMinistrySelection(instituIndex,institu) {
     }
     if(RenderChartBool == false) {
         // Render the chart.
-        $('#container-barchart2').css('display','block');
+        // $('#container-barchart2').css('display','block');
 
         renderChart(institutions[instituIndex]);
     }
     if (RenderChartBool == true) {
-        $('#container-barchart2').css('display','none');
-        $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
+        // $('#container-barchart2').css('display','none');
+        swal({
+          title: "Error!",
+          text: "Here's my error message!",
+          type: "error",
+          confirmButtonText: "Cool"
+        });
+        // $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
     // onServiceSelection(instituIndex,0,0);
     getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
@@ -205,14 +202,20 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
         }
     }
     if(RenderChartBool == false) {
-        $('#container-barchart2').css('display','block');
+        // $('#container-barchart2').css('display','block');
 
         renderChart(services[serviceIndex]);
     }
     if (RenderChartBool == true) {
-        $('#container-barchart2').css('display','none');
+        // $('#container-barchart2').css('display','none');
+        swal({
+          title: "Error!",
+          text: "Here's my error message!",
+          type: "error",
+          confirmButtonText: "Cool"
+        });
 
-        $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
+        // $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
 }
 

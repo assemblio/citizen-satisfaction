@@ -1,5 +1,41 @@
 var API_REQUEST_URL_GENERAL_RESULT = 'https://opi.rks-gov.net/api/report/general';
+var CYCLE_LENGTH_DAYS = 7;
 
+/**
+ * Get the dates needed to define the following ranges:
+ *
+ *  Latest date range from 1n to today.
+ *  Mid date range from 2n to 1n-1.
+ *  Oldest data range from 3n to 2n-1.
+**/
+
+var today = new Date();
+
+var pastDaysBy1n = new Date();
+pastDaysBy1n.setDate(pastDaysBy1n.getDate() - CYCLE_LENGTH_DAYS);
+
+var pastDaysBy1nMin1 = new Date();
+pastDaysBy1nMin1.setDate(pastDaysBy1nMin1.getDate() - CYCLE_LENGTH_DAYS - 1);
+
+var pastDaysBy2n = new Date();
+pastDaysBy2n.setDate(pastDaysBy2n.getDate() - 2 * CYCLE_LENGTH_DAYS);
+
+var pastDaysBy2nMin1 = new Date();
+pastDaysBy2nMin1.setDate(pastDaysBy2nMin1.getDate() - (2 * CYCLE_LENGTH_DAYS) - 1);
+
+var pastDaysBy3n = new Date();
+pastDaysBy3n.setDate(pastDaysBy3n.getDate() - 3 * CYCLE_LENGTH_DAYS);
+
+
+var dateRanges = [
+    '?date_fromString=' + pastDaysBy1n.toLocaleDateString('fr-FR') + '&date_toString=' + today.toLocaleDateString('fr-FR'),
+    '?date_fromString=' + pastDaysBy2n.toLocaleDateString('fr-FR') + '&date_toString=' + pastDaysBy1nMin1.toLocaleDateString('fr-FR'),
+    '?date_fromString=' + pastDaysBy3n.toLocaleDateString('fr-FR') + '&date_toString=' + pastDaysBy2nMin1.toLocaleDateString('fr-FR')
+];
+
+var data1 = null;
+var data2 = null;
+var data3 = null;
 var institutions = null;
 var services = null;
 
@@ -9,6 +45,11 @@ if(sessionStorage.getItem('institutions') != null){
 
 if(sessionStorage.getItem('services') != null){
     services = JSON.parse(sessionStorage.getItem('services'));
+}
+if(sessionStorage.getItem('data1') != null && sessionStorage.getItem('data2') != null  && sessionStorage.getItem('data3') != null){
+    data1 = JSON.parse(sessionStorage.getItem('data1'));
+    data2 = JSON.parse(sessionStorage.getItem('data2'));
+    data3 = JSON.parse(sessionStorage.getItem('data3'));
 }
 
 function domInit(){
@@ -30,7 +71,7 @@ function buildInstitutionsAndServices(apiResponse) {
     services = {};
 
     $.each(apiResponse, function (key, val) {
-        
+
         institutions.push({
             id: this['ID'],
             name: {
@@ -170,5 +211,22 @@ function fetchData(){
         domInit();
 
         $('.overllay').hide();
+    }
+    if (data1 == null && data2 == null  && data3 == null) {
+        // Deferred requests
+        $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[0], function (rsp3) {
+            sessionStorage.setItem('data3', JSON.stringify(rsp3));
+            data3 = rsp3;
+        });
+
+        $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[1], function (rsp2) {
+            sessionStorage.setItem('data2', JSON.stringify(rsp2));
+            data2 = rsp2;
+        });
+
+        $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[2], function (rsp1) {
+            sessionStorage.setItem('data1', JSON.stringify(rsp1));
+            data1 = rsp1;
+        });
     }
 }

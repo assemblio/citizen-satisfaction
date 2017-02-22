@@ -201,7 +201,6 @@ $(function() {
         urlLangParam = 'sq';
     }
     // link to the ranking
-    // TODO: do the same for page title
     $('#lnk-ranking').attr('href', document.location.pathname + 'ranking?lang=' + urlLangParam);
     $('.navbar-brand').attr('href', document.location.pathname + '?lang=' + urlLangParam);
     $('#lnk-trends').attr('href', document.location.pathname + 'trends?lang=' + urlLangParam);
