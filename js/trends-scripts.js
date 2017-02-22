@@ -52,9 +52,13 @@ function onMinistrySelection(instituIndex,institu) {
 
     var dataTime = [data1,data2,data3];
     var RenderChartBool = false;
-    for (var i = 0; i <= 2; i++) {
+    for (var i = 0; i < 3; i++) {
         if (dataTime[i][instituIndex]['result_Bad'] == 0 && dataTime[i][instituIndex]['result_Middle'] == 0 && dataTime[i][instituIndex]['result_Good'] == 0) {
             RenderChartBool = true;
+        }
+        else{
+            RenderChartBool = false;
+            break;
         }
     }
     if(RenderChartBool == false) {
