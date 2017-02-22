@@ -209,6 +209,14 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
 }
 
 function renderChart(data){
+    var xPos = screen.availWidth - screen.availWidth/4;
+    if (data.happy[1] <=50 && data.meh[1] <= 50 && data.unhappy[1] <=50) {
+        xPos = (screen.availWidth / 2) - (screen.availWidth / 22  );
+    }else if (data.happy[0] <=50 && data.meh[0] <= 50 && data.unhappy[0] <=50) {
+        xPos = 100;
+    }
+
+    // console.log(data);
     Highcharts.chart('container-barchart', {
         title: {
             text: ''
@@ -291,7 +299,7 @@ function renderChart(data){
                 y: data.happyCount.reduce(function(a, b) { return a + b; }, 0),
                 color: '#87c441' // Satisfied color
             }],
-            center: [100, 60],
+            center: [xPos, 60],
             size: 120,
             showInLegend: false,
             dataLabels: {
