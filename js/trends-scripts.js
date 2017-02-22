@@ -307,6 +307,7 @@ function renderChart(data){
         }**/]
     });
 }
+
 $(function() {
     // Set link to trends with selected language
     if(urlLangParam == null){
