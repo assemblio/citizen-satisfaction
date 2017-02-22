@@ -230,7 +230,7 @@ function renderChart(data){
             text: ''
         },
         xAxis: {
-            categories: ["three weeks ago", "two weeks ago", "one week ago"],
+            categories: [i18n.weeks1[lang], i18n.weeks2[lang], i18n.weeks3[lang]],
             labels: {
                 style: {
                     color: 'white'
