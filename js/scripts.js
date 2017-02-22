@@ -1,151 +1,158 @@
 var API_REQUEST_URL_GENERAL_RESULT = 'https://opi.rks-gov.net/api/report/general';
 // 'http://csis.appdec.com/api/report/general'
 
-var satisfactionJson = null;
-if(sessionStorage.getItem('satisfactionJson') != null){
-    satisfactionJson = JSON.parse(sessionStorage.getItem('satisfactionJson'));
+var institutions = null;
+var services = null;
+
+if(sessionStorage.getItem('institutions') != null){
+    institutions = JSON.parse(sessionStorage.getItem('institutions'));
+    console.log("institutions: " + sessionStorage.getItem('institutions').length);
 }
 
-function onServiceSelection(ministryIndex, serviceGroupIndex, serviceIndex){
+if(sessionStorage.getItem('services') != null){
+    services = JSON.parse(sessionStorage.getItem('services'));
+    console.log("services: " + sessionStorage.getItem('services').length);
+}
 
-    // Set the service name display
-    var serviceName = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang];
-    $('#dropdown-second .selected-value').html(serviceName);
+function getService(institutionId, serviceId){
+    for(var i=0; i < services[institutionId].length; i++){
+        if(services[institutionId][i].sid == serviceId){
+            return services[institutionId][i];
+        }
+    }
+
+    return null;
+}
+
+function onServiceSelection(institutionId, serviceId){
+
+    var service = null;
+    if(serviceId < 0){
+        service = services[institutionId][0];
+
+    }else{
+        service = getService(institutionId, serviceId);
+    }
+
+    //$('#dropdown-second .selected-value').html(service.name);
 
     // Set the default service's satisfaction stats:
-    setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex);
+    setSatisfactionStats(institutionId, service.sid);
 
+    //TODO: FIMXME
     // Now, let's clear previously created list of services.
-    $('#dropdown-second .dropdown-menu').html('');
+    //$('#dropdown-second .dropdown-menu').html('');
 
     // Shake illustrations with highest counts
-    shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex);
-    // console.log(ministryIndex,serviceGroupIndex,serviceIndex);
+    shakeHighestCounts(institutionId, service.sid);
 
-    var sortedServices = [];
-    // Finally, let's build the new list of services for the selected ministry.
-    // Get each Service from each Service Group.
-    $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function(serviceGroupIndex) {
-        $(this['Services']).each(function(serviceIndex) {
-            var serviceName = this['ServiceName_' + lang];
-            sortedServices.push({grIndex:serviceGroupIndex,srIndex:serviceIndex,service:serviceName});
-        });
-    });
-
-    sortedServices.sort(function(a,b){
-        A = a.service.toUpperCase();
-        B = b.service.toUpperCase();
-        if (A < B) {
-            return -1;
-        }
-        if (A > B) {
-            return 1;
-        }
-        return 0;
-
-    });
-    $(sortedServices).each(function(i){
-        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + ministryIndex + ', ' + sortedServices[i].grIndex + ', ' + sortedServices[i].srIndex + ')">' + sortedServices[i].service + '</a></li>');
-    });
-    // console.log(a);
+    //TODO: FIXME
+    //buildServiceDropdown(institutionIndex);
 
 }
 
-function onMinistrySelection(institutionIndex, institutionName){
+function onInstitutionSelection(institutionId, institutionName){
 
     $('#dropdown-first .selected-value').html(institutionName);
 
-    onServiceSelection(institutionIndex, 0, 0);
+    buildServiceDropdown(institutionId);
+    onServiceSelection(institutionId, -1);
 }
 
-function setSatisfactionStats(ministryIndex, serviceGroupIndex, serviceIndex){
-    var serviceJson = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex];
+function buildInstitutionDropdown() {
+    $.each(institutions, function (i, val) {
+        $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onInstitutionSelection(' + val.id + ', \'' + val.name[lang] + '\')">' + val.name[lang] + '</a></li>');
+    });
+}
+
+function buildServiceDropdown(institutionId){
+
+
+
+    // Let's clear previously created list of services.
+    $('#dropdown-second .dropdown-menu').html('');
+
+    $.each(services[institutionId], function(idx, val){
+        // Display selected service name
+        if(idx == 0){
+            $('#dropdown-second .selected-value').html(val.name[lang]);
+        }
+
+        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + institutionId + ', ' + val.sid + ')">' + val.name[lang] + '</a></li>');
+    });
+}
+
+
+function setSatisfactionStats(institutionId, serviceId){
+
+    var service = getService(institutionId, serviceId);
 
     // Percentages of votes for each level of satisfaction
-    $('.row-happy .percentage-count').html(serviceJson['result_Good_Percentage'].replace('.00%', '%'));
-    $('.row-meh .percentage-count').html(serviceJson['result_Middle_Percentage'].replace('.00%', '%'));
-    $('.row-unhappy .percentage-count').html(serviceJson['result_Bad_Percentage'].replace('.00%', '%'));
+    $('.row-happy .percentage-count').html(service['results']['percentage']['good']);
+    $('.row-meh .percentage-count').html(service['results']['percentage']['mid']);
+    $('.row-unhappy .percentage-count').html(service['results']['percentage']['bad']);
 
     // Total vote counts for each level of satisfaction
-    $('.row-happy .vote-count-label .vote-count').html(serviceJson['result_Good']);
-    $('.row-meh .vote-count-label .vote-count').html(serviceJson['result_Middle']);
-    $('.row-unhappy .vote-count-label .vote-count').html(serviceJson['result_Bad']);
+    $('.row-happy .vote-count-label .vote-count').html(service['results']['count']['good']);
+    $('.row-meh .vote-count-label .vote-count').html(service['results']['count']['mid']);
+    $('.row-unhappy .vote-count-label .vote-count').html(service['results']['count']['bad']);
 
     // Timeliness vote counts
-    setVoteCounts(serviceJson, 0, '.illustration-timeliness', '.img-timeliness');
+    setVoteCounts(service, 0, '.illustration-timeliness', '.img-timeliness');
 
     // Payment vote counts
-    setVoteCounts(serviceJson, 1, '.illustration-payment', '.img-payment');
+    setVoteCounts(service, 1, '.illustration-payment', '.img-payment');
 
     // Behaviour of official vote counts
-    setVoteCounts(serviceJson, 2, '.illustration-kindliness', '.img-kindliness');
+    setVoteCounts(service, 2, '.illustration-kindliness', '.img-kindliness');
 
     // Online service vote count
-    setVoteCounts(serviceJson, 3, '.illustration-online', '.img-online');
+    setVoteCounts(service, 3, '.illustration-online', '.img-online');
 
     // Quality of service vote count
-    setVoteCounts(serviceJson, 4, '.illustration-quality', '.img-quality');
+    setVoteCounts(service, 4, '.illustration-quality', '.img-quality');
 }
 
-function shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex){
+function shakeHighestCounts(institutionId, serviceId){
     $('.img-illustration ').removeClass('shake-chunk shake-constant');
     $('.warn').removeAttr('src');
 
-    var serviceJson = satisfactionJson[ministryIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex];
-
-    // Get all the happies
-    var happies = [{
-        indicator: 'timeliness',
-        count: serviceJson['Answers'][0]['result_Good']
-    },{
-        indicator: 'payment',
-        count: serviceJson['Answers'][1]['result_Good']
-    },{
-        indicator: 'kindliness',
-        count: serviceJson['Answers'][2]['result_Good']
-    },{
-        indicator: 'online',
-        count: serviceJson['Answers'][3]['result_Good']
-    },{
-        indicator: 'quality',
-        count: serviceJson['Answers'][4]['result_Good']
-    }];
-
+    var service = getService(institutionId, serviceId);
 
     // Get all the mehs
     var mehs = [{
         indicator: 'timeliness',
-        count: serviceJson['Answers'][0]['result_Middle']
+        count: service['answers'][0]['mid']
     },{
         indicator: 'payment',
-        count: serviceJson['Answers'][1]['result_Middle']
+        count: service['answers'][1]['mid']
     },{
         indicator: 'kindliness',
-        count: serviceJson['Answers'][2]['result_Middle']
+        count: service['answers'][2]['mid']
     },{
         indicator: 'online',
-        count: serviceJson['Answers'][3]['result_Middle']
+        count: service['answers'][3]['mid']
     },{
         indicator: 'quality',
-        count: serviceJson['Answers'][4]['result_Middle']
+        count: service['answers'][4]['mid']
     }];
 
     // Get all the unhappies
     var unhappies = [{
         indicator: 'timeliness',
-        count: serviceJson['Answers'][0]['result_Bad']
+        count: service['answers'][0]['bad']
     },{
         indicator: 'payment',
-        count: serviceJson['Answers'][1]['result_Bad']
+        count: service['answers'][1]['bad']
     },{
         indicator: 'kindliness',
-        count: serviceJson['Answers'][2]['result_Bad']
+        count: service['answers'][2]['bad']
     },{
         indicator: 'online',
-        count: serviceJson['Answers'][3]['result_Bad']
+        count: service['answers'][3]['bad']
     },{
         indicator: 'quality',
-        count: serviceJson['Answers'][4]['result_Bad']
+        count: service['answers'][4]['bad']
     }];
 
     // Figure out which meh is the worst and shake it for emphasis.
@@ -174,91 +181,181 @@ function shakeHighestCounts(ministryIndex, serviceGroupIndex, serviceIndex){
 
 }
 
-function setVoteCounts(serviceJson, answerIndex, illustrationSelector, imageSelector){
+function setVoteCounts(service, answerIndex, illustrationSelector, imageSelector){
     // GOOD ANSWER
     // If the count is 0 then grey out the illustration in question.
-    if(serviceJson['result_Good'] == 0 && $('.row-happy ' + imageSelector).attr('src').indexOf('/inactive/') < 0){
+    if(service['results']['count']['good'] == 0 && $('.row-happy ' + imageSelector).attr('src').indexOf('/inactive/') < 0){
         var happyImgUrl = $('.row-happy ' + imageSelector).attr('src').replace('/happy/', '/happy/inactive/');
         $('.row-happy ' + imageSelector).attr('src', happyImgUrl);
 
     }
     // else if the count is greater than 0, enable the illustration in question
-    else if(serviceJson['result_Good'] > 0 && $('.row-happy ' + imageSelector).attr('src').indexOf('/inactive/') > 0){
+    else if(service['results']['count']['good'] > 0 && $('.row-happy ' + imageSelector).attr('src').indexOf('/inactive/') > 0){
         var happyImgUrl = $('.row-happy ' + imageSelector).attr('src').replace('/happy/inactive/', '/happy/');
         $('.row-happy ' + imageSelector).attr('src', happyImgUrl);
     }
 
     // MEH ANSWER
     // If the count is 0 then grey out the illustration in question.
-    if(serviceJson['Answers'][answerIndex]['result_Middle'] == 0 && $('.row-meh ' + imageSelector).attr('src').indexOf('/inactive/') < 0 ){
+    if(service['answers'][answerIndex]['mid'] == 0 && $('.row-meh ' + imageSelector).attr('src').indexOf('/inactive/') < 0 ){
         var mehImgUrl = $('.row-meh ' + imageSelector).attr('src').replace('/meh/', '/meh/inactive/');
         $('.row-meh ' + imageSelector).attr('src', mehImgUrl);
 
     }
     // else if the count is greater than 0, enable the illustration in question
-    else if(serviceJson['Answers'][answerIndex]['result_Middle'] > 0 && $('.row-meh ' + imageSelector).attr('src').indexOf('/inactive/') > 0 ){
+    else if(service['answers'][answerIndex]['mid'] > 0 && $('.row-meh ' + imageSelector).attr('src').indexOf('/inactive/') > 0 ){
         var mehImgUrl = $('.row-meh ' + imageSelector).attr('src').replace('/meh/inactive/', '/meh/');
         $('.row-meh ' + imageSelector).attr('src', mehImgUrl);
     }
 
     // UNHAPPY ANSWER
     // If the count is 0 then grey out the illustration in question.
-    if(serviceJson['Answers'][answerIndex]['result_Bad'] == 0 && $('.row-unhappy ' + imageSelector).attr('src').indexOf('/inactive/') < 0 ){
+    if(service['answers'][answerIndex]['bad'] == 0 && $('.row-unhappy ' + imageSelector).attr('src').indexOf('/inactive/') < 0 ){
         var unhappyImgUrl = $('.row-unhappy ' + imageSelector).attr('src').replace('/unhappy/', '/unhappy/inactive/');
         $('.row-unhappy ' + imageSelector).attr('src', unhappyImgUrl);
 
     }
 
     // else if the count is greater than 0, enable the illustration in question
-    else if(serviceJson['Answers'][answerIndex]['result_Bad'] > 0 && $('.row-unhappy ' + imageSelector).attr('src').indexOf('/inactive/') > 0 ){
+    else if(service['answers'][answerIndex]['bad'] > 0 && $('.row-unhappy ' + imageSelector).attr('src').indexOf('/inactive/') > 0 ){
         var unhappyImgUrl = $('.row-unhappy ' + imageSelector).attr('src').replace('/unhappy/inactive/', '/unhappy/');
         $('.row-unhappy ' + imageSelector).attr('src', unhappyImgUrl);
     }
 
-    $('.row-happy' + illustrationSelector + '.vote-count').html(serviceJson['Answers'][answerIndex]['result_Good']);
-    $('.row-meh ' + illustrationSelector + ' .vote-count').html(serviceJson['Answers'][answerIndex]['result_Middle']);
-    $('.row-unhappy ' + illustrationSelector + ' .vote-count').html(serviceJson['Answers'][answerIndex]['result_Bad']);
+    $('.row-happy' + illustrationSelector + '.vote-count').html(service['results']['count']['good']);
+    $('.row-meh ' + illustrationSelector + ' .vote-count').html(service['answers'][answerIndex]['mid']);
+    $('.row-unhappy ' + illustrationSelector + ' .vote-count').html(service['answers'][answerIndex]['bad']);
 }
-
 
 $(function() {
 
     // Set link to visualizer with selected language
-    if(urlLangParam == null){
+    if (urlLangParam == null) {
         urlLangParam = 'sq';
     }
     // link to the ranking
     // TODO: do the same for page title
     $('#lnk-ranking').attr('href', document.location.pathname + 'ranking?lang=' + urlLangParam);
     $('.navbar-brand').attr('href', document.location.pathname + '?lang=' + urlLangParam);
-    $('#lnk-trends').attr('href', document.location.pathname+'trends?lang=' + urlLangParam);
+    $('#lnk-trends').attr('href', document.location.pathname + 'trends?lang=' + urlLangParam);
     $('#lnk-visualizer').attr('href', document.location.pathname + '?lang=' + urlLangParam);
 
-    if(satisfactionJson == null){
+    if (institutions == null) {
         // get the citizen satisfaction result json
-        $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function( data ) {
-            sessionStorage.setItem('satisfactionJson', JSON.stringify(data));
-            satisfactionJson = data;
-            processApiResponse(data)
+        $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function (data) {
+            buildInstitutionsAndServices(data);
+            cacheInstitutionsAndServices();
 
-        }).done(function() {
+        }).done(function () {
+            // Grab institution list from cache
+
+            sortInstitutions();
+            onInstitutionSelection(institutions[0].id, institutions[0].name[lang]);
+            buildInstitutionDropdown();
             $('.overllay').hide();
         });
+
     }else{
-        processApiResponse(satisfactionJson);
+        // Grab institution list from cache
+        sortInstitutions();
+        onInstitutionSelection(institutions[0].id, institutions[0].name[lang]);
+        buildInstitutionDropdown();
         $('.overllay').hide();
     }
 
-    function processApiResponse(data){
+    function buildInstitutionsAndServices(apiResponse) {
 
-        var sortedInstitutions = [];
+        institutions = [];
+        services = {};
 
-        $.each( data, function( key, val ) {
-            sortedInstitutions.push({id:key, instit:data[key]['InstitutionName_' + lang]});
+        $.each(apiResponse, function (key, val) {
+
+            // TODO: All service score score.
+            institutions.push({
+                id: this['ID'],
+                name: {
+                    AL: this['InstitutionName_AL'],
+                    EN: this['InstitutionName_EN'],
+                    SR: this['InstitutionName_SR'],
+                    TR: this['InstitutionName_TR']
+                },
+                results: {
+                    count: {
+                        good: this['result_Good'],
+                        mid: this['result_Middle'],
+                        bad: this['result_Bad']
+                    },
+                    percentage: {
+                        good: this['result_Good_Percentage'].replace('.00%', '%'),
+                        mid: this['result_Middle_Percentage'].replace('.00%', '%'),
+                        bad: this['result_Bad_Percentage'].replace('.00%', '%')
+                    }
+                }
+            });
+
+            // Finally, let's build the new list of services for the selected ministry.
+            // Get each Service from each Service Group.
+            $(val['ServiceGroups']).each(function() {
+                $(this['Services']).each(function() {
+
+                    if (!(val['ID'] in services)) {
+                        services[val['ID']] = new Array();
+                    }
+
+                    services[val['ID']].push({
+                        sid: this['ID'],
+                        name: {
+                            AL: this['ServiceName_AL'],
+                            EN: this['ServiceName_EN'],
+                            SR: this['ServiceName_SR'],
+                            TR: this['ServiceName_TR']
+                        },
+                        results: {
+                            count: {
+                                good: this['result_Good'],
+                                mid: this['result_Middle'],
+                                bad: this['result_Bad']
+                            },
+                            percentage: {
+                                good: this['result_Good_Percentage'].replace('.00%', '%'),
+                                mid: this['result_Middle_Percentage'].replace('.00%', '%'),
+                                bad: this['result_Bad_Percentage'].replace('.00%', '%')
+                            }
+                        },
+                        answers: [
+                            {
+                                mid: this['Answers'][0]['result_Middle'],
+                                bad: this['Answers'][0]['result_Bad']
+                            },
+                            {
+                                mid: this['Answers'][1]['result_Middle'],
+                                bad: this['Answers'][1]['result_Bad']
+                            },
+                            {
+                                mid: this['Answers'][2]['result_Middle'],
+                                bad: this['Answers'][2]['result_Bad']
+                            },
+                            {
+                                mid: this['Answers'][3]['result_Middle'],
+                                bad: this['Answers'][3]['result_Bad']
+                            },
+                            {
+                                mid: this['Answers'][4]['result_Middle'],
+                                bad: this['Answers'][4]['result_Bad']
+                            }
+                        ]
+                    });
+                });
+            });
         });
-        sortedInstitutions.sort(function(y,x){
-            A = y.instit.toUpperCase();
-            B = x.instit.toUpperCase();
+
+
+    }
+
+    function sortInstitutions(){
+        institutions.sort(function (y, x) {
+            A = y.name[lang].toUpperCase();
+            B = x.name[lang].toUpperCase();
             if (A < B) {
                 return -1;
             }
@@ -268,13 +365,28 @@ $(function() {
             return 0;
 
         });
-        onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
+    }
 
-        $.each(sortedInstitutions,function(i,val){
-            var institutionName = val;
-            // console.log(institutionName.id,institutionName.instit);
-            // var id = institutionName.id + 1;
-            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + institutionName.id + ', \'' + institutionName.instit + '\')">' + institutionName.instit + '</a></li>');
+    function sortServices(institutionsId){
+        services[institutionsId].sort(function(a, b){
+            A = a.name[lang].toUpperCase();
+            B = b.name[lang].toUpperCase();
+            if (A < B) {
+                return -1;
+            }
+            if (A > B) {
+                return 1;
+            }
+            return 0;
         });
     }
+
+    function cacheInstitutionsAndServices(){
+        // Cache created institution list.
+        sessionStorage.setItem('institutions', JSON.stringify(institutions));
+
+        // Cache created services object.
+        sessionStorage.setItem('services', JSON.stringify(services))
+    }
+
 });
