@@ -256,7 +256,7 @@ function renderChart(data){
                     [1, 'rgb(65, 118, 173)']
                 ]
             }
-        },
+        }/**,
         labels: {
             items: [{
                 html: i18n.answers[lang] + ":",
@@ -266,7 +266,7 @@ function renderChart(data){
                     color: (Highcharts.theme && Highcharts.theme.textColor) || 'white'
                 }
             }]
-        },
+        }**/,
         series: [{
             type: 'column',
             name: i18n.dissatisfied[lang],
@@ -282,7 +282,7 @@ function renderChart(data){
             name: i18n.satisfied[lang],
             data: data.happy,
             color: '#87c441' // Satisfied color
-        },{
+        }/**,{
             type: 'pie',
             name: i18n.answers[lang],
             data: [{
@@ -304,7 +304,7 @@ function renderChart(data){
             dataLabels: {
                 enabled: false
             }
-        }]
+        }**/]
     });
 }
 $(function() {
