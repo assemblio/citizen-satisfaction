@@ -140,7 +140,7 @@ var i18n = {
     },
     trends:{
         AL:'Trendet',
-        SR:'unknown',
+        SR:'Smer',
         EN:'Trends',
         TR: 'E\u011filimler'
     },
