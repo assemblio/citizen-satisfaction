@@ -187,6 +187,12 @@ var i18n = {
         SR: 'pre tri nedelje',
         EN: 'three weeks ago',
         TR: 'üç hafta önce'
+    },
+    nodata:{
+        AL: 'Na vjen keq, por nuk ka t\xEB dh\xEBna p\xEBr ',
+        SR: '\u017dao nam je ali ti podaci ne postoje za ',
+        EN: "We're sorry, but there is no data for",
+        TR: 'Üzgünüz, fakat veri bulunmamaktadır için'
     }
 };
 

@@ -70,7 +70,7 @@ function onMinistrySelection(instituIndex,institu) {
     }
     if (RenderChartBool == true) {
         swal({
-            title: "We're sorry, but there is no data for "+institu+"!",
+            title: i18n.nodata[lang]+institu+"!",
             type: "error",
             confirmButtonText: "Back"
         });
@@ -209,7 +209,7 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
     }
     if (RenderChartBool == true) {
         swal({
-          title: "We're sorry, but there is no data for "+data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]+"!",
+          title: i18n.nodata[lang]+data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]+"!",
           type: "error",
           confirmButtonText: "Back"
         });
