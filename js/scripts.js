@@ -1,28 +1,8 @@
-var API_REQUEST_URL_GENERAL_RESULT = 'https://opi.rks-gov.net/api/report/general';
-// 'http://csis.appdec.com/api/report/general'
-
-var institutions = null;
-var services = null;
-
-if(sessionStorage.getItem('institutions') != null){
-    institutions = JSON.parse(sessionStorage.getItem('institutions'));
-    console.log("institutions: " + sessionStorage.getItem('institutions').length);
+function domInit(){
+    onInstitutionSelection(institutions[0].id, institutions[0].name[lang]);
+    buildInstitutionDropdown();
 }
 
-if(sessionStorage.getItem('services') != null){
-    services = JSON.parse(sessionStorage.getItem('services'));
-    console.log("services: " + sessionStorage.getItem('services').length);
-}
-
-function getService(institutionId, serviceId){
-    for(var i=0; i < services[institutionId].length; i++){
-        if(services[institutionId][i].sid == serviceId){
-            return services[institutionId][i];
-        }
-    }
-
-    return null;
-}
 
 function onServiceSelection(institutionId, serviceId){
 
@@ -34,20 +14,14 @@ function onServiceSelection(institutionId, serviceId){
         service = getService(institutionId, serviceId);
     }
 
-    //$('#dropdown-second .selected-value').html(service.name);
+    // Display selected service name
+    $('#dropdown-second .selected-value').html(service.name[lang]);
 
     // Set the default service's satisfaction stats:
-    setSatisfactionStats(institutionId, service.sid);
-
-    //TODO: FIMXME
-    // Now, let's clear previously created list of services.
-    //$('#dropdown-second .dropdown-menu').html('');
+    setSatisfactionStats(institutionId, service.id);
 
     // Shake illustrations with highest counts
-    shakeHighestCounts(institutionId, service.sid);
-
-    //TODO: FIXME
-    //buildServiceDropdown(institutionIndex);
+    shakeHighestCounts(institutionId, service.id);
 
 }
 
@@ -67,18 +41,11 @@ function buildInstitutionDropdown() {
 
 function buildServiceDropdown(institutionId){
 
-
-
     // Let's clear previously created list of services.
     $('#dropdown-second .dropdown-menu').html('');
 
     $.each(services[institutionId], function(idx, val){
-        // Display selected service name
-        if(idx == 0){
-            $('#dropdown-second .selected-value').html(val.name[lang]);
-        }
-
-        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + institutionId + ', ' + val.sid + ')">' + val.name[lang] + '</a></li>');
+        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + institutionId + ', ' + val.id + ')">' + val.name[lang] + '</a></li>');
     });
 }
 
@@ -240,153 +207,6 @@ $(function() {
     $('#lnk-trends').attr('href', document.location.pathname + 'trends?lang=' + urlLangParam);
     $('#lnk-visualizer').attr('href', document.location.pathname + '?lang=' + urlLangParam);
 
-    if (institutions == null) {
-        // get the citizen satisfaction result json
-        $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function (data) {
-            buildInstitutionsAndServices(data);
-            cacheInstitutionsAndServices();
-
-        }).done(function () {
-            // Grab institution list from cache
-
-            sortInstitutions();
-            onInstitutionSelection(institutions[0].id, institutions[0].name[lang]);
-            buildInstitutionDropdown();
-            $('.overllay').hide();
-        });
-
-    }else{
-        // Grab institution list from cache
-        sortInstitutions();
-        onInstitutionSelection(institutions[0].id, institutions[0].name[lang]);
-        buildInstitutionDropdown();
-        $('.overllay').hide();
-    }
-
-    function buildInstitutionsAndServices(apiResponse) {
-
-        institutions = [];
-        services = {};
-
-        $.each(apiResponse, function (key, val) {
-
-            // TODO: All service score score.
-            institutions.push({
-                id: this['ID'],
-                name: {
-                    AL: this['InstitutionName_AL'],
-                    EN: this['InstitutionName_EN'],
-                    SR: this['InstitutionName_SR'],
-                    TR: this['InstitutionName_TR']
-                },
-                results: {
-                    count: {
-                        good: this['result_Good'],
-                        mid: this['result_Middle'],
-                        bad: this['result_Bad']
-                    },
-                    percentage: {
-                        good: this['result_Good_Percentage'].replace('.00%', '%'),
-                        mid: this['result_Middle_Percentage'].replace('.00%', '%'),
-                        bad: this['result_Bad_Percentage'].replace('.00%', '%')
-                    }
-                }
-            });
-
-            // Finally, let's build the new list of services for the selected ministry.
-            // Get each Service from each Service Group.
-            $(val['ServiceGroups']).each(function() {
-                $(this['Services']).each(function() {
-
-                    if (!(val['ID'] in services)) {
-                        services[val['ID']] = new Array();
-                    }
-
-                    services[val['ID']].push({
-                        sid: this['ID'],
-                        name: {
-                            AL: this['ServiceName_AL'],
-                            EN: this['ServiceName_EN'],
-                            SR: this['ServiceName_SR'],
-                            TR: this['ServiceName_TR']
-                        },
-                        results: {
-                            count: {
-                                good: this['result_Good'],
-                                mid: this['result_Middle'],
-                                bad: this['result_Bad']
-                            },
-                            percentage: {
-                                good: this['result_Good_Percentage'].replace('.00%', '%'),
-                                mid: this['result_Middle_Percentage'].replace('.00%', '%'),
-                                bad: this['result_Bad_Percentage'].replace('.00%', '%')
-                            }
-                        },
-                        answers: [
-                            {
-                                mid: this['Answers'][0]['result_Middle'],
-                                bad: this['Answers'][0]['result_Bad']
-                            },
-                            {
-                                mid: this['Answers'][1]['result_Middle'],
-                                bad: this['Answers'][1]['result_Bad']
-                            },
-                            {
-                                mid: this['Answers'][2]['result_Middle'],
-                                bad: this['Answers'][2]['result_Bad']
-                            },
-                            {
-                                mid: this['Answers'][3]['result_Middle'],
-                                bad: this['Answers'][3]['result_Bad']
-                            },
-                            {
-                                mid: this['Answers'][4]['result_Middle'],
-                                bad: this['Answers'][4]['result_Bad']
-                            }
-                        ]
-                    });
-                });
-            });
-        });
-
-
-    }
-
-    function sortInstitutions(){
-        institutions.sort(function (y, x) {
-            A = y.name[lang].toUpperCase();
-            B = x.name[lang].toUpperCase();
-            if (A < B) {
-                return -1;
-            }
-            if (A > B) {
-                return 1;
-            }
-            return 0;
-
-        });
-    }
-
-    function sortServices(institutionsId){
-        services[institutionsId].sort(function(a, b){
-            A = a.name[lang].toUpperCase();
-            B = b.name[lang].toUpperCase();
-            if (A < B) {
-                return -1;
-            }
-            if (A > B) {
-                return 1;
-            }
-            return 0;
-        });
-    }
-
-    function cacheInstitutionsAndServices(){
-        // Cache created institution list.
-        sessionStorage.setItem('institutions', JSON.stringify(institutions));
-
-        // Cache created services object.
-        sessionStorage.setItem('services', JSON.stringify(services))
-    }
+    fetchData();
 
 });

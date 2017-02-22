@@ -1,185 +1,79 @@
-var API_REQUEST_URL_GENERAL_RESULT = 'https://opi.rks-gov.net/api/report/general';
-// 'http://csis.appdec.com/api/report/general'
-
-// TODO: Fix this jank approach to detecting whether we are listing institutions or not
+//TODO: Fix this jank approach to detecting whether we are listing institutions or not
 var EXPECTED_NUMBER_OF_INSTITUTIONS = 28;
 
-var satisfactionJson = null;
-if(sessionStorage.getItem('satisfactionJson') != null){
-    satisfactionJson = JSON.parse(sessionStorage.getItem('satisfactionJson'));
+// convert services associative array to just a list.
+var tempList = new Array()
+for(var key in services){
+   for(var i=0; i< services[key].length; i++){
+        tempList.push(services[key][i]);
+   }
 }
 
-var institutions = [];
-var services = [];
+services = tempList;
 
 var currentRankingList = null;
 
 function sortByHappy(a, b){
-    if(a.happy == b.happy){
-        if (a.happyCount == b.happyCount) {
+    if(a.results.percentage.good == b.results.percentage.good){
+        if (a.results.count.good == b.results.count.good) {
             var A;
             var B;
-            if (lang == 'AL') {
-                 A = a.name_AL.toUpperCase();
-                 B = b.name_AL.toUpperCase();
-                 if (A < B) {
-                     return -1;
-                 }
-                 if (A > B) {
-                     return 1;
-                 }
-                 return 0;
-            }else if(lang == 'EN') {
-                A = a.name_EN.toUpperCase();
-                B = b.name_EN.toUpperCase();
-
-                if (A < B) {
-                    return -1;
-                }
-                if (A > B) {
-                    return 1;
-                }
-                return 0;
-            }else if(lang == 'TR') {
-                A = a.name_EN.toUpperCase();
-                B = b.name_EN.toUpperCase();
-
-                if (A < B) {
-                    return -1;
-                }
-                if (A > B) {
-                    return 1;
-                }
-                return 0;
+            A = a.name[lang].toUpperCase();
+            B = b.name[lang].toUpperCase();
+            if (A < B) {
+                return -1;
             }
-            else {
-                A = a.name_SR.toUpperCase();
-                B = b.name_SR.toUpperCase();
-
-                if (A < B) {
-                    return -1;
-                }
-                if (A > B) {
-                    return 1;
-                }
-                return 0;
+            if (A > B) {
+                return 1;
             }
+            return 0;
         }
-        return b.happyCount - a.happyCount;
+
+        return b.results.count.good - a.results.count.good;
     }
-    return b.happy - a.happy;
+    return b.results.percentage.good - a.results.percentage.good;
 }
 
 function sortByMeh(a, b){
-    if(a.meh == b.meh){
-        if (a.mehCount == b.mehCount) {
+    if(a.results.percentage.mid == b.results.percentage.mid){
+        if (a.results.count.mid == b.results.count.mid) {
             var A;
             var B;
-            if (lang == 'AL') {
-                 A = a.name_AL.toUpperCase();
-                 B = b.name_AL.toUpperCase();
-                 if (A < B) {
-                     return -1;
-                 }
-                 if (A > B) {
-                     return 1;
-                 }
-                 return 0;
-            }else if(lang == 'EN') {
-                A = a.name_EN.toUpperCase();
-                B = b.name_EN.toUpperCase();
-
-                if (A < B) {
-                    return -1;
-                }
-                if (A > B) {
-                    return 1;
-                }
-                return 0;
-            }else if(lang == 'TR') {
-                A = a.name_EN.toUpperCase();
-                B = b.name_EN.toUpperCase();
-
-                if (A < B) {
-                    return -1;
-                }
-                if (A > B) {
-                    return 1;
-                }
-                return 0;
+            A = a.name[lang].toUpperCase();
+            B = b.name[lang].toUpperCase();
+            if (A < B) {
+                return -1;
             }
-            else {
-                A = a.name_SR.toUpperCase();
-                B = b.name_SR.toUpperCase();
-
-                if (A < B) {
-                    return -1;
-                }
-                if (A > B) {
-                    return 1;
-                }
-                return 0;
+            if (A > B) {
+                return 1;
             }
+            return 0;
         }
-        return b.mehCount - a.mehCount;
+
+        return b.results.count.mid - a.results.count.mid;
     }
-    return b.meh - a.meh;
+    return b.results.percentage.mid - a.results.percentage.mid;
 }
 
 function sortByUnhappy(a, b){
-    if (a.unhappy == b.unhappy) {
-        if (a.unhappyCount == b.unhappyCount) {
+    if(a.results.percentage.bad == b.results.percentage.bad){
+        if (a.results.count.bad == b.results.count.bad) {
             var A;
             var B;
-            if (lang == 'AL') {
-                 A = a.name_AL.toUpperCase();
-                 B = b.name_AL.toUpperCase();
-                 if (A < B) {
-                     return -1;
-                 }
-                 if (A > B) {
-                     return 1;
-                 }
-                 return 0;
-            }else if(lang == 'EN') {
-                A = a.name_EN.toUpperCase();
-                B = b.name_EN.toUpperCase();
-
-                if (A < B) {
-                    return -1;
-                }
-                if (A > B) {
-                    return 1;
-                }
-                return 0;
-            }else if(lang == 'TR') {
-                A = a.name_EN.toUpperCase();
-                B = b.name_EN.toUpperCase();
-
-                if (A < B) {
-                    return -1;
-                }
-                if (A > B) {
-                    return 1;
-                }
-                return 0;
+            A = a.name[lang].toUpperCase();
+            B = b.name[lang].toUpperCase();
+            if (A < B) {
+                return -1;
             }
-            else {
-                A = a.name_SR.toUpperCase();
-                B = b.name_SR.toUpperCase();
-
-                if (A < B) {
-                    return -1;
-                }
-                if (A > B) {
-                    return 1;
-                }
-                return 0;
+            if (A > B) {
+                return 1;
             }
+            return 0;
         }
-        return b.unhappyCount - a.unhappyCount;
+
+        return b.results.count.bad - a.results.count.bad;
     }
-    return b.unhappy - a.unhappy;
+    return b.results.percentage.bad - a.results.percentage.bad;
 }
 
 function progressBar(percent, $element) {
@@ -202,31 +96,31 @@ function displayServiceRanking(){
 function displayHappyRanking(){
     $('#dropdown-second .selected-value').html(i18n.satisfied[lang]);
     currentRankingList.sort(sortByHappy);
-    resetRanking('happy', currentRankingList);
+    resetRanking('good', 'happy', currentRankingList);
 }
 
 function displayMehRanking(){
     $('#dropdown-second .selected-value').html(i18n.moderatelySatisfied[lang]);
     currentRankingList.sort(sortByMeh);
-    resetRanking('meh', currentRankingList);
+    resetRanking('mid', 'meh', currentRankingList);
 }
 
 function displayUnhappyRanking(){
     currentRankingList.sort(sortByUnhappy);
     $('#dropdown-second .selected-value').html(i18n.dissatisfied[lang]);
-    resetRanking('unhappy', currentRankingList);
+    resetRanking('bad', 'unhappy', currentRankingList);
 }
 
-function resetRanking(rowType, currentRankingList){
+function resetRanking(satisfaction, rowType, currentRankingList){
     // Clear ranking
     $('.container-ranking').empty();
 
     $.each(currentRankingList, function( key, val ) {
 
-        var institutionId = val['id'];
-        var name = val["name_" + lang];
-        var answerCount = val[rowType + "Count"];
-        var totalCount = val['totalCount'];
+        var institutionId = val.id;
+        var name = val.name[lang];
+        var answerCount = val.results.count[satisfaction];
+        var totalCount = val.results.count.tot;
 
         var rowHtmlString =
             '<div class="row-container">' +
@@ -268,7 +162,7 @@ function resetRanking(rowType, currentRankingList){
 
         $('.container-ranking').append(rowHtmlString);
 
-        progressBar(val[rowType], $('#progress-bar-' + key));
+        progressBar(val.results.percentage[satisfaction], $('#progress-bar-' + key));
     });
 }
 
@@ -279,9 +173,9 @@ function displayInstitutionServices(institutionId, rowType){
         var institutionServices = [];
 
         $.each(services, function(key, val) {
-            if(val['institution_id'] == institutionId){
+            if(val.iid == institutionId){
                 // only include services that have at least one vote for each satisfaction level:
-                if(val["happyCount"] > 0 || val["mehCount"] > 0  || val["unhappyCount"] > 0 ){
+                if(val.results.count.good > 0 || val.results.count.mid > 0  || val.results.count.bad > 0 ){
                     institutionServices.push(val);
                 }
             }
@@ -314,8 +208,7 @@ function displayInstitutionServices(institutionId, rowType){
         $('.institution-' + institutionId + '-services-container').append(institutionServiceRowHeader);
 
         $.each(institutionServices, function(key, val) {
-            var serviceName = val["name_" + lang];
-            var answerCount = val[rowType + "Count"];
+            var serviceName = val.name[lang];
 
             var evenOrOddRow = 'row-even';
             if(key % 2 != 0){
@@ -328,13 +221,13 @@ function displayInstitutionServices(institutionId, rowType){
                             (key + 1) + '. ' + serviceName +
                     '</div>' +
                     '<div class="col-md-2 percentage-count happy-color">' +
-                        val["happy"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;(' + val['happyCount'] + '&nbsp;' + i18n.answers[lang] + ')</span>' +
+                        val.results.percentage.good + '%' + '&nbsp;<span class="vote-count-label">&nbsp;(' + val.results.count.good + '&nbsp;' + i18n.answers[lang] + ')</span>' +
                     '</div>' +
                     '<div class="col-md-2 percentage-count meh-color">' +
-                        val["meh"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;(' + val['mehCount'] + '&nbsp;' + i18n.answers[lang] + ')</span>' +
+                        val.results.percentage.mid + '%' + '&nbsp;<span class="vote-count-label">&nbsp;(' + val.results.count.mid + '&nbsp;' + i18n.answers[lang] + ')</span>' +
                     '</div>' +
                     '<div class="col-md-2 percentage-count unhappy-color">' +
-                        val["unhappy"] + '%' + '&nbsp;<span class="vote-count-label">&nbsp;(' + val['unhappyCount'] + '&nbsp;' + i18n.answers[lang] + ')</span>' +
+                        val.results.percentage.bad + '%' + '&nbsp;<span class="vote-count-label">&nbsp;(' + val.results.count.bad + '&nbsp;' + i18n.answers[lang] + ')</span>' +
                     '</div>' +
                 '</div>';
             $('.institution-' + institutionId + '-services-container').append(institutionServiceRow);
@@ -362,74 +255,17 @@ $(function() {
     if(urlLangParam == null){
         urlLangParam = 'sq';
     }
+
     $('#lnk-visualizer').attr('href', document.location.pathname.replace('/ranking/', '/') + '?lang=' + urlLangParam);
-
     $('.navbar-brand').attr('href', document.location.pathname.replace('/ranking/', '/') + '?lang=' + urlLangParam);
-
     $('#lnk-trends').attr('href', document.location.pathname.replace('/ranking/', '/trends') + '?lang=' + urlLangParam);
-
     $('#lnk-ranking').attr('href', document.location.pathname + '?lang=' + urlLangParam);
 
+    fetchData();
 
-    if(satisfactionJson == null) {
-        // get the citizen satisfaction result json
-        $.getJSON(API_REQUEST_URL_GENERAL_RESULT, function (data) {
-            sessionStorage.setItem('satisfactionJson', JSON.stringify(data));
-            satisfactionJson = data;
-            processApiResponse(data);
+    // By default, display institution ranking
+    displayInstitutionRanking();
 
-        }).done(function () {
-            $('.overllay').hide();
-        });
-    }else{
-        processApiResponse(satisfactionJson);
-        $('.overllay').hide();
-    }
-
-    function processApiResponse(data){
-
-        $.each(data, function (key, val) {
-            institutions.push({
-                id: val['ID'],
-                name_AL: val['InstitutionName_AL'],
-                name_EN: val['InstitutionName_EN'],
-                name_SR: val['InstitutionName_SR'],
-                name_TR: val['InstitutionName_TR'],
-                happy: parseFloat(val['result_Good_Percentage'].replace('%', '')),
-                meh: parseFloat(val['result_Middle_Percentage'].replace('%', '')),
-                unhappy: parseFloat(val['result_Bad_Percentage'].replace('%', '')),
-                happyCount: val['result_Good'],
-                mehCount: val['result_Middle'],
-                unhappyCount: val['result_Bad'],
-                totalCount: val['result_Total']
-            });
-        });
-
-        // By default, display institution ranking
-        displayInstitutionRanking();
-
-        // Do similar thing with services...
-        $.each(data, function (ministryIndex) {
-            $(satisfactionJson[ministryIndex]['ServiceGroups']).each(function () {
-                $(this['Services']).each(function (key, val) {
-                    services.push({
-                        institution_id: satisfactionJson[ministryIndex]['ID'],
-                        name_AL: val['ServiceName_AL'],
-                        name_EN: val['ServiceName_EN'],
-                        name_SR: val['ServiceName_SR'],
-                        name_TR: val['ServiceName_TR'],
-                        happy: parseFloat(val['result_Good_Percentage'].replace('%', '')),
-                        meh: parseFloat(val['result_Middle_Percentage'].replace('%', '')),
-                        unhappy: parseFloat(val['result_Bad_Percentage'].replace('%', '')),
-                        happyCount: val['result_Good'],
-                        mehCount: val['result_Middle'],
-                        unhappyCount: val['result_Bad'],
-                        totalCount: val['result_Total']
-                    });
-                });
-            });
-        });
-    }
 
     // Init keyup listener for search field
     $('.form-control-search').keyup(function() {
