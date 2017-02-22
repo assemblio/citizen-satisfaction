@@ -48,7 +48,6 @@ var sortedInstitutions = [];
 var services = [];
 
 function onMinistrySelection(instituIndex,institu) {
-    $('#dropdown-first .selected-value').html(institu);
 
 
     var dataTime = [data1,data2,data3];
@@ -61,21 +60,21 @@ function onMinistrySelection(instituIndex,institu) {
     if(RenderChartBool == false) {
         // Render the chart.
         // $('#container-barchart2').css('display','block');
+        $('#dropdown-first .selected-value').html(institu);
 
         renderChart(institutions[instituIndex]);
+        getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
     }
     if (RenderChartBool == true) {
         // $('#container-barchart2').css('display','none');
         swal({
-          title: "Error!",
-          text: "Here's my error message!",
-          type: "error",
-          confirmButtonText: "Cool"
+            title: "We're sorry, but there is no data for "+institu+"!",
+            type: "error",
+            confirmButtonText: "Back"
         });
         // $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
     }
     // onServiceSelection(instituIndex,0,0);
-    getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
 }
 function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex, serviceIndex){
     $('#dropdown-second .selected-value').html(i18n.allServices[lang]);
@@ -203,16 +202,14 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
     }
     if(RenderChartBool == false) {
         // $('#container-barchart2').css('display','block');
-
         renderChart(services[serviceIndex]);
     }
     if (RenderChartBool == true) {
         // $('#container-barchart2').css('display','none');
         swal({
-          title: "Error!",
-          text: "Here's my error message!",
+          title: "We're sorry, but there is no data for "+services[serviceIndex]['name_'+lang]+"!",
           type: "error",
-          confirmButtonText: "Cool"
+          confirmButtonText: "Back"
         });
 
         // $('#container-barchart').html('<div style="text-align: center;height: 100%;" class="gradient-background"><h1 style="padding-top:30px;margin: 0;">Nuk ka te dhena per kete sherbim!</h1></div>');
