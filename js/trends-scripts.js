@@ -1,200 +1,25 @@
-var API_REQUEST_URL_GENERAL_RESULT = 'https://opi.rks-gov.net/api/report/general';
-var CYCLE_LENGTH_DAYS = 7;
-
-/**
- * Get the dates needed to define the following ranges:
- *
- *  Latest date range from 1n to today.
- *  Mid date range from 2n to 1n-1.
- *  Oldest data range from 3n to 2n-1.
-**/
-
-var today = new Date();
-
-var pastDaysBy1n = new Date();
-pastDaysBy1n.setDate(pastDaysBy1n.getDate() - CYCLE_LENGTH_DAYS);
-
-var pastDaysBy1nMin1 = new Date();
-pastDaysBy1nMin1.setDate(pastDaysBy1nMin1.getDate() - CYCLE_LENGTH_DAYS - 1);
-
-var pastDaysBy2n = new Date();
-pastDaysBy2n.setDate(pastDaysBy2n.getDate() - 2 * CYCLE_LENGTH_DAYS);
-
-var pastDaysBy2nMin1 = new Date();
-pastDaysBy2nMin1.setDate(pastDaysBy2nMin1.getDate() - (2 * CYCLE_LENGTH_DAYS) - 1);
-
-var pastDaysBy3n = new Date();
-pastDaysBy3n.setDate(pastDaysBy3n.getDate() - 3 * CYCLE_LENGTH_DAYS);
-
-
-var dateRanges = [
-    '?date_fromString=' + pastDaysBy1n.toLocaleDateString('fr-FR') + '&date_toString=' + today.toLocaleDateString('fr-FR'),
-    '?date_fromString=' + pastDaysBy2n.toLocaleDateString('fr-FR') + '&date_toString=' + pastDaysBy1nMin1.toLocaleDateString('fr-FR'),
-    '?date_fromString=' + pastDaysBy3n.toLocaleDateString('fr-FR') + '&date_toString=' + pastDaysBy2nMin1.toLocaleDateString('fr-FR')
-];
-
-var data1 = null;
-var data2 = null;
-var data3 = null;
-
-if(sessionStorage.getItem('data1') != null && sessionStorage.getItem('data2') != null  && sessionStorage.getItem('data3') != null){
-    data1 = JSON.parse(sessionStorage.getItem('data1'));
-    data2 = JSON.parse(sessionStorage.getItem('data2'));
-    data3 = JSON.parse(sessionStorage.getItem('data3'));
-}
-
-var institutions = [];
+var requestCompleteCounter = 0;
 var sortedInstitutions = [];
-var services = [];
+var servicesTrends = [];
+var institutionsTrends = [];
+var servicesTrends = [];
+var institutionsTrends = [];
+var insObj = [];
+var servObj = [];
+var RenderChartBool = false;
+var insSelect = false;
 
-function onMinistrySelection(instituIndex,institu) {
-
-
-    var dataTime = [data1,data2,data3];
-    var RenderChartBool = false;
-    for (var i = 0; i < 3; i++) {
-        if (dataTime[i][instituIndex]['result_Bad'] == 0 && dataTime[i][instituIndex]['result_Middle'] == 0 && dataTime[i][instituIndex]['result_Good'] == 0) {
-            RenderChartBool = true;
-        }
-        else{
-            RenderChartBool = false;
-            break;
-        }
+function onServiceSelection(institutionId, serviceId){
+    var service = null;
+    if(serviceId < 0){
+        service = servicesTrends[0];
+    }else{
+        service = servicesTrends[serviceId];
     }
-    if(RenderChartBool == false) {
-        // Render the chart.
-        $('#dropdown-first .selected-value').html(institu);
 
-        renderChart(institutions[instituIndex]);
-        getServicesDropdownListBasedOnMinistry(instituIndex,0,0);
-    }
-    if (RenderChartBool == true) {
-        swal({
-            title: i18n.nodata[lang]+institu+"!",
-            type: "error",
-            confirmButtonText: "Back"
-        });
-    }
-    // onServiceSelection(instituIndex,0,0);
-}
-function getServicesDropdownListBasedOnMinistry(instituIndex, serviceGroupIndex, serviceIndex){
-    $('#dropdown-second .selected-value').html(i18n.allServices[lang]);
-
-    // console.log(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_'+lang]);
-    $('#dropdown-second .dropdown-menu').html('');
-    var services = [];
-
-    $(data1[instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
-        $(this['Services']).each(function(serviceIndex,serviceVal) {
-            services.push({
-                id: serviceIndex,
-                service_id: serviceVal['ID'],
-                service_grid: serviceGroupIndex,
-                name_AL: serviceVal['ServiceName_AL'],
-                name_EN: serviceVal['ServiceName_EN'],
-                name_SR: serviceVal['ServiceName_SR'],
-                name_TR: serviceVal['ServiceName_TR'],
-                happy: [
-                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
-                ],
-                meh: [
-                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
-                ],
-                unhappy: [
-                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
-                ],
-                happyCount: [
-                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
-                ],
-                mehCount: [
-                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
-                ],
-                unhappyCount: [
-                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
-                ],
-                totalCount: [
-                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
-                ]
-            });
-        });
-    });
-    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + data1[instituIndex]['InstitutionName_'+lang] + '\')">' + i18n.allServices[lang] + '</script></a></li>');
-    $(services).each(function(i){
-        var servID = services[i]['id'];
-        var serviceN = services[i]['name_' + lang];
-        var serviceGrId = services[i].service_grid;
-        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection('+ instituIndex + ', ' + serviceGrId + ', ' + servID + ')">' + serviceN + '</a></li>');
-    });
-}
-function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
-    var services = [];
-
-    $(data1[instituIndex]['ServiceGroups']).each(function(serviceGroupIndex){
-        $(this['Services']).each(function(serviceIndex,serviceVal) {
-            services.push({
-                service_id: serviceVal['ID'],
-                service_grid: serviceGroupIndex,
-                name_AL: serviceVal['ServiceName_AL'],
-                name_EN: serviceVal['ServiceName_EN'],
-                name_SR: serviceVal['ServiceName_SR'],
-                name_TR: serviceVal['ServiceName_TR'],
-                happy: [
-                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex] == undefined ? 0: data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good_Percentage'].replace('%', ''))
-                ],
-                meh: [
-                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle_Percentage'].replace('%', ''))
-                ],
-                unhappy: [
-                    parseFloat(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad_Percentage'].replace('%', ''))
-                ],
-                happyCount: [
-                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'],
-                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good']
-                ],
-                mehCount: [
-                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'],
-                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle']
-                ],
-                unhappyCount: [
-                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'],
-                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad']
-                ],
-                totalCount: [
-                    data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                    data2[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total'],
-                    data3[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Total']
-                ]
-            });
-        });
-    });
-
-    var dataTime = [data1,data2,data3];
     var RenderChartBool = false;
     for (var i = 0; i <= 2; i++) {
-        if (dataTime[i][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Bad'] == 0 && dataTime[i][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Middle'] == 0 && dataTime[i][instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['result_Good'] == 0) {
+        if (service['happyCount'][i] == 0 && service['mehCount'][i] == 0 && service['unhappyCount'][i] == 0) {
             RenderChartBool = true;
         }
         else {
@@ -203,28 +28,115 @@ function onServiceSelection(instituIndex, serviceGroupIndex, serviceIndex){
         }
     }
     if(RenderChartBool == false) {
-        $('#dropdown-second .selected-value').html(data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]);
-        $('#dropdown-second .selected-value').html(services[serviceIndex]['ServiceName_'+lang]);
-        renderChart(services[serviceIndex]);
+        if(serviceId < 0){
+            $('#dropdown-second .selected-value').html(i18n.allServices[lang]);
+            renderChart(institutionsTrends[institutionId - 1]);
+        }else{
+            $('#dropdown-second .selected-value').html(service['name_'+lang]);
+            renderChart(service);
+        }
     }
     if (RenderChartBool == true) {
-        swal({
-          title: i18n.nodata[lang]+data1[instituIndex]['ServiceGroups'][serviceGroupIndex]['Services'][serviceIndex]['ServiceName_' + lang]+"!",
-          type: "error",
-          confirmButtonText: "Back"
-        });
+        if(serviceId < 0){
+            swal({
+              title: i18n.nodata[lang]+institutionsTrends[institutionId - 1]['name_'+lang]+"!",
+              type: "error",
+              confirmButtonText: "Back"
+            });
+        }else{
+            swal({
+              title: i18n.nodata[lang]+service['name_'+lang]+"!",
+              type: "error",
+              confirmButtonText: "Back"
+            });
+        }
     }
 }
 
-function renderChart(data){
-    var xPos = screen.availWidth - screen.availWidth/4;
-    if (data.happy[1] <=50 && data.meh[1] <= 50 && data.unhappy[1] <=50) {
-        xPos = (screen.availWidth / 2) - (screen.availWidth / 22  );
-    }else if (data.happy[0] <=50 && data.meh[0] <= 50 && data.unhappy[0] <=50) {
-        xPos = 100;
-    }
+function buildServiceDropdown(institutionId, institutionName){
 
-    // console.log(data);
+    // Let's clear previously created list of services.
+    $('#dropdown-second .dropdown-menu').html('');
+
+    $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + institutionId + ', -1)">' + i18n.allServices[lang] + '</a></li>');
+
+    $.each(services['first'][institutionId], function(idx, val){
+        $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + institutionId + ', ' + idx + ')">' + val.name[lang] + '</a></li>');
+    });
+}
+
+function onInstitutionSelection(institutionId, institutionName){
+    servicesTrends = new Array();
+
+    $.each(services['first'][institutionId], function(idx, val){
+        servicesTrends.push({
+            id: val['id'],
+            name_AL: val['name']['AL'],
+            name_EN: val['name']['EN'],
+            name_SR: val['name']['SR'],
+            name_TR: val['name']['TR'],
+            happy: [
+                parseFloat(services['first'][institutionId][idx]['results']['percentage']['good'].replace('%', '')),
+                parseFloat(services['second'][institutionId][idx]['results']['percentage']['good'].replace('%', '')),
+                parseFloat(services['third'][institutionId][idx]['results']['percentage']['good'].replace('%', ''))
+            ],
+            meh: [
+                parseFloat(services['first'][institutionId][idx]['results']['percentage']['mid'].replace('%', '')),
+                parseFloat(services['second'][institutionId][idx]['results']['percentage']['mid'].replace('%', '')),
+                parseFloat(services['third'][institutionId][idx]['results']['percentage']['mid'].replace('%', ''))
+            ],
+            unhappy: [
+                parseFloat(services['first'][institutionId][idx]['results']['percentage']['bad'].replace('%', '')),
+                parseFloat(services['second'][institutionId][idx]['results']['percentage']['bad'].replace('%', '')),
+                parseFloat(services['third'][institutionId][idx]['results']['percentage']['bad'].replace('%', ''))
+            ],
+            happyCount: [
+                services['first'][institutionId][idx]['results']['count']['good'],
+                services['second'][institutionId][idx]['results']['count']['good'],
+                services['third'][institutionId][idx]['results']['count']['good']
+            ],
+            mehCount: [
+                services['first'][institutionId][idx]['results']['count']['mid'],
+                services['second'][institutionId][idx]['results']['count']['mid'],
+                services['third'][institutionId][idx]['results']['count']['mid']
+            ],
+            unhappyCount: [
+                services['first'][institutionId][idx]['results']['count']['bad'],
+                services['second'][institutionId][idx]['results']['count']['bad'],
+                services['third'][institutionId][idx]['results']['count']['bad']
+            ],
+            totalCount: [
+                services['first'][institutionId][idx]['results']['count']['tot'],
+                services['second'][institutionId][idx]['results']['count']['tot'],
+                services['third'][institutionId][idx]['results']['count']['tot']
+            ]
+        });
+    });
+    insSelect = false;
+    for (var i = 0; i < 3; i++) {
+        if (institutionsTrends[institutionId - 1]['happyCount'][i] == 0 && institutionsTrends[institutionId - 1]['mehCount'][i] == 0 && institutionsTrends[institutionId - 1]['unhappyCount'][i] == 0) {
+            swal({
+              title: i18n.nodata[lang]+institutionsTrends[institutionId - 1]['name_'+lang]+"!",
+              type: "error",
+              confirmButtonText: "Back"
+            });
+        }else {
+            $('#dropdown-first .selected-value').html(institutionName);
+            buildServiceDropdown(institutionId, institutionName);
+            onServiceSelection(institutionId, -1);
+            break;
+        }
+    }
+}
+
+function buildInstitutionDropdown() {
+
+    $.each(institutions['first'], function (i, val) {
+        $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onInstitutionSelection(' + val.id + ', \'' + val.name[lang] + '\')">' + val.name[lang] + '</a></li>');
+    });
+}
+
+function renderChart(data){
     Highcharts.chart('container-barchart', {
         title: {
             text: ''
@@ -308,98 +220,117 @@ function renderChart(data){
     });
 }
 
+function onFetchDataComplete(sessionKeyId){
+    if(sessionKeyId !== 'general'){
+        requestCompleteCounter = requestCompleteCounter + 1;
+    }
+
+    // Only prep data when all three requests have been completed.
+    if(requestCompleteCounter == 3){
+        buildChartDataObj();
+    }
+}
+
+function buildChartDataObj(){
+    $.each(institutions['first'], function(idx, val){
+        institutionsTrends.push({
+            id: val['id'],
+            name_AL: val['name']['AL'],
+            name_EN: val['name']['EN'],
+            name_SR: val['name']['SR'],
+            name_TR: val['name']['TR'],
+            happy: [
+                parseFloat(institutions['first'][idx]['results']['percentage']['good'].replace('%', '')),
+                parseFloat(institutions['second'][idx]['results']['percentage']['good'].replace('%', '')),
+                parseFloat(institutions['third'][idx]['results']['percentage']['good'].replace('%', ''))
+            ],
+            meh: [
+                parseFloat(institutions['first'][idx]['results']['percentage']['mid'].replace('%', '')),
+                parseFloat(institutions['second'][idx]['results']['percentage']['mid'].replace('%', '')),
+                parseFloat(institutions['third'][idx]['results']['percentage']['mid'].replace('%', ''))
+            ],
+            unhappy: [
+                parseFloat(institutions['first'][idx]['results']['percentage']['bad'].replace('%', '')),
+                parseFloat(institutions['second'][idx]['results']['percentage']['bad'].replace('%', '')),
+                parseFloat(institutions['third'][idx]['results']['percentage']['bad'].replace('%', ''))
+            ],
+            happyCount: [
+                institutions['first'][idx]['results']['count']['good'],
+                institutions['second'][idx]['results']['count']['good'],
+                institutions['third'][idx]['results']['count']['good']
+            ],
+            mehCount: [
+                institutions['first'][idx]['results']['count']['mid'],
+                institutions['second'][idx]['results']['count']['mid'],
+                institutions['third'][idx]['results']['count']['mid']
+            ],
+            unhappyCount: [
+                institutions['first'][idx]['results']['count']['bad'],
+                institutions['second'][idx]['results']['count']['bad'],
+                institutions['third'][idx]['results']['count']['bad']
+            ],
+            totalCount: [
+                institutions['first'][idx]['results']['count']['tot'],
+                institutions['second'][idx]['results']['count']['tot'],
+                institutions['third'][idx]['results']['count']['tot']
+            ]
+        });
+    });
+
+    institutionsTrends.sort(function(a,b) {
+        return a.id - b.id;
+    });
+
+    onInstitutionSelection(institutionsTrends[2].id, institutionsTrends[2]['name_'+lang]);
+    buildInstitutionDropdown();
+
+    $('.overllay').hide();
+}
+
 $(function() {
     // Set link to trends with selected language
     if(urlLangParam == null){
         urlLangParam = 'sq';
     }
+
+    function isDataCached(){
+        isCached = true;
+
+        $.each(['first', 'second', 'third', 'general'], function(index, group){
+            if(sessionStorage.getItem('services_' + group) == null){
+                isCached = (isCached && false);
+            }if(sessionStorage.getItem('institutions_' + group) == null){
+                isCached = (isCached && false);
+            }
+        });
+
+        return isCached;
+    }
+
     $('.navbar-brand').attr('href', document.location.pathname.replace('/trends/', '/') + '?lang=' + urlLangParam);
     $('#lnk-visualizer').attr('href', document.location.pathname.replace('/trends/', '/') + '?lang=' + urlLangParam);
     $('#lnk-ranking').attr('href', document.location.pathname.replace('/trends/', '/ranking') + '?lang=' + urlLangParam);
     $('#lnk-trends').attr('href', document.location.pathname+'?lang=' + urlLangParam);
-    if (data1 == null && data2 == null  && data3 == null) {
-        $.when(
-            // Deferred requests
-            $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[0], function (rsp3) {
-                sessionStorage.setItem('data3', JSON.stringify(rsp3));
-                data3 = rsp3;
-            }),
-
-            $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[1], function (rsp2) {
-                sessionStorage.setItem('data2', JSON.stringify(rsp2));
-                data2 = rsp2;
-            }),
-
-            $.getJSON(API_REQUEST_URL_GENERAL_RESULT + dateRanges[2], function (rsp1) {
-                sessionStorage.setItem('data1', JSON.stringify(rsp1));
-                data1 = rsp1;
-            })
-        ).then(function() {
-            // console.log(data1);
-            processApiResponse(data1, data2, data3)
-            // Hide gif loader animation.
-            $('.overllay').hide();
-        });
-    }else {
-        processApiResponse(data1, data2, data3)
-        $('.overllay').hide();
+    var urls = apiUrl();
+    if (!isDataCached()) {
+        fetchData(urls['third'], 'third');
+        fetchData(urls['second'], 'second');
+        fetchData(urls['first'], 'first');
+        fetchData(urls['general'], 'general');
     }
+    else {
+        institutions = {
+            'first': JSON.parse(sessionStorage.getItem('institutions_first')),
+            'second': JSON.parse(sessionStorage.getItem('institutions_second')),
+            'third': JSON.parse(sessionStorage.getItem('institutions_third'))
+        }
 
-    function processApiResponse(rsp1,rsp2, rsp3) {
+        services = {
+            'first': JSON.parse(sessionStorage.getItem('services_first')),
+            'second': JSON.parse(sessionStorage.getItem('services_second')),
+            'third': JSON.parse(sessionStorage.getItem('services_third'))
+        }
 
-        $.each(data1, function(idx, val){
-            institutions.push({
-                institution_id: val['ID'],
-                name_AL: val['InstitutionName_AL'],
-                name_EN: val['InstitutionName_EN'],
-                name_SR: val['InstitutionName_SR'],
-                name_TR: val['InstitutionName_TR'],
-                happy: [
-                    parseFloat(data1[idx]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data2[idx]['result_Good_Percentage'].replace('%', '')),
-                    parseFloat(data3[idx]['result_Good_Percentage'].replace('%', ''))
-                ],
-                meh: [
-                    parseFloat(data1[idx]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data2[idx]['result_Middle_Percentage'].replace('%', '')),
-                    parseFloat(data3[idx]['result_Middle_Percentage'].replace('%', ''))
-                ],
-                unhappy: [
-                    parseFloat(data1[idx]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data2[idx]['result_Bad_Percentage'].replace('%', '')),
-                    parseFloat(data3[idx]['result_Bad_Percentage'].replace('%', ''))
-                ],
-                happyCount: [
-                    data1[idx]['result_Good'],
-                    data2[idx]['result_Good'],
-                    data3[idx]['result_Good']
-                ],
-                mehCount: [
-                    data1[idx]['result_Middle'],
-                    data2[idx]['result_Middle'],
-                    data3[idx]['result_Middle']
-                ],
-                unhappyCount: [
-                    data1[idx]['result_Bad'],
-                    data2[idx]['result_Bad'],
-                    data3[idx]['result_Bad']
-                ],
-                totalCount: [
-                    data1[idx]['result_Total'],
-                    data2[idx]['result_Total'],
-                    data3[idx]['result_Total']
-                ]
-            });
-        });
-
-        $.each( data1, function( key, val ) {
-            sortedInstitutions.push({id:key, instit:val['InstitutionName_' + lang]});
-        });
-        onMinistrySelection(sortedInstitutions[0].id,sortedInstitutions[0].instit);
-        $.each(institutions, function(i) {
-            var institu = sortedInstitutions[i].instit;
-            var instituIndex = sortedInstitutions[i].id;
-            $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onMinistrySelection(' + instituIndex + ', \'' + institu + '\')">' + institu + '</a></li>');
-        });
+        buildChartDataObj();
     }
 });

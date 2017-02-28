@@ -1,17 +1,27 @@
-function domInit(){
-    onInstitutionSelection(institutions[0].id, institutions[0].name[lang]);
-    buildInstitutionDropdown();
+var requestCompleteCounter = 0;
+
+function onFetchDataComplete(sessionKeyId){
+    if(sessionKeyId !== 'general'){
+        requestCompleteCounter = requestCompleteCounter + 1;
+    }
+    if(requestCompleteCounter == 3){
+        buildData();
+    }
 }
 
+function buildData(){
+    onInstitutionSelection(institutions['general'][0].id, institutions['general'][0].name[lang]);
+    buildInstitutionDropdown();
+    $('.overllay').hide();
+}
 
 function onServiceSelection(institutionId, serviceId){
 
     var service = null;
     if(serviceId < 0){
-        service = services[institutionId][0];
-
+        service = services['general'][institutionId][0];
     }else{
-        service = getService(institutionId, serviceId);
+        service = getService(institutionId, serviceId, 'general');
     }
 
     // Display selected service name
@@ -34,7 +44,7 @@ function onInstitutionSelection(institutionId, institutionName){
 }
 
 function buildInstitutionDropdown() {
-    $.each(institutions, function (i, val) {
+    $.each(institutions['general'], function (i, val) {
         $('#dropdown-first .dropdown-menu').append('<li><a href="javascript:onInstitutionSelection(' + val.id + ', \'' + val.name[lang] + '\')">' + val.name[lang] + '</a></li>');
     });
 }
@@ -44,15 +54,14 @@ function buildServiceDropdown(institutionId){
     // Let's clear previously created list of services.
     $('#dropdown-second .dropdown-menu').html('');
 
-    $.each(services[institutionId], function(idx, val){
+    $.each(services['general'][institutionId], function(idx, val){
         $('#dropdown-second .dropdown-menu').append('<li><a href="javascript:onServiceSelection(' + institutionId + ', ' + val.id + ')">' + val.name[lang] + '</a></li>');
     });
 }
 
-
 function setSatisfactionStats(institutionId, serviceId){
 
-    var service = getService(institutionId, serviceId);
+    var service = getService(institutionId, serviceId, 'general');
 
     // Percentages of votes for each level of satisfaction
     $('.row-happy .percentage-count').html(service['results']['percentage']['good']);
@@ -84,7 +93,8 @@ function shakeHighestCounts(institutionId, serviceId){
     $('.img-illustration ').removeClass('shake-chunk shake-constant');
     $('.warn').removeAttr('src');
 
-    var service = getService(institutionId, serviceId);
+    var service = getService(institutionId, serviceId, 'general');
+
 
     // Get all the mehs
     var mehs = [{
@@ -200,12 +210,44 @@ $(function() {
     if (urlLangParam == null) {
         urlLangParam = 'sq';
     }
+
+    function isDataCached(){
+        isCached = true;
+
+        $.each(['first', 'second', 'third', 'general'], function(index, group){
+            if(sessionStorage.getItem('services_' + group) == null){
+                isCached = (isCached && false);
+            }if(sessionStorage.getItem('institutions_' + group) == null){
+                isCached = (isCached && false);
+            }
+        });
+
+        return isCached;
+    }
+
     // link to the ranking
+    // TODO: do the same for page title
     $('#lnk-ranking').attr('href', document.location.pathname + 'ranking?lang=' + urlLangParam);
     $('.navbar-brand').attr('href', document.location.pathname + '?lang=' + urlLangParam);
     $('#lnk-trends').attr('href', document.location.pathname + 'trends?lang=' + urlLangParam);
     $('#lnk-visualizer').attr('href', document.location.pathname + '?lang=' + urlLangParam);
 
-    fetchData();
+    var urls = apiUrl();
+    if (!isDataCached()) {
+        fetchData(urls['third'], 'third');
+        fetchData(urls['second'], 'second');
+        fetchData(urls['first'], 'first');
+        fetchData(urls['general'], 'general');
+    }
+    else {
+        institutions = {
+            'general': JSON.parse(sessionStorage.getItem('institutions_general')),
+        }
+
+        services = {
+            'general': JSON.parse(sessionStorage.getItem('services_general')),
+        }
+        buildData();
+    }
 
 });

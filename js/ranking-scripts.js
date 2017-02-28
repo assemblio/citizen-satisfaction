@@ -1,15 +1,16 @@
-//TODO: Fix this jank approach to detecting whether we are listing institutions or not
+var SESSION_KEY_ID = 'general';
 var EXPECTED_NUMBER_OF_INSTITUTIONS = 28;
+var requestCompleteCounter = 0;
 
 // convert services associative array to just a list.
 var tempList = new Array()
-for(var key in services){
-   for(var i=0; i< services[key].length; i++){
-        tempList.push(services[key][i]);
+for(var key in services['general']){
+   for(var i=0; i< services['general'][key].length; i++){
+        tempList.push(services['general'][key][i]);
    }
 }
 
-services = tempList;
+services[SESSION_KEY_ID] = tempList;
 
 var currentRankingList = null;
 
@@ -83,13 +84,18 @@ function progressBar(percent, $element) {
 
 function displayInstitutionRanking(){
     $('#dropdown-first .selected-value').html(i18n.institutions[lang]);
-    currentRankingList = institutions;
+    currentRankingList = institutions[SESSION_KEY_ID];
     displayHappyRanking();
 }
 
 function displayServiceRanking(){
     $('#dropdown-first .selected-value').html(i18n.services[lang]);
-    currentRankingList = services;
+    currentRankingList = new Array();
+    for (var i = 1; i <= 28; i++) {
+        $(services[SESSION_KEY_ID][i]).each(function(key,value) {
+            currentRankingList.push(value)
+        });
+    }
     displayHappyRanking();
 }
 
@@ -172,14 +178,17 @@ function displayInstitutionServices(institutionId, rowType){
 
         var institutionServices = [];
 
-        $.each(services, function(key, val) {
-            if(val.iid == institutionId){
-                // only include services that have at least one vote for each satisfaction level:
-                if(val.results.count.good > 0 || val.results.count.mid > 0  || val.results.count.bad > 0 ){
-                    institutionServices.push(val);
+        for(var i=1; i< 29 ; i++){
+
+            $.each(services[SESSION_KEY_ID][i], function(key, val) {
+                if(val.iid == institutionId){
+                    // only include services that have at least one vote for each satisfaction level:
+                    if(val.results.count.good > 0 || val.results.count.mid > 0  || val.results.count.bad > 0 ){
+                        institutionServices.push(val);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         if(rowType === 'happy'){
             institutionServices.sort(sortByHappy);
@@ -249,6 +258,20 @@ function displayInstitutionServices(institutionId, rowType){
 
 }
 
+function onFetchDataComplete(sessionKeyId){
+    if(sessionKeyId !== 'general'){
+        requestCompleteCounter = requestCompleteCounter + 1;
+    }
+    if(requestCompleteCounter == 3){
+        // By default, display institution ranking
+        buildData()
+    }
+}
+
+function buildData(){
+    displayInstitutionRanking();
+    $('.overllay').hide();
+}
 
 $(function() {
     // Set link to visualizer with selected language
@@ -256,15 +279,44 @@ $(function() {
         urlLangParam = 'sq';
     }
 
+    function isDataCached(){
+        isCached = true;
+
+        $.each(['first', 'second', 'third', 'general'], function(index, group){
+            if(sessionStorage.getItem('services_' + group) == null){
+                isCached = (isCached && false);
+            }if(sessionStorage.getItem('institutions_' + group) == null){
+                isCached = (isCached && false);
+            }
+        });
+
+        return isCached;
+    }
+
+
     $('#lnk-visualizer').attr('href', document.location.pathname.replace('/ranking/', '/') + '?lang=' + urlLangParam);
     $('.navbar-brand').attr('href', document.location.pathname.replace('/ranking/', '/') + '?lang=' + urlLangParam);
     $('#lnk-trends').attr('href', document.location.pathname.replace('/ranking/', '/trends') + '?lang=' + urlLangParam);
     $('#lnk-ranking').attr('href', document.location.pathname + '?lang=' + urlLangParam);
 
-    fetchData();
+    var urls = apiUrl();
+    if (!isDataCached()) {
+        fetchData(urls['third'], 'third');
+        fetchData(urls['second'], 'second');
+        fetchData(urls['first'], 'first');
+        fetchData(urls['general'], 'general');
+    }
+    else {
+        institutions = {
+            'general': JSON.parse(sessionStorage.getItem('institutions_general')),
+        }
 
-    // By default, display institution ranking
-    displayInstitutionRanking();
+        services = {
+            'general': JSON.parse(sessionStorage.getItem('services_general')),
+        }
+        buildData();
+    }
+
 
 
     // Init keyup listener for search field
