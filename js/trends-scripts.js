@@ -39,13 +39,13 @@ function onServiceSelection(institutionId, serviceId){
     if (RenderChartBool == true) {
         if(serviceId < 0){
             swal({
-              title: i18n.nodata[lang]+institutionsTrends[institutionId - 1]['name_'+lang]+"!",
+              title: i18n.nodata[lang]+institutionsTrends[institutionId - 1]['name_'+lang]+".",
               type: "error",
               confirmButtonText: "Back"
             });
         }else{
             swal({
-              title: i18n.nodata[lang]+service['name_'+lang]+"!",
+              title: i18n.nodata[lang]+service['name_'+lang]+".",
               type: "error",
               confirmButtonText: "Back"
             });
@@ -116,7 +116,7 @@ function onInstitutionSelection(institutionId, institutionName){
     for (var i = 0; i < 3; i++) {
         if (institutionsTrends[institutionId - 1]['happyCount'][i] == 0 && institutionsTrends[institutionId - 1]['mehCount'][i] == 0 && institutionsTrends[institutionId - 1]['unhappyCount'][i] == 0) {
             swal({
-              title: i18n.nodata[lang]+institutionsTrends[institutionId - 1]['name_'+lang]+"!",
+              title: i18n.nodata[lang]+institutionsTrends[institutionId - 1]['name_'+lang]+".",
               type: "error",
               confirmButtonText: "Back"
             });
