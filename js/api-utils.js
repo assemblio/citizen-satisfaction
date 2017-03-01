@@ -75,13 +75,14 @@ function buildInstitutionsAndServices(apiResponse, sessionKeyId) {
 
     $.each(apiResponse, function (key, val) {
 
+
         institutions[sessionKeyId].push({
             id: this['ID'],
             name: {
-                AL: this['InstitutionName_AL'],
-                EN: this['InstitutionName_EN'],
-                SR: this['InstitutionName_SR'],
-                TR: this['InstitutionName_TR']
+                AL:this['InstitutionName_AL'].trim(),
+                EN:this['InstitutionName_EN'].trim(),
+                SR:this['InstitutionName_SR'].trim(),
+                TR:this['InstitutionName_TR'].trim()
             },
             results: {
                 count: {
@@ -114,10 +115,10 @@ function buildservices(sessionKeyId, val){
                 iid: val['ID'], // Need this for ranking page.
                 id: this['ID'],
                 name: {
-                    AL: this['ServiceName_AL'],
-                    EN: this['ServiceName_EN'],
-                    SR: this['ServiceName_SR'],
-                    TR: this['ServiceName_TR']
+                    AL: this['ServiceName_AL'].trim(),
+                    EN: this['ServiceName_EN'].trim(),
+                    SR: this['ServiceName_SR'].trim(),
+                    TR: this['ServiceName_TR'].trim()
                 },
                 results: {
                     count: {
