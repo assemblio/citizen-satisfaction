@@ -26,13 +26,13 @@ var i18n = {
         AL: 'Platforma e OPI-t sh\xEBrben p\xEBr t\xEB reflektuar rezultatet e grumbulluara nga opinionet e qytetar\xEBve n\xEB koh\xEB reale dhe n\xEB m\xEBnyr\xEB transparente, si dhe mund\xEBson p\xEBrmir\xEBsimin e politikave publike p\xEBr sh\xEBrbimet administrative q\xEB ofrohen nga institucionet e Republik\xEBs s\xEB Kosov\xEBs.',
         SR: 'Platforma OPI slu&zcaron;i za odra&zcaron;avanje rezultata prikupljenih od mi&scaron;ljenja gra&#273;ana u realno vreme i na transparentan na&ccaron;in, i omogu&cacute;ava pobolj&scaron;anje javnih politika za administrativne usluga koje se pru&zcaron;aju od strane institucija Republike Kosova.',
         EN: 'OPI platform serves to reflect the results collected from the opinions of citizens in a timely and transparent manner, and enables the improvement of public policies for administrative services provided by the institutions of the Republic of Kosovo.',
-        TR: 'OPI platformu, vatanda&#351;lar\u0131n g\xf6r&#252;&#351;leri do\u011frultusunda toplanan sonu&#231;lar\u0131n zaman\u0131nda ve &#351;effaf bir &#351;ekilde yans\u0131mas\u0131n\u0131 sa\u011flamakta ve Kosova Cumhuriyeti kurumlar\u0131n\u0131n sa\u011flad\u0131\u011f\u0131 idari hizmetler i&#231;in kamu politikalar\u0131n\u0131n geli&#351;tirilmesini sa\u011flamaktad\u0131r.'
+        TR: 'OPI platformu, vatanda\u015flar\u0131n g\xf6r&#252;\u015fleri do\u011frultusunda toplanan sonu&#231;lar\u0131n zaman\u0131nda ve \u015feffaf bir \u015fekilde yans\u0131mas\u0131n\u0131 sa\u011flamakta ve Kosova Cumhuriyeti kurumlar\u0131n\u0131n sa\u011flad\u0131\u011f\u0131 idari hizmetler i&#231;in kamu politikalar\u0131n\u0131n geli\u015ftirilmesini sa\u011flamaktad\u0131r.'
     },
     descriptionbottom:{
         AL: 'Projekti \xEBsht\xEB bashk\xEBfinancuar nga Ministria e Administrat\xEBs Publike (MAP) dhe Programi i Kombeve t\xEB Bashkuara p\xEBr Zhvillim (UNDP) n\xEB Kosov\xEB.',
         SR: 'Projekat je ko-finansiran od strane Ministarstva za javnu upravu (MJU) i Programa za razvoj Ujedinjenin Nacija (UNDP) na Kosovu.',
         EN: 'The project is co-financed by the Ministry of Public Administration (MPA) and United Nations Development Programme (UNDP) in Kosovo.',
-        TR: 'Proje, Kosova Kamu Y\xf6netimi Bakanlı\u011fı ve Birle&#351;mi&#351; Milletler Kalkınma Programı (UNDP) tarafından ortak olarak finanse edilmektedir.'
+        TR: 'Proje, Kosova Kamu Y\xf6netimi Bakanlı\u011fı ve Birle\u015fmi\u015f Milletler Kalkınma Programı (UNDP) tarafından ortak olarak finanse edilmektedir.'
     },
     institutionLabel:{
         AL: "Institucioni",
@@ -111,7 +111,7 @@ var i18n = {
             AL: 'mir\xEBsjelljen e<br>zyrtarit',
             SR: 'ponasanje<br>sluzbenika',
             EN: 'behaviour of<br>the official',
-            TR: 'yetkili davran\u0131&#351;\u0131<br></br>'
+            TR: 'yetkili davran\u0131\u015f\u0131<br></br>'
         },
         timeliness:{
             AL: 'koh\xEBzgjatjen e<br>sh\xEBrbimit',
@@ -174,25 +174,25 @@ var i18n = {
         AL: 'para nj\xEB jave',
         SR: 'pre jedne nedelje',
         EN: 'one week ago',
-        TR: 'bir hafta önce'
+        TR: 'bir hafta \xf6nce'
     },
     weeks2:{
         AL: 'para dy jav\xEBsh',
         SR: 'pre dve nedelje',
         EN: 'two weeks ago',
-        TR: 'iki hafta önce'
+        TR: 'iki hafta \xf6nce'
     },
     weeks3:{
         AL: 'para tre jav\xEBsh',
         SR: 'pre tri nedelje',
         EN: 'three weeks ago',
-        TR: 'üç hafta önce'
+        TR: '\xfcç hafta \xf6nce'
     },
     nodata:{
         AL: 'Na vjen keq, por nuk ka t\xEB dh\xEBna p\xEBr ',
         SR: '\u017dao nam je ali ti podaci ne postoje za ',
-        EN: "We're sorry, but there is no data for",
-        TR: 'Üzgünüz, fakat veri bulunmamaktadır için'
+        EN: "We're sorry, but there is no data for ",
+        TR: '\xdczg\xfcn\xfcz, fakat veri bulunmamaktadır i\xe7in '
     }
 };
 
