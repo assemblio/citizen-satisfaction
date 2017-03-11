@@ -1,10 +1,10 @@
 var requestCompleteCounter = 0;
 
 function onFetchDataComplete(sessionKeyId){
-    if(sessionKeyId !== 'general'){
-        requestCompleteCounter = requestCompleteCounter + 1;
+    if(sessionKeyId == 'general'){
+        requestCompleteCounter += 1;
     }
-    if(requestCompleteCounter == 3){
+    if(requestCompleteCounter == 1){
         buildData();
     }
 }

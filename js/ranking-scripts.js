@@ -259,10 +259,10 @@ function displayInstitutionServices(institutionId, rowType){
 }
 
 function onFetchDataComplete(sessionKeyId){
-    if(sessionKeyId !== 'general'){
-        requestCompleteCounter = requestCompleteCounter + 1;
+    if(sessionKeyId == 'general'){
+        requestCompleteCounter += 1;
     }
-    if(requestCompleteCounter == 3){
+    if(requestCompleteCounter == 1){
         // By default, display institution ranking
         buildData()
     }
