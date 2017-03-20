@@ -7,12 +7,12 @@ var institutionsTrends = [];
 var insObj = [];
 var servObj = [];
 var RenderChartBool = false;
-var insSelect = false;
+var insSelectHasData = false;
 
 function onServiceSelection(institutionId, serviceId){
     var service = null;
     if(serviceId < 0){
-        service = servicesTrends[0];
+        service = institutionsTrends[0];
     }else{
         service = servicesTrends[serviceId];
     }
@@ -112,20 +112,26 @@ function onInstitutionSelection(institutionId, institutionName){
             ]
         });
     });
-    insSelect = false;
+    insSelectHasData = false;
     for (var i = 0; i < 3; i++) {
         if (institutionsTrends[institutionId - 1]['happyCount'][i] == 0 && institutionsTrends[institutionId - 1]['mehCount'][i] == 0 && institutionsTrends[institutionId - 1]['unhappyCount'][i] == 0) {
-            swal({
-              title: i18n.nodata[lang]+institutionsTrends[institutionId - 1]['name_'+lang]+".",
-              type: "error",
-              confirmButtonText: "Back"
-            });
+            insSelectHasData = false;
         }else {
-            $('#dropdown-first .selected-value').html(institutionName);
-            buildServiceDropdown(institutionId, institutionName);
-            onServiceSelection(institutionId, -1);
+            insSelectHasData = true;
             break;
         }
+    }
+
+    if (insSelectHasData == true) {
+        $('#dropdown-first .selected-value').html(institutionName);
+        buildServiceDropdown(institutionId, institutionName);
+        onServiceSelection(institutionId, -1);
+    }else {
+        swal({
+            title: i18n.nodata[lang]+institutionsTrends[institutionId - 1]['name_'+lang]+".",
+            type: "error",
+            confirmButtonText: "Back"
+        });
     }
 }
 

@@ -96,6 +96,8 @@ hr{
 }
 .dropdown-menu{
     min-width: 300px;
+    max-height: 450px !important;
+    overflow-y: scroll;
 }
 .btn-dropdown.focus, .btn-dropdown:focus, .btn-dropdown:hover {
     color: #AAAAA9;

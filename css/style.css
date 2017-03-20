@@ -170,7 +170,7 @@
 .label-satisfaction-level{
     padding-top: 15px;
     color: white;
-    /*font-weight: bold;*/
+    margin-right: 0px !important;
     font-family: ReneT;
 }
 
@@ -186,9 +186,11 @@
 
 .vote-count-container{
     margin-top: 18px;
-    min-width: 130px
+    min-width: 130px;
     padding-left: 10px;
     padding-top: 10px;
+    margin-right: 0px!important;
+
 }
 
 .vote-count, .percentage-count{
