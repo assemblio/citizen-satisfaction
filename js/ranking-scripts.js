@@ -1,7 +1,7 @@
 var SESSION_KEY_ID = 'general';
-var NUMBER_OF_INSTITUTIONS = 0;
+var NUMBER_OF_INSTITUTIONS = 0; //this will be set after building the data
 var requestCompleteCounter = 0;
-
+var institutionSelected = false;
 // convert services associative array to just a list.
 var tempList = new Array()
 for(var key in services['general']){
@@ -83,6 +83,7 @@ function progressBar(percent, $element) {
 }
 
 function displayInstitutionRanking(){
+    institutionSelected = true;
     $('#dropdown-first .selected-value').html(i18n.institutions[lang]);
     currentRankingList = institutions[SESSION_KEY_ID];
     displayHappyRanking();
@@ -91,11 +92,12 @@ function displayInstitutionRanking(){
 function displayServiceRanking(){
     $('#dropdown-first .selected-value').html(i18n.services[lang]);
     currentRankingList = new Array();
-    for (var i = 1; i <= 28; i++) {
+    for (var i = 1; i <= NUMBER_OF_INSTITUTIONS; i++) {
         $(services[SESSION_KEY_ID][i]).each(function(key,value) {
             currentRankingList.push(value)
         });
     }
+    institutionSelected = false;
     displayHappyRanking();
 }
 
@@ -146,7 +148,7 @@ function resetRanking(satisfaction, rowType, currentRankingList){
                 '<hr>' +
             '</div>';
 
-        if(currentRankingList.length <= NUMBER_OF_INSTITUTIONS){
+        if(institutionSelected){
 
             var serviceSublistDisplayLinkHtml = '&nbsp;<span class="vote-count-label show-details-institution-' + institutionId + '">' +
                 '<a href="javascript:displayInstitutionServices(' + institutionId + ', \'' + rowType + '\')" id="lnk-details-services">(' + i18n.serviceList.show[lang] + ')</a>' +
@@ -178,7 +180,7 @@ function displayInstitutionServices(institutionId, rowType){
 
         var institutionServices = [];
 
-        for(var i=1; i< 29 ; i++){
+        for(var i=1; i<= NUMBER_OF_INSTITUTIONS ; i++){
 
             $.each(services[SESSION_KEY_ID][i], function(key, val) {
                 if(val.iid == institutionId){
@@ -269,7 +271,7 @@ function onFetchDataComplete(sessionKeyId){
 }
 
 function buildData(){
-    NUMBER_OF_INSTITUTIONS = institutions['general'].length
+    NUMBER_OF_INSTITUTIONS = institutions['general'].length //this is set to the number of institutions
     displayInstitutionRanking();
     $('.overllay').hide();
 }
