@@ -74,6 +74,10 @@
     }
 }
 
+body{
+    background-color: #0065ad;
+}
+
 .gradient-background {
     background: #4176AD; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(#52B2D5, #4176AD); /* For Safari 5.1 to 6.0 */
