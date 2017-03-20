@@ -1,5 +1,5 @@
 var SESSION_KEY_ID = 'general';
-var EXPECTED_NUMBER_OF_INSTITUTIONS = 28;
+var NUMBER_OF_INSTITUTIONS = 0;
 var requestCompleteCounter = 0;
 
 // convert services associative array to just a list.
@@ -146,7 +146,7 @@ function resetRanking(satisfaction, rowType, currentRankingList){
                 '<hr>' +
             '</div>';
 
-        if(currentRankingList.length <= EXPECTED_NUMBER_OF_INSTITUTIONS){
+        if(currentRankingList.length <= NUMBER_OF_INSTITUTIONS){
 
             var serviceSublistDisplayLinkHtml = '&nbsp;<span class="vote-count-label show-details-institution-' + institutionId + '">' +
                 '<a href="javascript:displayInstitutionServices(' + institutionId + ', \'' + rowType + '\')" id="lnk-details-services">(' + i18n.serviceList.show[lang] + ')</a>' +
@@ -269,6 +269,7 @@ function onFetchDataComplete(sessionKeyId){
 }
 
 function buildData(){
+    NUMBER_OF_INSTITUTIONS = institutions['general'].length
     displayInstitutionRanking();
     $('.overllay').hide();
 }
